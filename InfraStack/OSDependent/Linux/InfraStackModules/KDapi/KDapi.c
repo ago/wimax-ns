@@ -195,8 +195,6 @@ static FILE *ptracefile = NULL;
 
 #endif
 
-extern char * g_ifacename;
-
 // ########### DEBUG ###################
 
 /* local function delclarations*/
@@ -1571,11 +1569,6 @@ int wimax_handle_open_in_loop()
 	linkup_redundant = 0;
 
 	L4Configurations_getInterfaceName(ifname);
-	if(g_ifacename != NULL) {
-		if (strcmp(g_ifacename, ifname)) {
-			strncpy(ifname, g_ifacename, DEFULT_STR_SIZE);
-		}
-	}
 
 	for (i = 0; i < KDAPI_TRY_TO_OPEN_WMX_HANDLE; i++) {
 		g_wmx_read_handle = wimaxll_open(ifname);

@@ -304,17 +304,12 @@ void *ManageIPThread(void *param)
 	
 	interface_name[0] = '\0';
 
-	if(g_ifacename != NULL) {
-		strncpy(interface_name, g_ifacename, DEFULT_STR_SIZE);
+	result = L4Configurations_getInterfaceName(interface_name);
+	if ( !result || (interface_name[0] == '\0') )
+	{
+		OSALTRACE(OSAL_ERROR, ("Failed to get interface name"));
+		return 0;
 	}
-	else {
-		result = L4Configurations_getInterfaceName(interface_name);
-		if ( !result || (interface_name[0] == '\0') )
-		{
-			OSALTRACE(OSAL_ERROR, ("Failed to get interface name"));
-			return 0;
-		}
-	}	
 
 	strcat (file_name ," ");
 	

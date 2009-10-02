@@ -746,15 +746,20 @@ BOOL L4Configurations_getApdoFumoDisable(LPSTR answer)
 	return InitStrParamFromRegOrToDefault(L4Configurations.ApdoFumoDisable, MAX_ANSWER_SIZE, OSAL_KEY_ENTRY_PIPEDEV, OSAL_KEY_ENTRY_APDO_FUMO_DISABLE, answer, __FUNCTION__);
 }
 
+extern char *g_ifacename;
 BOOL L4Configurations_getInterfaceName(char *answer)
 {
 	BOOL readFromReg;
 	char regInterfaceName[DEFULT_STR_SIZE];
 
-	readFromReg =
-	    OSAL_ConfigController_GetStrValue(OSAL_KEY_ENTRY_PIPECONFIG, KEY_ENTRY_INTERFACE_NAME,
-			       (char *)regInterfaceName, DEFULT_STR_SIZE);
-	OSAL_strcpy_s(answer, DEFULT_STR_SIZE, regInterfaceName);
+	if (g_ifacename == NULL) {
+		readFromReg =
+			OSAL_ConfigController_GetStrValue(
+				OSAL_KEY_ENTRY_PIPECONFIG, KEY_ENTRY_INTERFACE_NAME,
+				(char *)regInterfaceName, DEFULT_STR_SIZE);
+		OSAL_strcpy_s(answer, DEFULT_STR_SIZE, regInterfaceName);
+	} else
+		OSAL_strcpy_s(answer, DEFULT_STR_SIZE, g_ifacename);
 	return readFromReg;
 }
 

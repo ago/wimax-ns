@@ -51,8 +51,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 const char *WIMAX_APPSRVD_STR = WIMAXD_NAME;
 
-extern char * g_ifacename;
-
 OSAL_event_t deviceInsertRemoveEvent;
 OSAL_critical_section csDeviceInsertRemove;
 
@@ -70,11 +68,6 @@ int IsDaemonRunning()
 	char ifname[DEFULT_STR_SIZE];
 	
 	L4Configurations_getInterfaceName(ifname);
-	if(g_ifacename != NULL) {
-		if (strcmp(g_ifacename, ifname)) {
-			strncpy(ifname, g_ifacename, DEFULT_STR_SIZE);
-		}
-	}
 	
 	// simple checking is done by looking for the pid file in /var/run/
 	snprintf(pidfile_path, sizeof(pidfile_path),
@@ -149,11 +142,6 @@ int create_pidfile(unsigned currpid)
 	char ifname[DEFULT_STR_SIZE];
 	
 	L4Configurations_getInterfaceName(ifname);
-	if(g_ifacename != NULL) {
-		if (strcmp(g_ifacename, ifname)) {
-			strncpy(ifname, g_ifacename, DEFULT_STR_SIZE);
-		}
-	}
 	/* Does VAR_RUN_DIR exist? create it if not */
 	if (ensure_dir_exists(VAR_RUN_DIR) == FALSE)
 		return FALSE;
@@ -195,11 +183,6 @@ int delete_pidfile()
 	char ifname[DEFULT_STR_SIZE];
 	
 	L4Configurations_getInterfaceName(ifname);
-	if(g_ifacename != NULL) {
-		if (strcmp(g_ifacename, ifname)) {
-			strncpy(ifname, g_ifacename, DEFULT_STR_SIZE);
-		}
-	}
 	snprintf(pidfile_path, sizeof(pidfile_path),
 		 VAR_RUN_DIR "/%s.%s.pid", WIMAX_APPSRVD_STR, ifname);
 	unlink(pidfile_path);

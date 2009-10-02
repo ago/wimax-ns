@@ -201,6 +201,8 @@ wmx_Status_t WMX_WRAPPER_API WMX_EXT_CALL_CONV wmxSDK_UnregisterCtrlStatusUpdate
 	}
 }
 
+
+
 wmx_CtrlStatus_t WMX_WRAPPER_API WMX_EXT_CALL_CONV wmxSDK_GetCtrlStatus()
 {
 	if (L5funcs != NULL)

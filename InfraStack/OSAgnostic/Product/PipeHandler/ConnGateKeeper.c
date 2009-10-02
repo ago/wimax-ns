@@ -181,7 +181,20 @@ void PIPE_HANDLER_ThreadProc(LPVOID lpParam)
 				TRACE(TR_MOD_L5_CONNECTOR, TR_SEV_INFO, "ConnGateKeeper - thread is about to exit");
 				break; // exit loop and end thread
 			}
-			OSAL_sleep(THREAD_SLEEP_TIME);
+			/*
+			 * When sleeping, don't sleep too little
+			 *
+			 * If this is left at just THREAD_SLEEP_TIME,
+			 * it will wake up the system every .7s, write
+			 * logs, etc. Bump it to 5s just for this
+			 * "auto reconnect thingie".
+			 *
+			 * In any case, polling is bad. This is an
+			 * ugly hack, but it beats rewriting this beast.
+			 *
+			 * Inaky Perez-Gonzalez <inaky@linux.intel.com>
+			 */
+			OSAL_sleep(7 * THREAD_SLEEP_TIME);
 			continue;
 		}
 		TRACE(TR_MOD_L5_CONNECTOR, TR_SEV_INFO, "ConnGateKeeper connected.");

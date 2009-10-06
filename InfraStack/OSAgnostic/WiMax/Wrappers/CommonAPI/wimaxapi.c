@@ -993,7 +993,6 @@ WIMAX_API_RET WIMAX_API GetErrorString(WIMAX_API_DEVICE_ID_P pDeviceId, WIMAX_AP
 		OSAL_CAPI_strcpy_s(buffer, TEXT_LEN(*pLength)+1, TEXT("WIMAX_API_RET_INTEL_NO_RF"));
 		break;
 	}
-
 	return WIMAX_API_RET_SUCCESS;
 }
 //Device detection, association and initialization
@@ -1554,6 +1553,8 @@ WIMAX_API_RET WIMAX_API GetListDevice(WIMAX_API_DEVICE_ID_P pDeviceId, WIMAX_API
 {
 	wmx_CtrlStatus_t ctrlStatus;
 	WIMAX_API_RET wmxRet;
+	char ifname[DEFULT_STR_SIZE];
+	char append[sizeof(ifname) + sizeof(" if:") + 1];
 	char deviceName[MAX_SIZE_OF_STRING_BUFFER] = {0};
 	BOOL retStatus;
 
@@ -1611,6 +1612,10 @@ WIMAX_API_RET WIMAX_API GetListDevice(WIMAX_API_DEVICE_ID_P pDeviceId, WIMAX_API
 		}
 	}
 
+	L4Configurations_getInterfaceName(ifname);
+	snprintf(append, sizeof(append), " if:%s", ifname);
+	strncat(pHwDeviceIdList->deviceName, append,
+		sizeof(pHwDeviceIdList->deviceName) - strlen(pHwDeviceIdList->deviceName));
 	TRACE(TR_MOD_COMMON_API, TR_SEV_NOTICE, "GetListDevice(OUT). Device name = %s", pHwDeviceIdList->deviceName);
 	return WIMAX_API_RET_SUCCESS;
 }

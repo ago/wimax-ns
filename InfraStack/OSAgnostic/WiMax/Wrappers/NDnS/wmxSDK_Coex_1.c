@@ -145,6 +145,11 @@ wmx_Status_t wmx_CmdProcessStart(wmx_CoexState_t coexState)
 
 	send_st = wmx_SendL4Command( &processStartCmdParams, CmdCoexProcessStart_Funcs, *nds_wrapper_pFuncs, nds_wrapper_l5ConnID, &driver_st );
 	TRACE(TR_MOD_NDNS_WRAPPER, TR_SEV_INFO, "wmx_CmdProcessStart (OUT) wimax status - %d, driver status - %d", send_st, driver_st);
+	if (driver_st != 0) {
+		TRACE(TR_MOD_NDNS_WRAPPER, TR_SEV_WARNING,
+		      "CmxProcessStart failed with invalid opcode; ignoring\n");
+		driver_st = 0;
+	}
 	if( send_st != WMX_ST_OK )
 	{
 		return send_st;

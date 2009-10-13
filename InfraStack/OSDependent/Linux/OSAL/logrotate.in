@@ -1,0 +1,8 @@
+@pkgvarlogdir@/*.log {
+        daily
+	delaycompress
+	copytruncate
+        externsion log
+        missingok
+        rotate 9
+}

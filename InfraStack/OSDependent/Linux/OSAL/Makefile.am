@@ -3,6 +3,15 @@ varlogdir = ${localstatedir}/log
 pkgvarlogdir = ${varlogdir}/$(PACKAGE)
 pkgsysconfdir = ${sysconfdir}/$(PACKAGE)
 pkglocalstatedir= ${localstatedir}/lib/$(PACKAGE)
+logrotatedir = ${sysconfdir}/logrotate.d/
+
+logrotate_DATA = wimax.conf
+
+EXTRA_DIST = logrotate.in
+CLEANFILES = wimax.conf
+
+wimax.conf: logrotate.in
+	sed -e "s|@pkgvarlogdir@|$(pkgvarlogdir)|g" $^ > $@
 
 libosal_la_SOURCES = \
 			$(srcdir)/./Primitives/wimax_osal_primitives.c \

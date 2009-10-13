@@ -60,7 +60,6 @@ static char gcProcessName[MAX_PATH];
 static char gcLogFilePathName[MAX_FILENAME_LEN];
 
 static FILE *gLogFile = NULL;
-static long gLogFileBytesWritten = 0;
 
 static BOOL isInitialized = FALSE;
 
@@ -261,102 +260,22 @@ void Trace_CloseLogFile()
 	}
 }
 
-// returns true if append is needed; false, otherwise
-void GetNextIndex(BOOL * append, int *lastLogFileIndex)
-{
-	char fileName[MAX_PATH];
-	UINT32 index = 0;
-	int earliestUpdatedFileIndex = 1;
-	OSAL_filetime earliestUpdateFileTime;
-	int latestUpdatedFileIndex = 1;
-	OSAL_filetime latestUpdateFileTime;
-	BOOL allFilesUsed = TRUE;
-	OSAL_file_stat findFileData;
-	BOOL hFind = FALSE;
-
-	do {
-		index++;
-		snprintf(fileName, MAX_FILENAME_LEN, "%s/%s%d%s", 
-				 gcLogFilePathName, gcProcessName, index, ".log");
-		Trace_CloseLogFile();	// closes only if needed          
-		hFind = OSAL_get_file_stat(fileName, &findFileData);
-
-		// search for the oldest and newest files
-		if (hFind != FALSE) {
-			if (index == 1 
-				|| OSAL_compare_filetime(&earliestUpdateFileTime, 
-										&findFileData.ftLastWriteTime) == 1) 
-			{
-				earliestUpdatedFileIndex = index;
-				earliestUpdateFileTime =
-				    findFileData.ftLastWriteTime;
-			}
-			if (index == 1
-				|| OSAL_compare_filetime(&latestUpdateFileTime,
-										&findFileData.ftLastWriteTime) == -1) 
-			{
-				latestUpdatedFileIndex = index;
-				latestUpdateFileTime =
-				    findFileData.ftLastWriteTime;
-			}
-		} else {
-			earliestUpdatedFileIndex = index;
-			allFilesUsed = FALSE;
-		}
-	}
-	while ((hFind != FALSE)
-	       && (index < MAX_FILES_PER_PROCESS));
-
-	*lastLogFileIndex = latestUpdatedFileIndex;
-
-	// get the last number of lines
-	OSAL_snprintf(fileName, MAX_FILENAME_LEN, "%s/%s%d%s", gcLogFilePathName,
-		 gcProcessName, *lastLogFileIndex, ".log");
-	gLogFile = fopen(fileName, "r");
-	if (gLogFile != NULL)	// otherwise gLogFileBytesWritten stays 0
-	{
-		gLogFileBytesWritten = OSAL_get_file_size(gLogFile->_fileno);
-		Trace_CloseLogFile();
-	}
-	// open the file
-	*append = (gLogFileBytesWritten < MAX_CHARS_TO_WRITE)
-	    && (gLogFileBytesWritten >= 0);
-
-	if (*append == FALSE) {
-		// If all the indices are used, take the index that was used earliest           
-		*lastLogFileIndex = earliestUpdatedFileIndex;
-		OSAL_snprintf(fileName, MAX_FILENAME_LEN, "%s/%s%d%s",
-			 gcLogFilePathName, gcProcessName, *lastLogFileIndex,
-			 ".log");
-	}
-}
-
 BOOL Trace_OpenLogFile()
 {
 	char fileName[MAX_PATH];
-	BOOL append;
 	int lastLogFileIndex;
 //	struct stat fileStat;
 
-	GetNextIndex(&append, &lastLogFileIndex);
-	OSAL_snprintf(fileName, MAX_FILENAME_LEN, "%s/%s%d%s", gcLogFilePathName,
-		 gcProcessName, lastLogFileIndex, ".log");
+	OSAL_snprintf(fileName, MAX_FILENAME_LEN, "%s/%s%s", gcLogFilePathName,
+		      gcProcessName, ".log");
 
 	// Open the new log file for writing
-	if (append == TRUE) {
-		gLogFile = fopen(fileName, "a+");
-		chmod (fileName, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
-	} else {
-		gLogFile = fopen(fileName, "w+");		
-		chmod (fileName, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
-	}
+	gLogFile = fopen(fileName, "a+");
+	chmod (fileName, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
 
 	if (gLogFile == NULL) {
 		return FALSE;
 	}
-	
-	// Init the Log file size
-	gLogFileBytesWritten = OSAL_get_file_size(gLogFile->_fileno);
 	
 	return TRUE;
 }
@@ -532,15 +451,6 @@ EXPORT void TraceAgent_PrintTrace(const char *fmt, ...)
 			delimitedFileName = delimitedFileName + 1;
 		}
 
-		if (gLogFileBytesWritten >= MAX_CHARS_TO_WRITE) {
-			if (FALSE == Trace_OpenLogFile()) {
-				OSAL_exit_critical_section(&csWriteProt);
-				return;
-			}
-
-			TRACE(TR_MOD_ALL, TR_SEV_INFO, "Trace file opened...");
-		}
-
 		currTime = time(NULL);
 		timeinfo = *(localtime(&currTime));
 
@@ -563,12 +473,6 @@ EXPORT void TraceAgent_PrintTrace(const char *fmt, ...)
 			delimitedFileName,
 			gMessageProp.line,
 			gcProcessName);
-
-		if (tmpByteWritten < 0) {
-			gLogFileBytesWritten = MAX_CHARS_TO_WRITE;
-		} else {
-			gLogFileBytesWritten += tmpByteWritten;
-		}
 
 		fflush(gLogFile);
 	}
@@ -611,15 +515,6 @@ EXPORT void TraceAgent_WriteTrace(MODULE_IDS moduleID, Severities severity, cons
       delimitedFileName = delimitedFileName + 1;
     }
     
-    if (gLogFileBytesWritten >= MAX_CHARS_TO_WRITE) {
-      if (FALSE == Trace_OpenLogFile()) {
-	OSAL_exit_critical_section(&csWriteProt);
-	return;
-      }
-      
-      TRACE(TR_MOD_ALL, TR_SEV_INFO, "Trace file opened...");
-	}
-    
 	currTime = time(NULL);
     timeinfo = *(localtime(&currTime));
     
@@ -640,12 +535,6 @@ EXPORT void TraceAgent_WriteTrace(MODULE_IDS moduleID, Severities severity, cons
 			     delimitedFileName,
 			     line,
 			     gcProcessName);
-    
-    if (tmpByteWritten < 0) {
-      gLogFileBytesWritten = MAX_CHARS_TO_WRITE;
-    } else {
-      gLogFileBytesWritten += tmpByteWritten;
-    }
     
     fflush(gLogFile);
   }

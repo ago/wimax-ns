@@ -48,7 +48,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(configdir)" \
 	"$(DESTDIR)$(modprobedir)" "$(DESTDIR)$(pkgdatadir)" \
-	"$(DESTDIR)$(pkglocalstatedir)" "$(DESTDIR)$(udevrulesdir)"
+	"$(DESTDIR)$(udevrulesdir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_wimaxd_OBJECTS = wimaxd-Act.$(OBJEXT) wimaxd-L4MsgProxy.$(OBJEXT) \
 	wimaxd-L5SocketsDispatcher.$(OBJEXT) \
@@ -104,8 +104,8 @@ am__nobase_list = $(am__nobase_strip_setup); \
 am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-DATA = $(config_DATA) $(modprobe_DATA) $(pkgdata_DATA) \
-	$(pkglocalstate_DATA) $(udevrules_DATA)
+DATA = $(config_DATA) $(modprobe_DATA) $(noinst_DATA) $(pkgdata_DATA) \
+	$(udevrules_DATA)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -263,9 +263,7 @@ wimaxd_SOURCES = \
 
 EXTRA_DIST = $(srcdir)/i2400m_idle_mode.conf \
 	$(srcdir)/iwmxsdk.rules.in iwmxsdk.rules.in
-pkglocalstate_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/WiMAX_DB.bin \
-		$(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/WiMAX_Def.bin 
-
+noinst_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml
 pkgdata_DATA = ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_key.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_cert.pem \
@@ -702,26 +700,6 @@ uninstall-pkgdataDATA:
 	test -n "$$files" || exit 0; \
 	echo " ( cd '$(DESTDIR)$(pkgdatadir)' && rm -f" $$files ")"; \
 	cd "$(DESTDIR)$(pkgdatadir)" && rm -f $$files
-install-pkglocalstateDATA: $(pkglocalstate_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(pkglocalstatedir)" || $(MKDIR_P) "$(DESTDIR)$(pkglocalstatedir)"
-	@list='$(pkglocalstate_DATA)'; test -n "$(pkglocalstatedir)" || list=; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(pkglocalstatedir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(pkglocalstatedir)" || exit $$?; \
-	done
-
-uninstall-pkglocalstateDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(pkglocalstate_DATA)'; test -n "$(pkglocalstatedir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	test -n "$$files" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(pkglocalstatedir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(pkglocalstatedir)" && rm -f $$files
 install-udevrulesDATA: $(udevrules_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(udevrulesdir)" || $(MKDIR_P) "$(DESTDIR)$(udevrulesdir)"
@@ -829,7 +807,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(PROGRAMS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(configdir)" "$(DESTDIR)$(modprobedir)" "$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(pkglocalstatedir)" "$(DESTDIR)$(udevrulesdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(configdir)" "$(DESTDIR)$(modprobedir)" "$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(udevrulesdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -881,8 +859,7 @@ info: info-am
 info-am:
 
 install-data-am: install-configDATA install-modprobeDATA \
-	install-pkgdataDATA install-pkglocalstateDATA \
-	install-udevrulesDATA
+	install-pkgdataDATA install-udevrulesDATA
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-am
@@ -931,7 +908,7 @@ ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-configDATA \
 	uninstall-modprobeDATA uninstall-pkgdataDATA \
-	uninstall-pkglocalstateDATA uninstall-udevrulesDATA
+	uninstall-udevrulesDATA
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
 .MAKE: install-am install-data-am install-strip uninstall-am
@@ -944,16 +921,14 @@ uninstall-am: uninstall-binPROGRAMS uninstall-configDATA \
 	install-data-am install-data-hook install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
 	install-info install-info-am install-man install-modprobeDATA \
-	install-pdf install-pdf-am install-pkgdataDATA \
-	install-pkglocalstateDATA install-ps install-ps-am \
-	install-strip install-udevrulesDATA installcheck \
+	install-pdf install-pdf-am install-pkgdataDATA install-ps \
+	install-ps-am install-strip install-udevrulesDATA installcheck \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-binPROGRAMS \
 	uninstall-configDATA uninstall-hook uninstall-modprobeDATA \
-	uninstall-pkgdataDATA uninstall-pkglocalstateDATA \
-	uninstall-udevrulesDATA
+	uninstall-pkgdataDATA uninstall-udevrulesDATA
 
 
 export LD_RUN_PATH=$(libdir)
@@ -978,7 +953,20 @@ install-data-hook:
 #	  Set the permissions on the dhcp script.
 	  chmod +x $(DESTDIR)$(pkgdatadir)/dhcp_renew.sh
 
+	mkdir -p $(pkglocalstatedir)
+
+# Read/write database
+	install -m 0644 \
+	  $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/NDnSAgentConfig_forDriver.xml \
+	  $(pkglocalstatedir)/WiMAX_DB.bin
+
+# Database backup
+	install -m 0644 \
+	  $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/NDnSAgentConfig_forDriver.xml \
+	  $(pkglocalstatedir)/WiMAX_Def.bin
+
 uninstall-hook:
+	rm -f $(pkglocalstatedir)/WiMAX_DB.bin $(pkglocalstatedir)/WiMAX_Def.bin
 	rm -fr $(DESTDIR)$(LOGDIR)
 	rm -f iwmxsdk.rules
 

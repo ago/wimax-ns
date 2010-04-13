@@ -37,8 +37,7 @@ wimaxd_SOURCES = \
 EXTRA_DIST =	$(srcdir)/i2400m_idle_mode.conf \
 		$(srcdir)/iwmxsdk.rules.in
 
-pkglocalstate_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/WiMAX_DB.bin \
-		$(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/WiMAX_Def.bin 
+noinst_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml
 
 pkgdata_DATA =  ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_key.pem \
@@ -132,6 +131,19 @@ install-data-hook:
 #	  Set the permissions on the dhcp script.
 	  chmod +x $(DESTDIR)$(pkgdatadir)/dhcp_renew.sh
 
+	mkdir -p $(pkglocalstatedir)
+
+# Read/write database
+	install -m 0644 \
+	  $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/NDnSAgentConfig_forDriver.xml \
+	  $(pkglocalstatedir)/WiMAX_DB.bin
+
+# Database backup
+	install -m 0644 \
+	  $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/NDnSAgentConfig_forDriver.xml \
+	  $(pkglocalstatedir)/WiMAX_Def.bin
+
 uninstall-hook:
+	rm -f $(pkglocalstatedir)/WiMAX_DB.bin $(pkglocalstatedir)/WiMAX_Def.bin
 	rm -fr $(DESTDIR)$(LOGDIR)
 	rm -f iwmxsdk.rules

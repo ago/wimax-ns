@@ -124,6 +124,17 @@ AC_ARG_ENABLE(instrument,
 		AC_SUBST(USE_INST, "0")
 	      ])
 
+AC_ARG_ENABLE(bindb, 
+	      AC_HELP_STRING([--enable-bindb],[enable support for binary databases (disabled by default)]), 
+	      __BINDB_ENABLED=$enable_bindb,
+	      __BINDB_ENABLED=no)
+if test x$__BINDB_ENABLED = xyes
+then
+	AC_MSG_RESULT(Database support will be in binary format)
+else
+	AC_MSG_RESULT(Database support will be in clear text format)
+fi
+AM_CONDITIONAL([BINDB_ENABLED], [test x$__BINDB_ENABLED = xyes])
 
 curr_dir=`pwd`
 cd $srcdir/InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders

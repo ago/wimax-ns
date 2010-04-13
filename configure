@@ -790,6 +790,8 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+BINDB_ENABLED_FALSE
+BINDB_ENABLED_TRUE
 USE_INST
 LINUX_INCLUDE_PATH
 I2400M_INCLUDES
@@ -922,6 +924,7 @@ with_libwimaxll
 with_linux
 with_i2400m
 enable_instrument
+enable_bindb
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1576,6 +1579,8 @@ Optional Features:
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-debug          enable compiling with debugging information
   --enable-instrument     enable support for instrumentation
+  --enable-bindb          enable support for binary databases (disabled by
+                          default)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -4409,13 +4414,13 @@ if test "${lt_cv_nm_interface+set}" = set; then
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:4412: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:4417: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4415: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:4420: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4418: output\"" >&5)
+  (eval echo "\"\$as_me:4423: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -5621,7 +5626,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 5624 "configure"' > conftest.$ac_ext
+  echo '#line 5629 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -7474,11 +7479,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7477: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7482: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7481: \$? = $ac_status" >&5
+   echo "$as_me:7486: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7813,11 +7818,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7816: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7821: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7820: \$? = $ac_status" >&5
+   echo "$as_me:7825: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7918,11 +7923,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7921: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7926: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7925: \$? = $ac_status" >&5
+   echo "$as_me:7930: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -7973,11 +7978,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7976: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7981: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7980: \$? = $ac_status" >&5
+   echo "$as_me:7985: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -10776,7 +10781,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 10779 "configure"
+#line 10784 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10872,7 +10877,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 10875 "configure"
+#line 10880 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -11668,6 +11673,29 @@ $as_echo "Instrument has been disabled" >&6; }
 fi
 
 
+# Check whether --enable-bindb was given.
+if test "${enable_bindb+set}" = set; then
+  enableval=$enable_bindb; __BINDB_ENABLED=$enable_bindb
+else
+  __BINDB_ENABLED=no
+fi
+
+if test x$__BINDB_ENABLED = xyes
+then
+	{ $as_echo "$as_me:$LINENO: result: Database support will be in binary format" >&5
+$as_echo "Database support will be in binary format" >&6; }
+else
+	{ $as_echo "$as_me:$LINENO: result: Database support will be in clear text format" >&5
+$as_echo "Database support will be in clear text format" >&6; }
+fi
+ if test x$__BINDB_ENABLED = xyes; then
+  BINDB_ENABLED_TRUE=
+  BINDB_ENABLED_FALSE='#'
+else
+  BINDB_ENABLED_TRUE='#'
+  BINDB_ENABLED_FALSE=
+fi
+
 
 curr_dir=`pwd`
 cd $srcdir/InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders
@@ -11797,6 +11825,13 @@ if test -z "${am__fastdepCC_TRUE}" && test -z "${am__fastdepCC_FALSE}"; then
   { { $as_echo "$as_me:$LINENO: error: conditional \"am__fastdepCC\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
 $as_echo "$as_me: error: conditional \"am__fastdepCC\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${BINDB_ENABLED_TRUE}" && test -z "${BINDB_ENABLED_FALSE}"; then
+  { { $as_echo "$as_me:$LINENO: error: conditional \"BINDB_ENABLED\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+$as_echo "$as_me: error: conditional \"BINDB_ENABLED\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi

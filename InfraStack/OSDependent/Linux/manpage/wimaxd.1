@@ -1,0 +1,39 @@
+.TH wimaxd 1 "wimaxd" "Local" "Intel WiMAX Network Service Usage"
+.SH NAME:
+.B wimaxd - Intel WiMAX Network Service Usage.
+."-----------------
+.SH SYNOPSIS:
+.B "wimaxd [options]"
+."----------------
+.SH DESCRIPTION:
+.PP
+.B WiMAX Network Service 
+
+
+.PP    
+If no OPTION is specified,
+.B wimaxd
+runs in a console mode.
+."------------------------
+.SH OPTIONS:
+.IP "-i IFACENAME    "
+IFACENAME is an interface name like e.g. wmx0
+Work on said network interface.
+
+.IP "-k		"
+Kill existing instance (requires -i)
+
+.IP "-d      "
+Debug mode, work in a console.
+
+.IP "-b"
+ Force working in background and become a daemon
+
+.SH Examples:
+.IP "wimaxd -i wmx0"
+.IP "wimaxd -b -i wmx0"
+.IP "wimaxd -d -i wmxo"
+.IP "wimaxd -k -i wmx0"
+.SH AUTHOR
+KIRAN IVATURI
+

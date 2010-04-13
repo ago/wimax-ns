@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Bitman RequiredVersion="2.0" >
+
+  <Info>
+    <Project Value="Ofer"/>
+    <Module Value="L3L4 types define"/>
+    <Author Value="Roy Ramon"/>
+    <Date Value="Oct 25th 2006"/>
+    <Purpose Value="Define the L3 L4 msgs"/>
+  </Info>
+
+	<BitmanIncludeFiles>
+		<BitmanIncludeFile Path="BasicBitmanTypes.bm" 	Type="Implicit"/>
+	</BitmanIncludeFiles>
+
+  <Definitions Endianness="Little">
+
+  <Composite Name="BootstrapMessage">
+    <FixedMember Name="Version"					BitSize="16" 	CType="UINT16"/>
+    <FixedMember Name="Protocol"				BitSize="16" 	CType="UINT16"/>
+    <FixedMember Name="Length"					BitSize="32" 	CType="UINT32"/>
+    <FixedMember Name="NonceTag"				BitSize="16" 	CType="UINT16"/>
+    <FixedMember Name="NonceLength"			BitSize="32" 	CType="UINT32"/>
+    <ArrayMember Name="Nonce" CompositeName="Uint8">
+    	<ArrayDimension Size="NonceLength"/>
+    </ArrayMember>    
+    <FixedMember Name="Tag"				BitSize="16" 	CType="UINT16"/>
+    <FixedMember Name="CiphertextLength"			BitSize="32" 	CType="UINT32"/>
+    <ArrayMember Name="Ciphertext" CompositeName="Uint8">
+    	<ArrayDimension Size="CiphertextLength"/>
+    </ArrayMember>    
+  </Composite>
+   
+
+  </Definitions>
+</Bitman>

@@ -1,0 +1,7 @@
+
+$ ./configure --with-linux=/usr --with-libwimaxll=/usr --sysconfdir=/etc 
+  --localstatedir=/var --prefix=/usr --enable-instrument
+$ make
+$ make install
+
+See README for more details.

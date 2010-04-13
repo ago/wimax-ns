@@ -1,0 +1,164 @@
+#! /bin/sh
+#############################################################################
+#
+# Copyright (c) 2007-2008, Intel Corporation. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+#  1. Redistributions of source code must retain the above copyright notice,
+#     this list of conditions and the following disclaimer.
+# 
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+# 
+#  3. Neither the name of the Intel Corporation nor the names of its
+#     contributors may be used to endorse or promote products derived from
+#     this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+#
+#############################################################################
+# SCRIPTNAME=dhcp_renew.sh
+SCRIPTNAME=$0
+PIDFILE=dhclient.wmx0.pid
+PIDPATH="/var/run"
+IFNAME=$2
+RUNNING=0
+EXIT_STATUS=0
+
+LOGFILE="/var/log/wimax/dhcp.log"
+
+#=== Local Functions ===
+
+function find_if_process_running()
+{
+    # This function won't check PID file existance
+    # Before calling this function please make sure that PID file exists
+    process_id=`cat $PIDPATH/$PIDFILE` > /dev/null 2>&1
+    grep $PIDFILE /proc/$process_id/cmdline > /dev/null 2>&1
+    return $?
+}
+
+#============================================
+
+date >> $LOGFILE
+echo "Performing" $1 "operation" >>$LOGFILE
+
+case "$1" in
+#
+# Lease a new IP
+#
+    lease)
+	if [ -f $PIDPATH/$PIDFILE ]; then
+	    echo "dhclient PID file found" >> $LOGFILE
+	    find_if_process_running
+	    RUNNING=$?
+	    
+	    if [ 0 -eq $RUNNING ]; then
+		    echo "dhclient process is already running - removing pending lease (if any) and terminating" >> $LOGFILE
+		/sbin/dhclient -q -r -pf $PIDPATH/$PIDFILE $IFNAME >/dev/null 2>&1
+	        EXIT_STATUS=$?
+	        echo  "Exit status of dhclient = " $EXIT_STATUS>> $LOGFILE
+	    fi
+	fi
+
+	if [ -f $PIDPATH/$PIDFILE ]; then
+	    find_if_process_running
+	    RUNNING=$?
+	    
+	    if [ 0 -eq $RUNNING ]; then
+		    echo "*** dhclient process is still running despite termination order" >> $LOGFILE
+		fi
+	fi
+	
+	echo "Starting a new instance of dhclient to aquire a new IP lease" >> $LOGFILE
+	/sbin/dhclient -q -pf $PIDPATH/$PIDFILE $IFNAME >/dev/null 2>&1
+	EXIT_STATUS=$?
+	echo  "Exit status of dhclient = " $EXIT_STATUS>> $LOGFILE
+	;;
+#
+# Reaquire an IP lease
+#
+    renew)
+	if [ -f $PIDPATH/$PIDFILE ]; then
+	    echo "dhclient PID file found" >> $LOGFILE
+	    find_if_process_running
+	    RUNNING=$?
+	    
+	    if [ 0 -eq $RUNNING ]; then
+		    echo "removing pending lease and terminating dhclient" >> $LOGFILE
+		/sbin/dhclient -q -r -pf $PIDPATH/$PIDFILE $IFNAME >/dev/null 2>&1
+	        EXIT_STATUS=$?
+        fi
+
+        if [ -f $PIDPATH/$PIDFILE ]; then
+	        find_if_process_running
+	        RUNNING=$?
+	    
+	        if [ 0 -eq $RUNNING ]; then
+		        echo "*** dhclient process is still running despite termination order" >> $LOGFILE
+	    fi
+	fi
+
+        echo "Starting a new dhclient process to aqcuire new IP lease" >> $LOGFILE
+	/sbin/dhclient -q -pf $PIDPATH/$PIDFILE $IFNAME >/dev/null 2>&1
+	    EXIT_STATUS=$?
+	    echo  "Exit status of dhclient = " $EXIT_STATUS>> $LOGFILE
+	fi
+	;;
+#
+# Release an existing IP lease
+#
+    release)
+	if [ -f $PIDPATH/$PIDFILE ]; then
+	    echo "dhclient PID file found" >> $LOGFILE
+	    find_if_process_running
+	    RUNNING=$?
+
+	    if [ 0 -eq $RUNNING ]; then
+		    echo "Removing pending lease and terminating dhclient" >> $LOGFILE
+		/sbin/dhclient -q -r -pf $PIDPATH/$PIDFILE $IFNAME >/dev/null 2>&1
+	        EXIT_STATUS=$?
+	        echo  "Exit status of dhclient = " $EXIT_STATUS>> $LOGFILE
+	    fi
+
+        if [ -f $PIDPATH/$PIDFILE ]; then
+	        find_if_process_running
+	        RUNNING=$?
+	    
+	        if [ 0 -eq $RUNNING ]; then
+		        echo "*** dhclient process is still running despite termination order" >> $LOGFILE
+	    fi
+	fi
+#
+#       If dhclient is not running we assume that the IP was already released
+#
+	fi
+	;;
+	
+#
+# default case
+#
+   *) 
+        echo "Unrecognized" $0 "argument"
+        exit 1
+    ;;
+esac
+
+echo "Normal process exit from" $0 "script">> $LOGFILE
+
+exit 0
+
+

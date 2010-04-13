@@ -1,0 +1,8 @@
+
+DRIVERS == "i2400m?*", SUBSYSTEM == "net", ACTION == "add", RUN = "@@bin@@dir@@/@@WIMAXD_NAME@@ -b -i %k"
+
+# We have no way to tell the driver of the device being removed (nope,
+# DRIVERS won't work), so we just kill; running kill for non-wimax
+# device or a device who has no wimaxd running has no effect...
+SUBSYSTEM == "net", ACTION == "remove", RUN = "@@bin@@dir@@/@@WIMAXD_NAME@@ -k -i %k"
+

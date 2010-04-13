@@ -1,0 +1,6 @@
+<StringFiles>
+	<Arm0>.\MacPhyIntegration.trc</Arm0>
+	<Arm1>.\UpperDSPS.trc</Arm1>	
+	<NDillo></NDillo>
+	<SDillo>.\integCDMA.msg.trc</SDillo>
+</StringFiles>

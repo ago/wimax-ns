@@ -1,0 +1,71 @@
+Changes in 5.10.1114
+ - Fixed merge issue with trace handler in KDapi.c
+ - Increated shutdown sleep time to 5 seconds before sending SIGKILL
+ - Updated default L4 DB to support UQ and Clear only
+ - Enabled wimaxcu to change connect mode while radio is off
+ - Using temp file to update the config.xml instead of directly change it.
+
+
+Changes in 5.10.1113
+ - Bug fix - 3103853, 3103394, 3015805, 3102375, 3101698, 3014892
+ - Bug 3104285 - UQ bug. Enable browser popup for activate command
+
+
+Changes in 5.10.1112
+ - Version number has been changed to 5.10.1112
+ - Enabled FastReconnect and RobustConnect
+ - Fixed wimaxcu seg. falut issue
+ - Fixed config.xml corruption
+
+
+Changes in 5.1.1111
+ - Version number has been changed to 5.1.1111
+ - Added stop scan command in wimaxcu
+ - Fixed profile/network connect - connect failed due to timeout
+ - splitted wimaxcu.c into multiple files
+
+
+Changes in 5.3.10
+ - Enabled ReorderARQ feature in L4
+ - Support driver's passive_mode (KDAPI.c and i2400.conf)
+ - Fixed concurrent config file access issue in wimax_osal_config_controller.c
+ - Updated XmlParser.c to print file name when it gets an error while parsing
+
+
+Changes in 5.3.09
+
+ - KDAPI.c uses two handles (read and write) to communicate to wimax-tools
+ - In ManageIP thread, the wimax interface name override the interface
+   value in config.xml
+ - Bug 3103215: fixed connection fail in manual mode
+ - Bug 3102670: allow a user to connect to a different profile when set
+   preferred setting are on
+ - Updated help contents
+
+
+Changes in 5.3.08
+
+  - Changes made in 5.3.07 didn't make and moved to 5.3.08 release
+
+
+Changes in 5.3.07
+
+  - Changed the installation path of WiMAX_DB.bin and WiMAX_Def.bin from
+    /usr/share/wimax to /var/lib/wimax.
+  - Added missing configuration parameters for APDO in config.xml.in
+  - Disabled XOR mode support - changed the defalut value to 0 and
+    block the API to change to XOR mode from CM.
+
+
+Changes in 5.3.06:
+
+  - SDK port changed to 49001 in config.xml. Windows remote tools need to
+    sync with this new port to work remotely.
+  - Enabled Ver_info.bin to get version info.
+  - Bug fix: factory reset command. Enforce a user to turn off the radio
+  - Added device reset command in wimaxcu
+  - Merged patches from SSG (Inaky)
+  - Added an option to toggle instrument library in configuration.
+    Need to use --enable-instrument to enable.
+  - Config option for driver header is changed to --with-linux=
+

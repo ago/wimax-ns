@@ -1,0 +1,101 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          wimaxd
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      S 0 1 6
+# Short-Description: WiMAX Network Service daemon
+# Description:       This file starts/stops/restarts the WiMAX Network Service daemon.
+### END INIT INFO
+
+DESC_APPSRV="WiMAX Network Service"
+DNAME=wimaxd
+NAME=wimax
+BINDIR=VALUE
+VARRUNPATH=VARRUNDIR
+DAEMONSCRIPTDIR=DAEMONDIR
+DAEMON=$BINDIR/$DNAME
+DAEMON_ARGS=
+PIDFILE=$VARRUNPATH/$DNAME.pid
+SCRIPTNAME=$DAEMONSCRIPTDIR/$NAME
+
+# Exit if the package is not installed
+[ -x "$DAEMON" ] || exit 0
+
+# Load the VERBOSE setting and other rcS variables
+[ -f /etc/default/rcS ] && . /etc/default/rcS
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
+. /lib/lsb/init-functions
+
+#
+# Function that starts the daemon/service
+#
+do_start_appsrv()
+{
+	# Return
+	#   0 if daemon has been started
+	#   1 if daemon was already running
+	#   2 if daemon could not be started
+    if [ -f $PIDFILE ] && kill -0 $(cat $PIDFILE) >/dev/null 2>&1
+    then
+	PID=`cat $PIDFILE`
+	echo "$DESC_APPSRV already running:$PID"
+	return 1
+    fi  
+	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON || return 2
+}
+
+#
+# Function that stops the daemon/service
+#
+do_stop_appsrv()
+{
+	# Return
+	#   0 if daemon has been stopped
+	#   1 if daemon was already stopped
+	#   2 if daemon could not be stopped
+	#   other if a failure occurred
+	start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE
+	RETVAL="$?"
+    rm -f $PIDFILE
+	[ "$RETVAL" = 2 ] && return 2
+	return "$RETVAL"
+}
+
+case "$1" in
+  start)
+	[ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC_APPSRV"
+	do_start_appsrv   
+	case "$?" in
+		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+	esac
+    sleep 2
+	;;
+  stop)
+    [ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC_APPSRV"
+    do_stop_appsrv
+    case "$?" in
+        0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+        2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+    esac
+    sleep 2
+	;;
+  status)
+    echo -n "$DESC_APPSRV: "
+    pidofproc -p $PIDFILE >/dev/null
+    RETVAL="$?"
+    if [ $RETVAL -eq 0 ]; then
+        echo "Running"
+    else
+        echo "Not Running" 
+    fi
+        ;;  
+  *)
+	echo "Usage: $SCRIPTNAME {start|stop|status}" >&2
+	exit 3
+	;;
+esac

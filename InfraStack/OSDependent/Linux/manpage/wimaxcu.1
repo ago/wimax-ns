@@ -1,0 +1,169 @@
+.TH wimaxcu 1 "wimaxcu" "Local" "WiMAX Connection Utility"
+.SH NAME:
+.B wimaxcu - Intel WiMAX Connection Utility.
+."-----------------
+.SH SYNOPSIS:
+.B "wimaxcu [options]"
+."----------------
+.SH DESCRIPTION:
+.PP
+.B wimaxcu
+is a connection utilty for Intel WiMAX adapter. It provides the
+basic features such as connect, disconnect, scan the available
+.B WiMAX 
+networks and also the radio management. It also provides the status of the 
+.B WiMAX 
+connection and information about the Intel 
+.B WiMAX
+Application Server which is the core of Intel 
+.B WiMAX
+network stack and the 
+.B Intel WiMAX
+adapter.
+.PP    
+If no OPTION is specified,
+.B wimaxcu
+displays the help, that 
+lists the OPTIONS without any detailed description.  Use "help" for more 
+details.
+."------------------------
+.SH OPTIONS:
+.IP "activate <network_id>"
+Activate the specified network.
+
+./.IP "getipinterface"
+./Get the IP of an interface.[Currently not supported]
+
+.IP "update		"
+Updates any APDO related packages. [Currently not supported]
+
+.IP "connect profile <profile_id> "
+Connect to the network with existing profile ID.
+
+.IP "connect network <network_id> "
+Connect to the newtork based on network ID.
+
+.IP "connectmode [MODE_OPTIONS]"
+By default this command displays the current "connection mode and scan mode".
+.RS
+.B MODE OPTIONS:
+.TP 
+connect [auto|manual]
+To change the connect mode to auto or manual.
+.TP 
+scan [semi|manual]
+To change the scan mode to semi or manual.
+.RE        
+.IP "dconnect	"
+Disconnects from the network if connected
+.IP "deactivate <profile_id>"
+Deactivates the network specified in the existing profile ID.
+.IP "info [INFO_OPTIONS]"
+By default this command displays the information about the device.
+.RS
+.B INFO OPTIONS:
+.TP
+version
+Displays the version information.
+.TP
+device		
+Displays the device information including the hardware name and version,software name and version, RF name and version, ASIC name and version, MAC address, hardware vendor name and hardware vendor specific information if specified.
+.TP
+stats		
+Displays the statistics data when the system is connected to WiMAX network. The statistics data includes total RX/TX bytes and total number of RX/TX packets.
+.TP
+contact <network id>
+Displays the service provider's contact information. 
+.RE
+.IP "scan [SCAN_OPTIONS]"
+Scans the WiMAX network. By default it scans the preferred network. Each network displays the NSP name, ID, RSSI, CINR, and network type.
+.RS
+.B SCAN OPTIONS:
+.TP
+preferred         
+Scans only preferred network.  The preferred network is the network provided by the subscribed service provider.
+.TP
+wide		
+Scans any available WiMAX network. This will take longer than preferred scan.
+.RE
+.IP "plist		"
+Displays the profile list. Each profile found displays the profile name and profile ID.
+.IP "reset [RESET_OPTIONS]"
+Resets the device.
+.RS
+.B RESET OPTIONS:
+.TP
+device	[Currently not Implemented. ]
+Resets the device.
+.TP
+factory	
+Resets the device to factory default.
+.RE
+.IP "setfastreconnect [OPTIONS]"
+Enables/Disables fast re-connect.
+.RS
+.B OPTIONS:
+.TP
+enable	
+Enables fast re-connect.
+.TP
+disable
+Disables fast re-connect.
+.RE
+.IP "getfastreconnect"
+Fetches the status of fast re-connect, either enable/disable.
+.IP "setccap [OPTIONS]"
+Enables/Disables Current connected as Preferred network.
+.RS
+.B OPTIONS:
+.TP
+enable	
+Enables current connected as preferred network.
+.TP
+disable
+Disables current connected as preferred network.
+.RE
+.IP "getccap"
+Fetches the status of current preferred network settings, either enable/disable.
+.IP "roff		"
+Turn off the Intel WiMAX adapter (software radio).
+.IP "ron		"
+Turn on the Intel WiMAX adapter (software radio).
+.IP "unlock <unlock_code>"
+Unlock the device from the specific service provider.
+.IP "status [STATUS_OPTIONS]"
+Displays various status of the system. By default it displays the system status.
+.RS
+.B STATUS OPTIONS: 
+.TP
+system	
+Display the Intel WiMAX Application Server status.
+.TP
+connect	
+Displays the current connection status. If the system is connected to WiMAX network, it also displays the connected NSP information such as NSP ID, NSP name, RSSI, CINR, activation status, and network type.
+.TP
+link		
+Displays the link status. If the system is connected, it displays Frequency, RSSI, CINR, average TX power, and BS ID.
+.TP
+radio	
+Displays the hardware and software radio status of Intel WiMAX adapter status .
+.TP
+prov [NOT AVAILABLE YET]
+Displays the provision status.
+.TP
+lock  
+Displays the service provider's device lock status.
+.RE
+.IP "stopscan	"
+Stops user initiated scan.
+.IP "help	"
+Displays the help.
+
+.SH Examples:
+.IP "wimaxcu ron"
+.IP "wimaxcu status"
+.IP "wimaxcu scan"
+.IP "wimaxcu connect network <network id>"
+.SH AUTHOR
+KIRAN IVATURI
+

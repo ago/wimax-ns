@@ -1,0 +1,10 @@
+prefix=@abs_top_builddir@
+exec_prefix=@abs_top_builddir@
+libdir=@libdir@
+includedir=@prefix@/include/@PACKAGE_NAME@
+
+Name: wimax-network-servic-lib
+Description: WiMAX Network Service API
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -liWmxSdk -lpthread -ldl -lm
+Cflags: -I${includedir}

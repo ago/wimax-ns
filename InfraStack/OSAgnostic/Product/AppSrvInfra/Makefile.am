@@ -48,11 +48,19 @@ pkgdata_DATA =  ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 
 configdir = $(sysconfdir)/$(PACKAGE)
 config_DATA = config.xml
+
+if BINDB_ENABLED
+DISABLE_OBFUSCATE = 0
+else
+DISABLE_OBFUSCATE = 1
+endif
+
 config.xml: $(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in
 	sed \
 	-e "s|@@pkgdatadir@@|$(pkgdatadir)|g" \
 	-e "s|@@lib@@dir@@|$(libdir)|g" \
 	-e "s|@@use_inst@@|$(USE_INST)|g" \
+	-e "s|<DisableObfuscate>.*\<DisableObfuscate>|<DisableObfuscate>$(DISABLE_OBFUSCATE)</DisableObfuscate>|" \
 	$< > $@
 
 # Driver option

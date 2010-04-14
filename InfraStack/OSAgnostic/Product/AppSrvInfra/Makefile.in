@@ -273,6 +273,8 @@ pkgdata_DATA = ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 
 configdir = $(sysconfdir)/$(PACKAGE)
 config_DATA = config.xml
+@BINDB_ENABLED_FALSE@DISABLE_OBFUSCATE = 1
+@BINDB_ENABLED_TRUE@DISABLE_OBFUSCATE = 0
 
 # Driver option
 modprobedir = $(sysconfdir)/modprobe.d/
@@ -932,11 +934,13 @@ uninstall-am: uninstall-binPROGRAMS uninstall-configDATA \
 
 
 export LD_RUN_PATH=$(libdir)
+
 config.xml: $(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in
 	sed \
 	-e "s|@@pkgdatadir@@|$(pkgdatadir)|g" \
 	-e "s|@@lib@@dir@@|$(libdir)|g" \
 	-e "s|@@use_inst@@|$(USE_INST)|g" \
+	-e "s|<DisableObfuscate>.*\<DisableObfuscate>|<DisableObfuscate>$(DISABLE_OBFUSCATE)</DisableObfuscate>|" \
 	$< > $@
 
 iwmxsdk.rules: iwmxsdk.rules.in

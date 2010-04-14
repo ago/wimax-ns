@@ -133,6 +133,7 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 USE_INST = @USE_INST@
 VERSION = @VERSION@
+WIMAX_DB_BIN = @WIMAX_DB_BIN@
 WIMAX_TOOLS = @WIMAX_TOOLS@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@

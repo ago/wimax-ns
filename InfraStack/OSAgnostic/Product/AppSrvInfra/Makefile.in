@@ -175,6 +175,7 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 USE_INST = @USE_INST@
 VERSION = @VERSION@
+WIMAX_DB_BIN = @WIMAX_DB_BIN@
 WIMAX_TOOLS = @WIMAX_TOOLS@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
@@ -269,12 +270,15 @@ pkgdata_DATA = ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_cert.pem \
 		../Instrumantation/DnDAgent/DefaultTracesAndMonitors.xml \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/Ver_info.bin \
-		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh 
+		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh \
+		WiMAX_DB.bin WiMAX_Def.bin
 
 configdir = $(sysconfdir)/$(PACKAGE)
 config_DATA = config.xml
 @BINDB_ENABLED_FALSE@DISABLE_OBFUSCATE = 1
 @BINDB_ENABLED_TRUE@DISABLE_OBFUSCATE = 0
+@BINDB_ENABLED_FALSE@WIMAX_DB_BIN_FILE = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml
+@BINDB_ENABLED_TRUE@WIMAX_DB_BIN_FILE = @WIMAX_DB_BIN@
 
 # Driver option
 modprobedir = $(sysconfdir)/modprobe.d/
@@ -935,6 +939,9 @@ uninstall-am: uninstall-binPROGRAMS uninstall-configDATA \
 
 export LD_RUN_PATH=$(libdir)
 
+WiMAX_DB.bin WiMAX_Def.bin: $(WIMAX_DB_BIN_FILE)
+	cp $(WIMAX_DB_BIN_FILE) $@
+
 config.xml: $(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in
 	sed \
 	-e "s|@@pkgdatadir@@|$(pkgdatadir)|g" \
@@ -957,20 +964,7 @@ install-data-hook:
 #	  Set the permissions on the dhcp script.
 	  chmod +x $(DESTDIR)$(pkgdatadir)/dhcp_renew.sh
 
-	mkdir -p $(pkglocalstatedir)
-
-# Read/write database
-	install -m 0644 \
-	  $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/NDnSAgentConfig_forDriver.xml \
-	  $(pkglocalstatedir)/WiMAX_DB.bin
-
-# Database backup
-	install -m 0644 \
-	  $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/NDnSAgentConfig_forDriver.xml \
-	  $(pkglocalstatedir)/WiMAX_Def.bin
-
 uninstall-hook:
-	rm -f $(pkglocalstatedir)/WiMAX_DB.bin $(pkglocalstatedir)/WiMAX_Def.bin
 	rm -fr $(DESTDIR)$(LOGDIR)
 	rm -f iwmxsdk.rules
 

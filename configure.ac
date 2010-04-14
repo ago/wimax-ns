@@ -136,6 +136,23 @@ else
 fi
 AM_CONDITIONAL([BINDB_ENABLED], [test x$__BINDB_ENABLED = xyes])
 
+AC_ARG_WITH(wimax-db-bin, 
+            AC_HELP_STRING([--with-wimax-db-bin],
+			   [path to the pre-generated binary WiMAX
+                            configuration database; this is only used
+                            when --enable-bindb is specified. USE
+                            ABSOLUTE PATHS.]),
+            [],
+            with_wimax_db_bin="InfraStack/OSAgnostic/WiMAX/Agents/NDnS/XML_Files/WiMAX_DB.bin")
+            
+if test x$__BINDB_ENABLED = xyes
+then
+        AC_CHECK_FILE([$with_wimax_db_bin],
+                      [],
+                      [AC_MSG_ERROR([Can't locate $with_wimax_db_bin])])
+fi
+AC_SUBST(WIMAX_DB_BIN, $with_wimax_db_bin)
+
 curr_dir=`pwd`
 cd $srcdir/InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders
 ln -sf ../../../../OSAgnostic/OSInterface/OSAL/Primitives/wimax_osal_types.h wimax_osal_types.h

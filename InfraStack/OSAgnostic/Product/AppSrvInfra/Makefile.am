@@ -44,16 +44,22 @@ pkgdata_DATA =  ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_cert.pem \
 		../Instrumantation/DnDAgent/DefaultTracesAndMonitors.xml \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/Ver_info.bin \
-		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh 
+		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh \
+		WiMAX_DB.bin WiMAX_Def.bin
 
 configdir = $(sysconfdir)/$(PACKAGE)
 config_DATA = config.xml
 
 if BINDB_ENABLED
 DISABLE_OBFUSCATE = 0
+WIMAX_DB_BIN_FILE = @WIMAX_DB_BIN@
 else
 DISABLE_OBFUSCATE = 1
+WIMAX_DB_BIN_FILE = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml
 endif
+
+WiMAX_DB.bin WiMAX_Def.bin: $(WIMAX_DB_BIN_FILE)
+	cp $(WIMAX_DB_BIN_FILE) $@
 
 config.xml: $(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in
 	sed \
@@ -139,19 +145,6 @@ install-data-hook:
 #	  Set the permissions on the dhcp script.
 	  chmod +x $(DESTDIR)$(pkgdatadir)/dhcp_renew.sh
 
-	mkdir -p $(pkglocalstatedir)
-
-# Read/write database
-	install -m 0644 \
-	  $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/NDnSAgentConfig_forDriver.xml \
-	  $(pkglocalstatedir)/WiMAX_DB.bin
-
-# Database backup
-	install -m 0644 \
-	  $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/NDnSAgentConfig_forDriver.xml \
-	  $(pkglocalstatedir)/WiMAX_Def.bin
-
 uninstall-hook:
-	rm -f $(pkglocalstatedir)/WiMAX_DB.bin $(pkglocalstatedir)/WiMAX_Def.bin
 	rm -fr $(DESTDIR)$(LOGDIR)
 	rm -f iwmxsdk.rules

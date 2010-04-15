@@ -43,9 +43,8 @@ pkgdata_DATA =  ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_key.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_cert.pem \
 		../Instrumantation/DnDAgent/DefaultTracesAndMonitors.xml \
-		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/Ver_info.bin \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh \
-		WiMAX_DB.bin WiMAX_Def.bin
+		WiMAX_DB.bin WiMAX_Def.bin Ver_info.bin
 
 configdir = $(sysconfdir)/$(PACKAGE)
 config_DATA = config.xml
@@ -53,13 +52,23 @@ config_DATA = config.xml
 if BINDB_ENABLED
 DISABLE_OBFUSCATE = 0
 WIMAX_DB_BIN_FILE = @WIMAX_DB_BIN@
+VER_INFO_BIN_FILE = @VER_INFO_BIN@
 else
 DISABLE_OBFUSCATE = 1
 WIMAX_DB_BIN_FILE = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml
+VER_INFO_BIN_FILE = $(top_builddir)/InfraStack/OSDependent/Linux/Ver_info.bin
 endif
 
 WiMAX_DB.bin WiMAX_Def.bin: $(WIMAX_DB_BIN_FILE)
 	cp $(WIMAX_DB_BIN_FILE) $@
+
+# If we get here, this means the file has to be generated
+# FIXME: generate off GIT commit ID
+$(VER_INFO_BIN_FILE)::
+	echo -e "FIXME\nFIXME" > $@
+
+Ver_info.bin: $(VER_INFO_BIN_FILE)
+	cp $(VER_INFO_BIN_FILE) $@
 
 config.xml: $(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in
 	sed \

@@ -143,15 +143,28 @@ AC_ARG_WITH(wimax-db-bin,
                             when --enable-bindb is specified. USE
                             ABSOLUTE PATHS.]),
             [],
-            with_wimax_db_bin="InfraStack/OSAgnostic/WiMAX/Agents/NDnS/XML_Files/WiMAX_DB.bin")
-            
+            with_wimax_db_bin="InfraStack/OSAgnostic/WiMAX/Agents/NDnS/XML_Files/WiMAX_DB.bin")         
+
+AC_ARG_WITH(ver-info-bin, 
+            AC_HELP_STRING([--with-ver-info-bin],
+			   [path to the pre-generated binary
+                            ver_info.bin file; this is only used when
+                            --enable-bindb is specified. USE ABSOLUTE
+                            PATHS.]),
+            [],
+            with_ver_info_bin="InfraStack/OSDependent/Linux/Config/Ver_info.bin")
+
 if test x$__BINDB_ENABLED = xyes
 then
         AC_CHECK_FILE([$with_wimax_db_bin],
                       [],
                       [AC_MSG_ERROR([Can't locate $with_wimax_db_bin])])
+        AC_CHECK_FILE([$with_ver_info_bin],
+                      [],
+                      [AC_MSG_ERROR([Can't locate $with_ver_info_bin])])
 fi
 AC_SUBST(WIMAX_DB_BIN, $with_wimax_db_bin)
+AC_SUBST(VER_INFO_BIN, $with_ver_info_bin)
 
 curr_dir=`pwd`
 cd $srcdir/InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders

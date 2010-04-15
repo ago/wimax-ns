@@ -14,8 +14,6 @@ wimaxcu_SOURCES = 	$(srcdir)/wimaxcu_main.c \
 			wimaxcu_defs.h \
 			wimaxcu_util.h 
 
-EXTRA_DIST = $(srcdir)/manpage
-
 wimaxcu_CFLAGS = 	-I "$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders/"  
 
 

@@ -34,7 +34,7 @@ wimaxd_SOURCES = \
 		$(top_srcdir)/InfraStack/OSAgnostic/OSInterface/InfraStackModules/KDapiForSim.h \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.h 
 
-EXTRA_DIST =	$(srcdir)/i2400m_idle_mode.conf \
+EXTRA_DIST =	$(srcdir)/i2400m.conf \
 		$(srcdir)/iwmxsdk.rules.in
 
 noinst_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml

@@ -24,12 +24,10 @@ libNDnSAgent_la_SOURCES = $(srcdir)/Source/FormatConversions.c \
 			$(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c \
 			$(srcdir)/L4Scanner/NDnS_L4Scanner.h \
 			$(srcdir)/L4_db/NDnSAgent_DB_if.h \
-			$(srcdir)/Source/ver_info.h \
 			$(srcdir)/Source/NDnSAgent_Monitor.h \
 			$(srcdir)/Source/NDnS_Coex.h \
 			$(srcdir)/L4Publisher/NDnS_L4Publisher.h \
 			$(srcdir)/Source/FormatConversions.h \
-			$(srcdir)/Source/NDnSAgent_DB.h \
 			$(srcdir)/Source/NDnSAgent.h \
 			$(srcdir)/Source/NDnSAgent_Internals.h \
 			$(srcdir)/Source/NDnSAgent_L4P.h \

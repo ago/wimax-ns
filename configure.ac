@@ -35,48 +35,18 @@ AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],
 ])
 
 
-# If libnl-1 is installed
-# We do this only when we use the included wimax-tools, as we can't
-# rely on the pkg-config infoprmation being available
-AC_ARG_WITH(libnl1, 
-            AC_HELP_STRING([--with-libnl1],
-			   [prefix to libnl (>=1.0-pre7) installation; defaults to
-                            whichever is found in the system with pkg-config.
-                            USE ABSOLUTE PATHS.]), 
-            export PKG_CONFIG_PATH="$withval:$withval/lib/pkgconfig")
-PKG_CHECK_MODULES(LIBNL1, libnl-1 >= 1.0-pre7)
-libnl1_prefix=`pkg-config "libnl-1 >= 1.0-pre7" --variable=prefix`
-AC_MSG_RESULT(Using libnl1 from $libnl1_prefix)
-AC_SUBST(LIBNL1_CFLAGS)
-AC_SUBST(LIBNL1_LIBS)
-
-# If libwimaxll is installed
+# Libwimax from wimax-tools
 AC_ARG_WITH(libwimaxll, 
             AC_HELP_STRING([--with-libwimaxll],
-			   [path to where libwimaxll is installed. USE ABSOLUTE PATHS.]), 
-             [
-                export PKG_CONFIG_PATH="$withval:$withval/lib/pkgconfig"
-                AC_MSG_RESULT(Using libwimaxll from $withval)
-                PKG_CHECK_MODULES(LIBWIMAX, libwimaxll-0, dummy=yes,
-                                  AC_MSG_ERROR(libwimaxll is required))                                
-                wimaxtools_use_included=false
-             ],
-             [
-                # Hardwire using the internal copy of wimax-tools
-                #
-                # Fake what pkg-config would do -- the subpackage
-                # still is not configured, so we can't rely on it the
-                # .pc files being generated for pkg-config to do the
-                # right thing.
-                AC_CONFIG_SUBDIRS([wimax-tools])
-                wimaxtools_use_included=true
-                export LIBWIMAX_CFLAGS="-I$ac_pwd/$srcdir/wimax-tools/include"
-                export LIBWIMAX_LIBS="-L$ac_pwd/wimax-tools/lib -lwimaxll $LIBNL1_LIBS"
-                AC_MSG_RESULT(Using included libwimaxll from $srcdir/wimax-tools)
-		AC_SUBST(WIMAX_TOOLS, "wimax-tools")
-             ])
+			   [path to where libwimax is installed. USE ABSOLUTE PATHS.]), 
+            export PKG_CONFIG_PATH="$withval:$withval/lib/pkgconfig:$PKG_CONFIG_PATH")
+PKG_CHECK_MODULES(LIBWIMAX, libwimaxll-0)
+libwimax_prefix=`pkg-config libwimaxll-0 --variable=prefix`
+AC_MSG_RESULT(Using libwimax from $libwimax_prefix)
+AC_SUBST(LIBWIMAX_CFLAGS)
+AC_SUBST(LIBWIMAX_LIBS)
 
-
+# Check if wimax-tools provide wimaxll_state_get()
 LDFLAGS_save="$LDFLAGS"
 LDFLAGS="$LIBWIMAX_LIBS $LDFLAGS"
 AC_CHECK_FUNCS(wimaxll_state_get)

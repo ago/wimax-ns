@@ -11755,13 +11755,15 @@ VER_INFO_BIN=$with_ver_info_bin
 
 
 curr_dir=`pwd`
-cd $srcdir/InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders
-ln -sf ../../../../OSAgnostic/OSInterface/OSAL/Primitives/wimax_osal_types.h wimax_osal_types.h
-ln -sf ../../OSAL/Primitives/wimax_osal_basictypes.h wimax_osal_basictypes.h
-ln -sf ../../OSAL/Primitives/wimax_osal_linux_types.h wimax_osal_linux_types.h
-ln -sf ../../OSAL/Primitives/wimax_consts.h wimax_consts.h
-ln -sf ../../OSAL/Primitives/windows_error.h windows_error.h
-ln -sf ../../OSAL/Primitives/wimax_osal_error.h wimax_osal_error.h
+mkdir -p InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders
+cd InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders
+ln -sf $ac_abs_confdir/InfraStack/OSAgnostic/OSInterface/OSAL/Primitives/wimax_osal_types.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Primitives/wimax_osal_basictypes.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Primitives/wimax_osal_linux_types.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Primitives/wimax_consts.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Primitives/windows_error.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Primitives/wimax_osal_error.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Services/wimax_osal_win_config_controller_defines.h
 cd $curr_dir
 
 ac_config_files="$ac_config_files Makefile wns-version.h InfraStack/OSDependent/Linux/OSAL/Makefile InfraStack/OSDependent/Linux/InfraStackModules/IPCs/Makefile InfraStack/OSAgnostic/Common/CommonServices/Makefile InfraStack/OSAgnostic/Common/CommonServices/XmlParser/Makefile InfraStack/OSAgnostic/Common/L4Common/Makefile InfraStack/OSAgnostic/Product/PipeHandler/Makefile InfraStack/OSAgnostic/WiMax/Agents/NDnS/Makefile InfraStack/OSAgnostic/WiMax/Agents/Supplicant/Makefile InfraStack/OSAgnostic/Product/Instrumantation/Makefile InfraStack/OSAgnostic/Product/Instrumantation/DnDAgent/Makefile InfraStack/OSAgnostic/Product/Instrumantation/MocMsgProxy/Makefile InfraStack/OSAgnostic/Product/AppSrvInfra/Makefile InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/Makefile InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/libiWmxSdk-0.pc InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/libiWmxSdk-0-uninstalled.pc InfraStack/OSDependent/Linux/wimaxcu/Makefile InfraStack/OSDependent/Linux/wimax_utils/wimax_monitor/Makefile"

@@ -219,6 +219,7 @@ libPipeHandler_la_SOURCES = \
 			  	$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersCommon.c \
 			  	$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersUtils.c \
 			  	$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceModule.c \
+			  	$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceAgentInternal.h \
 				$(srcdir)/Defs.h \
 			  	$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/EventSubscribers.h \
 			  	$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/IndicatorsSubscribers.h \

@@ -37,7 +37,8 @@ wimaxd_SOURCES = \
 EXTRA_DIST =	$(srcdir)/i2400m.conf \
 		$(srcdir)/iwmxsdk.rules.in
 
-noinst_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml
+noinst_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml \
+		$(top_srcdir)/$(VER_INFO_BIN_FILE_SRC)
 
 pkgdata_DATA =  ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_key.pem \
@@ -46,8 +47,12 @@ pkgdata_DATA =  ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh \
 		WiMAX_DB.bin WiMAX_Def.bin Ver_info.bin
 
+DISTCLEANFILES = WiMAX_DB.bin WiMAX_Def.bin Ver_info.bin
+
 configdir = $(sysconfdir)/$(PACKAGE)
 config_DATA = config.xml
+
+VER_INFO_BIN_FILE_SRC = InfraStack/OSDependent/Linux/Ver_info.bin
 
 if BINDB_ENABLED
 DISABLE_OBFUSCATE = 0
@@ -56,19 +61,55 @@ VER_INFO_BIN_FILE = @VER_INFO_BIN@
 else
 DISABLE_OBFUSCATE = 1
 WIMAX_DB_BIN_FILE = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml
-VER_INFO_BIN_FILE = $(top_builddir)/InfraStack/OSDependent/Linux/Ver_info.bin
+VER_INFO_BIN_FILE = $(top_srcdir)/$(VER_INFO_BIN_FILE_SRC)
 endif
 
 WiMAX_DB.bin WiMAX_Def.bin: $(WIMAX_DB_BIN_FILE)
 	cp $(WIMAX_DB_BIN_FILE) $@
 
-# If we get here, this means the file has to be generated
-# FIXME: generate off GIT commit ID
-$(VER_INFO_BIN_FILE)::
-	echo -e "FIXME\nFIXME" > $@
+git_version = $(shell cd $(top_srcdir) && git describe --abbrev=128 --always)
 
+# If we get here, this means the file has to be generated
+$(top_distdir)/$(VER_INFO_BIN_FILE_SRC) \
+$(top_buildir)/$(VER_INFO_BIN_FILE_SRC) \
+	::
+	@echo $@: generating distribution version
+	@[ -z "$(git_version)" ] \
+		&& echo "git-version-n/a" > $@ \
+		|| echo $(git_version) > $@
+# FIXME: find a better sollution for this
+	@echo 3.5.2 >> $@
+	@[ -z "$(git_version)" ] \
+		&& echo "WARNING: Git version not available" 1>&2 \
+		|| true
+
+dist-hook: $(top_distdir)/$(VER_INFO_BIN_FILE_SRC)
+
+# These rules are only used during build time, so packaging (make
+# dist) is not affected.
+#
+# If the bindb is enabled, the version information comes from the
+# build prepared and it has to be used yes-or-yes. If bindb is
+# disabled, we either use the one that comes prepackaged or generate
+# it on the run with git.
+#
+# FIXME: find a better sollution for the 3.5.2 thingie
+#
+# When generating, we take the original always as a reference and if
+# the new one is different to the original, we just update it :)
 Ver_info.bin: $(VER_INFO_BIN_FILE)
 	cp $(VER_INFO_BIN_FILE) $@
+if ! BINDB_ENABLED
+	@if ! [ -z "$(git_version)" ]; \
+	then \
+		echo $@: Generating, git version $(git_version); \
+		echo $(git_version) > $@.new; \
+		echo 3.5.2 >> $@.new; \
+		cmp $@ $@.new || mv $@.new $@ && rm -f $@.new; \
+	else \
+		echo $@: Git n/a, copying from original $(VER_INFO_BIN_FILE); \
+	fi 
+endif
 
 config.xml: $(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in
 	sed \

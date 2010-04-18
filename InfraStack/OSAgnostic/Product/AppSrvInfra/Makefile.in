@@ -261,7 +261,9 @@ wimaxd_SOURCES = \
 
 EXTRA_DIST = $(srcdir)/i2400m.conf $(srcdir)/iwmxsdk.rules.in \
 	iwmxsdk.rules.in
-noinst_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml
+noinst_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml \
+		$(top_srcdir)/$(VER_INFO_BIN_FILE_SRC)
+
 pkgdata_DATA = ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_key.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_cert.pem \
@@ -269,14 +271,17 @@ pkgdata_DATA = ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh \
 		WiMAX_DB.bin WiMAX_Def.bin Ver_info.bin
 
+DISTCLEANFILES = WiMAX_DB.bin WiMAX_Def.bin Ver_info.bin
 configdir = $(sysconfdir)/$(PACKAGE)
 config_DATA = config.xml
+VER_INFO_BIN_FILE_SRC = InfraStack/OSDependent/Linux/Ver_info.bin
 @BINDB_ENABLED_FALSE@DISABLE_OBFUSCATE = 1
 @BINDB_ENABLED_TRUE@DISABLE_OBFUSCATE = 0
 @BINDB_ENABLED_FALSE@WIMAX_DB_BIN_FILE = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml
 @BINDB_ENABLED_TRUE@WIMAX_DB_BIN_FILE = @WIMAX_DB_BIN@
-@BINDB_ENABLED_FALSE@VER_INFO_BIN_FILE = $(top_builddir)/InfraStack/OSDependent/Linux/Ver_info.bin
+@BINDB_ENABLED_FALSE@VER_INFO_BIN_FILE = $(top_srcdir)/$(VER_INFO_BIN_FILE_SRC)
 @BINDB_ENABLED_TRUE@VER_INFO_BIN_FILE = @VER_INFO_BIN@
+git_version = $(shell cd $(top_srcdir) && git describe --abbrev=128 --always)
 
 # Driver option
 modprobedir = $(sysconfdir)/modprobe.d/
@@ -807,6 +812,9 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	  fi; \
 	done
+	$(MAKE) $(AM_MAKEFLAGS) \
+	  top_distdir="$(top_distdir)" distdir="$(distdir)" \
+	  dist-hook
 check-am: all-am
 check: check-am
 all-am: Makefile $(PROGRAMS) $(DATA)
@@ -836,6 +844,7 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -918,21 +927,22 @@ uninstall-am: uninstall-binPROGRAMS uninstall-configDATA \
 .MAKE: install-am install-data-am install-strip uninstall-am
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-binPROGRAMS \
-	clean-generic clean-libtool ctags distclean distclean-compile \
-	distclean-generic distclean-libtool distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-binPROGRAMS install-configDATA install-data \
-	install-data-am install-data-hook install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-modprobeDATA \
-	install-pdf install-pdf-am install-pkgdataDATA install-ps \
-	install-ps-am install-strip install-udevrulesDATA installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-binPROGRAMS \
-	uninstall-configDATA uninstall-hook uninstall-modprobeDATA \
-	uninstall-pkgdataDATA uninstall-udevrulesDATA
+	clean-generic clean-libtool ctags dist-hook distclean \
+	distclean-compile distclean-generic distclean-libtool \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-binPROGRAMS install-configDATA \
+	install-data install-data-am install-data-hook install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-modprobeDATA install-pdf install-pdf-am \
+	install-pkgdataDATA install-ps install-ps-am install-strip \
+	install-udevrulesDATA installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-binPROGRAMS uninstall-configDATA uninstall-hook \
+	uninstall-modprobeDATA uninstall-pkgdataDATA \
+	uninstall-udevrulesDATA
 
 
 export LD_RUN_PATH=$(libdir)
@@ -941,12 +951,44 @@ WiMAX_DB.bin WiMAX_Def.bin: $(WIMAX_DB_BIN_FILE)
 	cp $(WIMAX_DB_BIN_FILE) $@
 
 # If we get here, this means the file has to be generated
-# FIXME: generate off GIT commit ID
-$(VER_INFO_BIN_FILE)::
-	echo -e "FIXME\nFIXME" > $@
+$(top_distdir)/$(VER_INFO_BIN_FILE_SRC) \
+$(top_buildir)/$(VER_INFO_BIN_FILE_SRC) \
+	::
+	@echo $@: generating distribution version
+	@[ -z "$(git_version)" ] \
+		&& echo "git-version-n/a" > $@ \
+		|| echo $(git_version) > $@
+# FIXME: find a better sollution for this
+	@echo 3.5.2 >> $@
+	@[ -z "$(git_version)" ] \
+		&& echo "WARNING: Git version not available" 1>&2 \
+		|| true
 
+dist-hook: $(top_distdir)/$(VER_INFO_BIN_FILE_SRC)
+
+# These rules are only used during build time, so packaging (make
+# dist) is not affected.
+#
+# If the bindb is enabled, the version information comes from the
+# build prepared and it has to be used yes-or-yes. If bindb is
+# disabled, we either use the one that comes prepackaged or generate
+# it on the run with git.
+#
+# FIXME: find a better sollution for the 3.5.2 thingie
+#
+# When generating, we take the original always as a reference and if
+# the new one is different to the original, we just update it :)
 Ver_info.bin: $(VER_INFO_BIN_FILE)
 	cp $(VER_INFO_BIN_FILE) $@
+@BINDB_ENABLED_FALSE@	@if ! [ -z "$(git_version)" ]; \
+@BINDB_ENABLED_FALSE@	then \
+@BINDB_ENABLED_FALSE@		echo $@: Generating, git version $(git_version); \
+@BINDB_ENABLED_FALSE@		echo $(git_version) > $@.new; \
+@BINDB_ENABLED_FALSE@		echo 3.5.2 >> $@.new; \
+@BINDB_ENABLED_FALSE@		cmp $@ $@.new || mv $@.new $@ && rm -f $@.new; \
+@BINDB_ENABLED_FALSE@	else \
+@BINDB_ENABLED_FALSE@		echo $@: Git n/a, copying from original $(VER_INFO_BIN_FILE); \
+@BINDB_ENABLED_FALSE@	fi 
 
 config.xml: $(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in
 	sed \

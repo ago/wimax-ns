@@ -1,5 +1,32 @@
-*~
+
+# Build products
+*.a
+*.la
+*.lo
+*.o
+.deps/
+.libs/
+/InfraStack/OSAgnostic/Product/AppSrvInfra/Ver_info.bin
+/InfraStack/OSAgnostic/Product/AppSrvInfra/WiMAX_DB.bin
+/InfraStack/OSAgnostic/Product/AppSrvInfra/WiMAX_Def.bin
+/InfraStack/OSAgnostic/Product/AppSrvInfra/config.xml
+/InfraStack/OSAgnostic/Product/AppSrvInfra/iwmxsdk.rules
+/InfraStack/OSAgnostic/Product/AppSrvInfra/wimaxd
+/InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/libiWmxSdk-0-uninstalled.pc
+/InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/libiWmxSdk-0.pc
+/InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders/wimax_osal_win_config_controller_defines.h
+/InfraStack/OSDependent/Linux/wimax_utils/wimax_monitor/wimax_monitor
+/InfraStack/OSDependent/Linux/wimaxcu/wimaxcu
 /autom4te.cache/
+/config.h
+/config.status
+/libtool
+/stamp-h1
+/wns-version.h
+Makefile
+
+# Source tree management
+*~
 /3rdParty/
 /Docs/
 /InfraStack/Builds/

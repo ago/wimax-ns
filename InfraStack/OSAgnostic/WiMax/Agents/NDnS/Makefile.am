@@ -20,6 +20,7 @@ libNDnSAgent_la_SOURCES = $(srcdir)/Source/FormatConversions.c \
 			$(srcdir)/L4_db/NDnSAgent_DB_Restore.c \
 			$(srcdir)/L4_db/NDnSAgent_DB_Save.c \
 			$(srcdir)/L4_db/NDnSAgent_DB_Update.c \
+			$(srcdir)/L4_db/NDnSAgent_DB_Internal.h \
 			$(srcdir)/L4Scanner/NDnS_L4Scanner.c \
 			$(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c \
 			$(srcdir)/L4Scanner/NDnS_L4Scanner.h \
@@ -104,5 +105,5 @@ libNDnSAgent_la_CFLAGS = \
 			-D PKG_DATA_DIR="\"${pkgdatadir}\"" \
 			  -D  "BMI_MACHINE_ENDIANNESS_LITTLE" -D "_LINUX"
 
-
-
+EXTRA_DIST = \
+	$(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml

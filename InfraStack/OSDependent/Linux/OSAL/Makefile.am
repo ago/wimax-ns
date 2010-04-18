@@ -14,7 +14,9 @@ libosal_la_SOURCES = \
 			$(srcdir)/./Services/wimax_osal_services.c \
 			$(srcdir)/./Services/wimax_osal_config_controller.c \
 			$(srcdir)/./Services/wimax_osal_crypt_services.c \
+			$(srcdir)/./Services/wimax_osal_win_config_controller_defines.h \
 			$(srcdir)/../EventLogMessages/EventLogger.c \
+			$(srcdir)/../EventLogMessages/EventLogger.h \
 			$(srcdir)/../../../OSAgnostic/OSInterface/OSAL/Primitives/wimax_osal_string.h \
 			$(srcdir)/../../../OSAgnostic/OSInterface/OSAL/Primitives/wimax_osal_types.h \
 			$(srcdir)/../../../OSAgnostic/OSInterface/OSAL/Primitives/wimax_osal_primitives.h \

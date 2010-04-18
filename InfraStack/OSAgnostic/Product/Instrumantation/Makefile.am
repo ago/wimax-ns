@@ -26,3 +26,9 @@ libWmxInstrument_la_LIBADD = DnDAgent/libDnDAgent.la \
 			MocMsgProxy/libMocMsgProxy.la \
 			$(top_builddir)/InfraStack/OSDependent/Linux/InfraStackModules/IPCs/libSockets.la
 
+# FIXME: where do these header files really belong?
+EXTRA_DIST = \
+	MOCHandler/UDapiL5/ApplicationMocTaskDesc.h \
+	MOCHandler/UDapiL5/UDapiCommonDefines.h \
+	MOCHandler/UDapiL5/UDapiDll.h \
+	MOCHandler/UDapiL5/UDapiL5.h

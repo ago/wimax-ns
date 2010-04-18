@@ -137,13 +137,15 @@ AC_SUBST(WIMAX_DB_BIN, $with_wimax_db_bin)
 AC_SUBST(VER_INFO_BIN, $with_ver_info_bin)
 
 curr_dir=`pwd`
-cd $srcdir/InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders
-ln -sf ../../../../OSAgnostic/OSInterface/OSAL/Primitives/wimax_osal_types.h wimax_osal_types.h
-ln -sf ../../OSAL/Primitives/wimax_osal_basictypes.h wimax_osal_basictypes.h
-ln -sf ../../OSAL/Primitives/wimax_osal_linux_types.h wimax_osal_linux_types.h
-ln -sf ../../OSAL/Primitives/wimax_consts.h wimax_consts.h
-ln -sf ../../OSAL/Primitives/windows_error.h windows_error.h
-ln -sf ../../OSAL/Primitives/wimax_osal_error.h wimax_osal_error.h
+mkdir -p InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders
+cd InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders
+ln -sf $ac_abs_confdir/InfraStack/OSAgnostic/OSInterface/OSAL/Primitives/wimax_osal_types.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Primitives/wimax_osal_basictypes.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Primitives/wimax_osal_linux_types.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Primitives/wimax_consts.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Primitives/windows_error.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Primitives/wimax_osal_error.h
+ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Services/wimax_osal_win_config_controller_defines.h
 cd $curr_dir
 
 AC_CONFIG_FILES([

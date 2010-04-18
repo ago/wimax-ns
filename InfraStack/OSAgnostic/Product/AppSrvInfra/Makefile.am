@@ -16,8 +16,10 @@ wimaxd_SOURCES = \
 		$(srcdir)/L5Dispatcher.c \
 		$(srcdir)/../../Common/L5Common/L5CommonUtils.c \
 		$(srcdir)/KDapiAdapter.c \
+		$(srcdir)/SVstatus.h \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c \
+		$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForLinuxNlsock.h \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c \
@@ -35,7 +37,9 @@ wimaxd_SOURCES = \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.h 
 
 EXTRA_DIST =	$(srcdir)/i2400m.conf \
-		$(srcdir)/iwmxsdk.rules.in
+		$(srcdir)/iwmxsdk.rules.in \
+		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in \
+		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh
 
 noinst_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml \
 		$(top_srcdir)/$(VER_INFO_BIN_FILE_SRC)

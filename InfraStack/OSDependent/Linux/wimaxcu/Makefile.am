@@ -14,7 +14,8 @@ wimaxcu_SOURCES = 	$(srcdir)/wimaxcu_main.c \
 			wimaxcu_defs.h \
 			wimaxcu_util.h 
 
-wimaxcu_CFLAGS = 	-I "$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders/"  
+wimaxcu_CFLAGS = 	-I "$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders/" \
+		 	-I "$(top_builddir)/InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders/"  
 
 
 #			-I "$(top_srcdir)/InfraStack/OSDependent/Linux/OSAL/Primitives/" 

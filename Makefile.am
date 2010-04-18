@@ -15,3 +15,5 @@ SUBDIRS = \
 
 man_MANS = $(srcdir)/InfraStack/OSDependent/Linux/manpage/wimaxcu.1 \
 	   $(srcdir)/InfraStack/OSDependent/Linux/manpage/wimaxd.1
+
+EXTRA_DIST = $(man_MANS)

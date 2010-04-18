@@ -1,7 +1,12 @@
 noinst_LTLIBRARIES = libMocMsgProxy.la
 
 
-libMocMsgProxy_la_SOURCES = $(srcdir)/MocMsgProxy.c 
+libMocMsgProxy_la_SOURCES = $(srcdir)/MocMsgProxy.c \
+	$(srcdir)/MocMsgProxy.h \
+	$(srcdir)/MocMsgProxyIF.h \
+	$(srcdir)/MOC_Types.h \
+	$(srcdir)/MOC_Utils.h \
+	$(srcdir)/Osal_TaskTypes.h
 
 libMocMsgProxy_la_CFLAGS = \
 			-I "$(srcdir)/../DnDWrapper" \

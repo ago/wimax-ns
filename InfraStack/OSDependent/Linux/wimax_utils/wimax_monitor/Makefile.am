@@ -3,7 +3,8 @@ bin_PROGRAMS = wimax_monitor
 
 wimax_monitor_SOURCES = \
 	wimax_monitor.c \
-	wimax_monitor_utils.c
+	wimax_monitor_utils.c \
+	wimax_monitor_utils.h
 
 wimax_monitor_CFLAGS = \
 	-I "$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/XmlParser" \

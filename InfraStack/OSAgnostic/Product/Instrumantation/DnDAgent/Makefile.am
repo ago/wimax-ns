@@ -9,7 +9,11 @@ libDnDAgent_la_SOURCES = \
 			 $(srcdir)/DnDUtils.c \
 			 $(srcdir)/L4DnDHandler.c \
 			 $(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.c \
+			 $(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.h \
+			 $(srcdir)/../DnDWrapper/wmxSDK_DnD_Cmn.h \
+			 $(srcdir)/../DnDWrapper/wmxSDK_DnD.h \
 			 $(srcdir)/RemoveExcessFiles.c \
+			 $(srcdir)/RemoveExcessFiles.h \
 			 $(srcdir)/DnDAgent.h \
 			 $(srcdir)/DnDUtils.h \
 			 $(srcdir)/DnDAgent_Internal.h \

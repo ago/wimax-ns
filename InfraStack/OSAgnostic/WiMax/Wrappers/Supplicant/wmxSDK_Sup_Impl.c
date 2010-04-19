@@ -52,7 +52,11 @@ typedef unsigned char u8;
 
 /* the supplicant calls procedures in this file, 
 so we use symlink to actual supplicant tls.h */
+#ifndef WPA_OPEN_SOURCE
 #include "tls.h"
+#else
+#include "tls-wpa.h"
+#endif
 
 extern void	(*wpa_logproc_ptr)(int level, char *fmt, ...);
 static void __keep_silence(void) {}
@@ -68,9 +72,11 @@ static void __keep_silence(void) {}
 
 #endif
 
+#ifndef WPA_OPEN_SOURCE
 /* temporary, remove*/
 tls_functions_table_t *HardwareTlsImplementation = &Arm1_tls_functions_table;
 tls_functions_table_t *SoftwareTlsImplementation = NULL;
+#endif
 
 //************************************************
 // Function declarations
@@ -531,6 +537,9 @@ wmx_Status_t wmx_SetEapKey ( wmx_EapKeyLength_t eapKeyLen, wmx_pEapKey_t pEapKey
 	{
 		setEapKey.EapKeyValid.value = FALSE;
 	}
+#ifdef WPA_OPEN_SOURCE
+	setEapKey.EapKeyValid.value = 3;
+#endif
 
 	send_st = wmx_SendL4Command( &setEapKey, SetEapKey_Funcs, *pFuncs, l5ConnID, &driver_st );
 	if( send_st != WMX_ST_OK )
@@ -1083,6 +1092,7 @@ int CreateSupMsg(UINT32 opCode, UINT32 bufferLength, char *buffer, char **msg)
 	return size;
 }
 
+#ifndef WPA_OPEN_SOURCE
 void *wmx_GetTlsFunctionTable(int param)
 {
 	void *ft = NULL;
@@ -1100,6 +1110,7 @@ void *wmx_GetTlsFunctionTable(int param)
 	}
 	return ft;
 }
+#endif //WPA_OPEN_SOURCE
 
 #pragma warning (disable:4100)
 
@@ -1233,6 +1244,9 @@ int tls_connection_prf(void *tls_ctx, struct tls_connection *conn, const char *l
 {
 	tTLSOperationRequest r;
 	wmx_Status_t res;
+#ifdef WPA_OPEN_SOURCE
+	out_len = 0x40;
+#endif
 	size_t in_len = OSAL_strnlen(label, MAX_STRING_VALIDATE) + 1;
 	res = SendTLSRequest(&r, ETLSOP_PRF, tls_ctx, conn, server_random_first, (UINT32)out_len, 
 		(const UINT8 *)label, (UINT32)in_len);

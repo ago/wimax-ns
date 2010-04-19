@@ -136,6 +136,32 @@ fi
 AC_SUBST(WIMAX_DB_BIN, $with_wimax_db_bin)
 AC_SUBST(VER_INFO_BIN, $with_ver_info_bin)
 
+AC_ARG_ENABLE(sup-ds, 
+            AC_HELP_STRING([--enable-sup-ds],
+			   [Enable usage of the DS binary
+                            supplicant (disabled by default)]),
+            [], [enable_sup_ds=no])         
+
+with_sup_wpa=/usr
+AC_ARG_WITH(sup-wpa, 
+            AC_HELP_STRING([--with-sup-wpa],
+			   [Specify prefix where the WPA supplicant
+                            can be found. USE ABSOLUTE PATHS.]),
+            [], [])
+
+if test x$enable_sup_ds = xyes
+then
+	AC_MSG_RESULT([supplicant: configured DS binary supplicant])
+        enable_sup_wpa=no
+else
+        enable_sup_wpa=yes
+	AC_MSG_RESULT([supplicant: configured WPA open source supplicant from $with_sup_wpa])
+        AC_MSG_ERROR([FIXME: not finished, need to detect the supplicant library])
+fi
+AC_SUBST(WPA_SUP_PREFIX, $with_sup_wpa)
+AM_CONDITIONAL(WPA_SUP_ENABLE, test x$enable_sup_wpa = xyes)
+
+
 curr_dir=`pwd`
 mkdir -p InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders
 cd InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders

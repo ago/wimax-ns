@@ -45,6 +45,119 @@
 #include "wimax_osal_crypt_services.h"		
 #include "wimax_osal_string.h"
 
+#if defined(WPA_OPEN_SOURCE)
+//open source supplicant include files
+#include "includes.h"
+#include <eap_peer/common.h>
+#include <eap_peer/eap.h>
+#include <eap_peer/eap_config.h>
+#include "wpabuf.h"
+#include "tls-wpa.h"
+#include "dlfcn.h"
+//////////////////////////////////////
+// wpa_supplicant open source structures
+struct eap_peer_ctx {
+	Boolean eapSuccess;
+	Boolean eapRestart;
+	Boolean eapFail;
+	Boolean eapResp;
+	Boolean eapNoResp;
+	Boolean eapReq;
+	Boolean portEnabled;
+	Boolean altAccept; /* for EAP */
+	Boolean altReject; /* for EAP */
+
+	struct wpabuf *eapReqData; /* for EAP */
+
+	unsigned int idleWhile; /* for EAP state machine */
+
+	struct eap_peer_config eap_config;
+	struct eap_sm *eap;
+
+	// msk key length and buffer size
+	size_t	 MskKeyActualLen;
+	UINT8    MskKey[MSK_SIZE];
+
+	Boolean bInited; // for 
+};
+
+// open source peer structure instance
+static struct eap_peer_ctx eap_ctx;
+static struct eap_config eap_conf;
+static struct eapol_callbacks eap_cb;
+BOOL SupplicantLoaded = FALSE;
+BOOL bMethodSet = FALSE;
+ 
+//open source function defines
+wmx_Status_t DelayLoadSupplicant();
+void Opensource_SupAgent_SendEapResponse(const u8 *data, size_t data_len);
+
+/************************************************************************
+***********************	   Loading libeap.so wpa_supplicant	*********
+*************************************************************************/
+
+// helper functions
+typedef struct wpabuf * (*wpabuf_alloc_copy_ptr) (const void *data, size_t len);
+typedef void (*wpabuf_free_ptr) (struct wpabuf *buf);
+typedef void (*wpa_hexdump_ptr) (int level, const char *title, const u8 *buf, size_t len);
+
+// eap methods
+typedef int (*eap_key_available_ptr) (struct eap_sm *sm);
+typedef const u8 * (*eap_get_eapKeyData_ptr) (struct eap_sm *sm, size_t *len);
+typedef struct wpabuf * (*eap_get_eapRespData_ptr) (struct eap_sm *sm);
+typedef struct eap_eapol_interface * (*eap_get_interface_ptr) (struct eap_sm *sm);
+
+// peer functions
+typedef int (*eap_peer_register_methods_ptr) (void);
+typedef struct eap_sm * (*eap_peer_sm_init_ptr) (void *eapol_ctx,
+				 struct eapol_callbacks *eapol_cb,
+				 void *msg_ctx, struct eap_config *conf);
+typedef int (*eap_peer_sm_step_ptr) (struct eap_sm *sm);
+typedef void (*eap_peer_sm_deinit_ptr) (struct eap_sm *sm);
+typedef void (*eap_peer_unregister_methods_ptr) (void);
+typedef int (*eap_peer_set_method_ptr) (int);
+
+//tls functions
+typedef void* (*tls_init_ptr) (const struct tls_config *conf);
+typedef int (*tls_global_set_params_ptr) (void *tls_ctx, const struct tls_connection_params *params);
+typedef int (*tls_global_set_verify_ptr) (void *tls_ctx, int check_crl);
+typedef void (*tls_deinit_ptr) (void *tls_ctx);
+typedef int (*tls_config_use_external_ptr) (const struct tls_functions_table_t *ft, const char *name_if_internal);
+typedef void			(*WpaLogprocPtr)(int level, char *fmt, ...);
+
+// helper functions
+wpabuf_alloc_copy_ptr 	wpabuf_alloc_copy_func 	= NULL;
+wpabuf_free_ptr 	wpabuf_free_func	= NULL;
+wpa_hexdump_ptr 	wpa_hexdump_func	= NULL;
+
+// eap methods
+eap_key_available_ptr 	eap_key_available_func	= NULL;
+eap_get_eapKeyData_ptr 	eap_get_eapKeyData_func	= NULL;
+eap_get_eapRespData_ptr eap_get_eapRespData_func= NULL;
+eap_get_interface_ptr 	eap_get_interface_func	= NULL;
+
+// peer functions
+eap_peer_register_methods_ptr	eap_peer_register_methods_func	= NULL;
+eap_peer_sm_init_ptr		eap_peer_sm_init_func		= NULL;
+eap_peer_sm_step_ptr		eap_peer_sm_step_func		= NULL;
+eap_peer_sm_deinit_ptr		eap_peer_sm_deinit_func		= NULL;
+eap_peer_unregister_methods_ptr	eap_peer_unregister_methods_func= NULL;
+
+eap_peer_set_method_ptr eap_peer_set_method_func=NULL;
+
+
+//tls functions
+tls_init_ptr			tls_init_func			= NULL;
+tls_global_set_params_ptr	tls_global_set_params_func	= NULL;
+tls_global_set_verify_ptr	tls_global_set_verify_func	= NULL;
+tls_deinit_ptr			tls_deinit_func			= NULL;
+tls_config_use_external_ptr	tls_config_use_external_func	= NULL;
+
+// print function
+WpaLogprocPtr					wpa_logproc_ptr  = NULL;
+#else
+
+
 /********************************************************************************
 ***********************											*****************
 ***********************	   Loading Device-Scape DLL				*****************
@@ -112,19 +225,23 @@ EapSmGetBEKFuncPtr				swc_get_BEK_ptr;
 /*************************
 *	     Globals         *
 **************************/
-OSAL_dynlib_t	g_DSlib = NULL;
+
 SupplicantData g_SuppData;
 SupplicantData g_SuppData1; //[findme][amirs] buffer for 64bit
 
-SupplicantConfig g_SuppConfig;
 SupplicantConfig g_SuppConfig1; //[findme][amirs] buffer for 64bit
+#endif
+SupplicantConfig g_SuppConfig;
+
+OSAL_dynlib_t	g_DSlib = NULL;
 UINT8		   g_TargetBuf[L4_MSG_MAX_LENGTH]; // TODO: define the correct const
 BOOL		   smRunRequired;
 BOOL		   smInitRequired;
 static List *indicatorSubscribersList = NULL;
 
+#if !defined(WPA_OPEN_SOURCE)
 EapSmInitFuncPtr				aaaamirswc_eap_sm_init_ptr; //[findme][amirs] buffer for 64bit
-
+#endif
 tUtilityFunctions *pUtils;
 /*************************
 *	     DEFINES         *
@@ -139,6 +256,7 @@ tUtilityFunctions *pUtils;
 ******************************************/
 wmx_Status_t InitSupplicantLibrary(VOID);
 
+#if !defined(WPA_OPEN_SOURCE)
 Boolean EapGetBool(VOID *ctx, enum eap_bool_var var);
 void EapSetBool(void *ctx, enum eap_bool_var  var, Boolean val);
 int EapGetInt(VOID *ctx, enum eap_int_var  var);
@@ -154,9 +272,11 @@ void SupAgent_CondEapSMRun();
 
 eSuppRetStatus EapSMRun();
 wmx_Status_t CondEapSMInit();
+
 void Sup_PrintTrace(char *sourceStr, char *caption, char *prefix);
 void wmxNds_SupOpCodeToStr(SUP_AGENT_CRED_OPCODE supOpCode, char *str, int strLength);
 void DS_EapRestart(VOID);
+#endif
 /////////////////////
 
 
@@ -207,7 +327,141 @@ void PrintBuff(UINT8* buf, UINT32 len)
 		printf("\n");
 	}
 }*/
+#if defined(WPA_OPEN_SOURCE)
+// eap_eample source code
+static struct eap_peer_config * peer_get_config(void *ctx)
+{
+	struct eap_peer_ctx *peer = ctx;
+	return &peer->eap_config;
+}
 
+
+static Boolean peer_get_bool(void *ctx, enum eapol_bool_var variable)
+{
+	struct eap_peer_ctx *peer = ctx;
+	if (peer == NULL)
+		return FALSE;
+	switch (variable) {
+	case EAPOL_eapSuccess:
+		return peer->eapSuccess;
+	case EAPOL_eapRestart:
+		return peer->eapRestart;
+	case EAPOL_eapFail:
+		return peer->eapFail;
+	case EAPOL_eapResp:
+		return peer->eapResp;
+	case EAPOL_eapNoResp:
+		return peer->eapNoResp;
+	case EAPOL_eapReq:
+		return peer->eapReq;
+	case EAPOL_portEnabled:
+		return peer->portEnabled;
+	case EAPOL_altAccept:
+		return peer->altAccept;
+	case EAPOL_altReject:
+		return peer->altReject;
+	}
+	return FALSE;
+}
+
+
+static void peer_set_bool(void *ctx, enum eapol_bool_var variable,
+			  Boolean value)
+{
+	struct eap_peer_ctx *peer = ctx;
+	if (peer == NULL)
+		return;
+	switch (variable) {
+	case EAPOL_eapSuccess:
+		peer->eapSuccess = value;
+		// send the eap success message to driver
+		wmx_SetEapSuccess();
+		break;
+	case EAPOL_eapRestart:
+		peer->eapRestart = value;
+		break;
+	case EAPOL_eapFail:
+		peer->eapFail = value;
+		wmx_SetEapFail(); // send EAP FAIL to the device
+		break;
+	case EAPOL_eapResp:
+		peer->eapResp = value;
+		break;
+	case EAPOL_eapNoResp:
+		peer->eapNoResp = value;
+		break;
+	case EAPOL_eapReq:
+		peer->eapReq = value;
+		break;
+	case EAPOL_portEnabled:
+		peer->portEnabled = value;
+		break;
+	case EAPOL_altAccept:
+		peer->altAccept = value;
+		break;
+	case EAPOL_altReject:
+		peer->altReject = value;
+		break;
+	}
+}
+
+
+static unsigned int peer_get_int(void *ctx, enum eapol_int_var variable)
+{
+	struct eap_peer_ctx *peer = ctx;
+	if (peer == NULL)
+		return 0;
+	switch (variable) {
+	case EAPOL_idleWhile:
+		return peer->idleWhile;
+	}
+	return 0;
+}
+
+
+static void peer_set_int(void *ctx, enum eapol_int_var variable,
+			 unsigned int value)
+{
+	struct eap_peer_ctx *peer = ctx;
+	if (peer == NULL)
+		return;
+	switch (variable) {
+	case EAPOL_idleWhile:
+		peer->idleWhile = value;
+		break;
+	}
+}
+
+
+static struct wpabuf * peer_get_eapReqData(void *ctx)
+{
+	struct eap_peer_ctx *peer = ctx;
+	if (peer == NULL || peer->eapReqData == NULL)
+		return NULL;
+
+	return peer->eapReqData;
+}
+
+
+static void peer_set_config_blob(void *ctx, struct wpa_config_blob *blob)
+{
+	printf("TODO: %s\n", __func__);
+}
+
+
+static const struct wpa_config_blob *
+peer_get_config_blob(void *ctx, const char *name)
+{
+	printf("TODO: %s\n", __func__);
+	return NULL;
+}
+
+
+static void peer_notify_pending(void *ctx)
+{
+	printf("TODO: %s\n", __func__);
+}
+#endif
 
 void FinalizeSuppConfig()
 {
@@ -224,7 +478,12 @@ void FinalizeSuppConfig()
 	FreeIfAllocated(g_SuppConfig.privatekeypasswd2);
 	FreeIfAllocated(g_SuppConfig.simreader);
 	FreeIfAllocated(g_SuppConfig.simpin);		
-	FreeIfAllocated(g_SuppConfig.nai);	
+	FreeIfAllocated(g_SuppConfig.nai);
+	if(g_DSlib != NULL)
+	{
+		ResetSupplicantLibrary();
+	}
+
 }
 
 // Initialize the supplicant .dll by registering the callbacks
@@ -240,6 +499,36 @@ wmx_Status_t InitSupplicantLibrary(VOID)
 	smRunRequired = FALSE;
 	smInitRequired = TRUE;
 
+#if defined(WPA_OPEN_SOURCE)
+	memset(&eap_ctx, 0, sizeof(eap_ctx));
+
+	eap_ctx.eap_config.identity = (u8 *) os_strdup("user");
+	eap_ctx.eap_config.identity_len = 4;
+	eap_ctx.eap_config.password = (u8 *) os_strdup("password");
+	eap_ctx.eap_config.password_len = 8;
+	eap_ctx.eap_config.ca_cert = (u8 *) os_strdup("ca.pem");
+	eap_ctx.eap_config.fragment_size = TLS_MAX_SIZE;
+
+	memset(&eap_cb, 0, sizeof(eap_cb));
+	eap_cb.get_config = peer_get_config;
+	eap_cb.get_bool = peer_get_bool;
+	eap_cb.set_bool = peer_set_bool;
+	eap_cb.get_int = peer_get_int;
+	eap_cb.set_int = peer_set_int;
+	eap_cb.get_eapReqData = peer_get_eapReqData;
+	eap_cb.set_config_blob = peer_set_config_blob;
+	eap_cb.get_config_blob = peer_get_config_blob;
+	eap_cb.notify_pending = peer_notify_pending;
+
+	memset(&eap_conf, 0, sizeof(eap_conf));
+	eap_ctx.eap = eap_peer_sm_init_func(&eap_ctx, &eap_cb, &eap_ctx, &eap_conf);
+	if (eap_ctx.eap == NULL)
+		return WMX_ST_FAIL;
+
+	/* Enable "port" to allow authentication */
+	eap_ctx.portEnabled = TRUE;
+	eap_ctx.bInited = TRUE;
+#else
 	// init DS data and config holders
 	memset(&g_SuppData, 0, sizeof(g_SuppData));
 	//memset(&g_SuppConfig, 0, sizeof(g_SuppConfig));
@@ -337,9 +626,63 @@ wmx_Status_t InitSupplicantLibrary(VOID)
 		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_ERR,"Supplicant: swc_config_alloc_ptr failed");
 		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: InitSupplicantLibrary (OUT)");
 		return WMX_ST_FAIL;
-	}	
+	}
+
+#endif //WPA_OPEN_SOURCE
+
+	return WMX_ST_OK;
 }
 
+#if defined(WPA_OPEN_SOURCE)
+
+int eap_sm_peer_step(void)
+{
+	int res;
+
+	if ( bMethodSet == FALSE)
+	{
+		
+		eap_peer_register_methods_func(); 	
+		bMethodSet = TRUE;
+	}
+
+	res = eap_peer_sm_step_func(eap_ctx.eap);
+
+	if (eap_ctx.eapResp) {
+		struct wpabuf *resp;
+		eap_ctx.eapResp = FALSE;
+		resp = eap_get_eapRespData_func(eap_ctx.eap);
+		if (resp) {
+			Opensource_SupAgent_SendEapResponse(wpabuf_head(resp),
+					      wpabuf_len(resp));
+			wpabuf_free_func(resp);
+		}
+	}
+
+	if (eap_ctx.eapSuccess) {
+		res = 0;
+		if (eap_key_available_func(eap_ctx.eap)) {
+			const u8 *key;
+			size_t key_len;
+			key = eap_get_eapKeyData_func(eap_ctx.eap, &key_len);
+			wpa_hexdump_func(MSG_DEBUG, "EAP keying material",
+				    key, key_len);
+			memcpy(eap_ctx.MskKey,key,key_len);
+			eap_ctx.MskKeyActualLen = key_len;
+		}
+	}
+
+	return res;
+}
+
+void eap_sm_peer_rx(const u8 *data, size_t data_len)
+{
+	/* Make received EAP message available to the EAP library */
+	eap_ctx.eapReq = TRUE;
+	wpabuf_free_func(eap_ctx.eapReqData);
+	eap_ctx.eapReqData = wpabuf_alloc_copy_func(data, data_len);
+}
+#else
 // for DEBUG
 VOID InitMethodAndPassword()
 {
@@ -780,10 +1123,12 @@ void DS_EapRestart(VOID)
 	g_SuppData.EapSmVars.portEnabled = TRUE;
 
 }
+#endif
 
 void ResetSupplicantLibrary()
 {
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: Reset library - start");
+#if !defined(WPA_OPEN_SOURCE)
 	if (g_SuppData.sc != NULL)
 	{
 		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: Reset library - erasing DS context");
@@ -794,6 +1139,22 @@ void ResetSupplicantLibrary()
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: Reset library - erasing last eap request data");
 	FreeIfAllocated(g_SuppData.EapSmVars.eapReqData);
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: Reset library - end");
+#else
+	if( bMethodSet == TRUE ){	
+		eap_peer_sm_deinit_func(eap_ctx.eap);
+		eap_peer_unregister_methods_func();
+		wpabuf_free_func(eap_ctx.eapReqData);
+	
+		FreeIfAllocated(eap_ctx.eap_config.identity);
+		FreeIfAllocated(eap_ctx.eap_config.anonymous_identity);
+		FreeIfAllocated(eap_ctx.eap_config.password);
+		FreeIfAllocated(eap_ctx.eap_config.ca_cert);
+		FreeIfAllocated(eap_ctx.eap_config.client_cert);
+		FreeIfAllocated(eap_ctx.eap_config.private_key);
+		FreeIfAllocated(eap_ctx.eap_config.private_key_passwd);
+		bMethodSet = FALSE;
+	}
+#endif
 }
 /*******************************************/
 
@@ -806,6 +1167,9 @@ void FinalizeSupplicantLibrary()
 		g_DSlib = NULL;
 	}	
 	FinalizeSuppConfig();
+#if defined(WPA_OPEN_SOURCE)
+		SupplicantLoaded = FALSE;
+#endif //WPA_OPEN_SOURCE
 }
 
 wmx_Status_t LoadSupplicantLibrary()
@@ -825,7 +1189,7 @@ wmx_Status_t LoadSupplicantLibrary()
 		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_ERR,"Supplicant: %s", str);
 		return WMX_ST_CONFIG_ERROR;
 	}
-
+#if !defined(WPA_OPEN_SOURCE)
 	swc_eap_sm_init_ptr = (EapSmInitFuncPtr)OSAL_find_symbol(g_DSlib,"swc_eap_sm_init");
 	swc_set_eap_method_ptr = (EapSmSetEapMethodFuncPtr)OSAL_find_symbol(g_DSlib,"swc_set_eap_method");
 	swc_set_phase2_method_ptr = (EapSmSetEapMethodFuncPtr)OSAL_find_symbol(g_DSlib,"swc_set_phase2_method");
@@ -857,9 +1221,40 @@ wmx_Status_t LoadSupplicantLibrary()
 	swc_set_tls_function_table_ptr = (EapSetTlsFunctionTable)OSAL_find_symbol(g_DSlib, "swc_config_use_external_tls");
 swc_get_BEK_ptr = (EapSmGetBEKFuncPtr)OSAL_find_symbol(g_DSlib, "swc_eap_get_BEK_data");
 aaaamirswc_eap_sm_init_ptr =swc_eap_sm_init_ptr;  //[findme][amirs] buffer for 64bit
+#else
+// helper functions
+	wpabuf_alloc_copy_func 	= (wpabuf_alloc_copy_ptr)OSAL_find_symbol(g_DSlib, "wpabuf_alloc_copy");
+	wpabuf_free_func 	= (wpabuf_free_ptr)OSAL_find_symbol(g_DSlib, "wpabuf_free");
+	wpa_hexdump_func	= (wpa_hexdump_ptr)OSAL_find_symbol(g_DSlib, "wpa_hexdump");
+
+// eap methods
+	eap_key_available_func 	= (eap_key_available_ptr)OSAL_find_symbol(g_DSlib, "eap_key_available");
+	eap_get_eapKeyData_func = (eap_get_eapKeyData_ptr)OSAL_find_symbol(g_DSlib, "eap_get_eapKeyData");
+	eap_get_eapRespData_func= (eap_get_eapRespData_ptr)OSAL_find_symbol(g_DSlib, "eap_get_eapRespData");
+	eap_get_interface_func	= (eap_get_interface_ptr)OSAL_find_symbol(g_DSlib, "eap_get_interface");
+
+// peer functions
+	eap_peer_register_methods_func 	= (eap_peer_register_methods_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_register_methods");
+	eap_peer_sm_init_func 		= (eap_peer_sm_init_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_sm_init");
+	eap_peer_sm_step_func		= (eap_peer_sm_step_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_sm_step");
+	eap_peer_sm_deinit_func		= (eap_peer_sm_deinit_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_sm_deinit");
+	eap_peer_unregister_methods_func= (eap_peer_unregister_methods_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_unregister_methods");
+
+	eap_peer_set_method_func = (eap_peer_set_method_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_set_method");
+
+//tls functions
+	tls_init_func 			= (tls_init_ptr)OSAL_find_symbol(g_DSlib, "tls_init");
+	tls_global_set_params_func 	= (tls_global_set_params_ptr)OSAL_find_symbol(g_DSlib, "tls_global_set_params");
+	tls_global_set_verify_func	= (tls_global_set_verify_ptr)OSAL_find_symbol(g_DSlib, "tls_global_set_verify");
+	tls_deinit_func			= (tls_deinit_ptr)OSAL_find_symbol(g_DSlib, "tls_deinit");
+	tls_config_use_external_func	= (tls_config_use_external_ptr)OSAL_find_symbol(g_DSlib, "tls_config_use_external");
+// print fucntion
+	wpa_logproc_ptr = (WpaLogprocPtr)OSAL_find_symbol(g_DSlib, "wpa_printf");
+#endif
 	return WMX_ST_OK;
 }
 
+#if !defined(WPA_OPEN_SOURCE)
 void SupAgent_SendEapResponse()
 {
 	UINT8 targetBuffer[L4_MSG_MAX_LENGTH];
@@ -870,6 +1265,13 @@ void SupAgent_SendEapResponse()
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: EAP_RESP_DATA was sent to Driver. Buffer length: %d", g_SuppData.RespBufferSize);
 	wmx_CmdSendEapResponse(g_SuppData.RespBufferSize, (wmx_pEapMessage_t)targetBuffer);
 }
+#endif 
+
+void Opensource_SupAgent_SendEapResponse(const u8 *data, size_t data_len)
+{
+	OSAL_MyPrintf("Sending EapResponse. Data size: %d\n", data_len);
+	wmx_CmdSendEapResponse(data_len, (wmx_pEapMessage_t) data);
+}
 //*******************************************
 // Used to receive an EAP request, pass it
 // to DS and send an EapResponse if required
@@ -879,6 +1281,7 @@ void WMX_EXT_CALL_CONV SupAgent_EapRequestAvailable( wmx_EapMsgLength_t	eapMsgLe
 	int rc;
 
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: EAP request available (size: %d)", eapMsgLen);
+#if !defined(WPA_OPEN_SOURCE)
 	if (!g_SuppConfig.isEnabled)
 	{
 		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_WARNING,"Supplicant: EAP request available, Supplicant disabled. Request discarded");
@@ -927,7 +1330,24 @@ void WMX_EXT_CALL_CONV SupAgent_EapRequestAvailable( wmx_EapMsgLength_t	eapMsgLe
 	{
 		SupAgent_SendEapResponse();
 	}
+#else
+	if ( SupplicantLoaded == FALSE )
+	{
+		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_WARNING, ("Supplicant library is not loaded."));
+		return;
+	}
+	eap_sm_peer_rx((const u8*)(pEapMsg) , eapMsgLen);
+	rc=eap_sm_peer_step();
 
+	if (rc == e_SUPP_RESPONSE_AVAILABLE)
+	{
+		//::todo
+	}
+	else
+	{
+		//::todo
+	}
+#endif
 }
 
 //*******************************************
@@ -937,6 +1357,7 @@ void WMX_EXT_CALL_CONV SupAgent_EapRequestAvailable( wmx_EapMsgLength_t	eapMsgLe
 void WMX_EXT_CALL_CONV SupAgent_AlternativeEapSuccess()
 {
 	int rc;
+#if !defined(WPA_OPEN_SOURCE)
 	rc = CondEapSMInit();
 	if (rc != WMX_ST_OK) // sm init error
 	{
@@ -944,7 +1365,11 @@ void WMX_EXT_CALL_CONV SupAgent_AlternativeEapSuccess()
 	}
 	g_SuppData.EapSmVars.altAccept=TRUE;
 	EapSMRun();
+	
 	g_SuppConfig.isValid = FALSE;
+#else
+	SupAgent_ResetSupplicant();
+#endif
 }
 
 //*******************************************
@@ -956,10 +1381,15 @@ void WMX_EXT_CALL_CONV SupAgent_EapKeyRequest()
 	//TODO
 	UINT8 targetBuffer[L4_MSG_MAX_LENGTH];
 
+#if !defined(WPA_OPEN_SOURCE)
+
 	memcpy((void*)targetBuffer, g_SuppData.MskKey, g_SuppData.MskKeyActualLen);
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: EAP_SET_KEY was sent to Driver. Buffer length: %d", g_SuppData.MskKeyActualLen);
 
 	wmx_SetEapKey (g_SuppData.MskKeyActualLen, (wmx_pEapKey_t)targetBuffer);
+#else
+	wmx_SetEapKey(eap_ctx.MskKeyActualLen, (wmx_pEapKey_t) eap_ctx.MskKey);
+#endif
 }
 
 //*******************************************//
@@ -1148,6 +1578,7 @@ INT32 SupAgent_ExtractInt(void *pvSentBuffer)
 	return *(INT32*)msg->buf;
 }
 
+#if !defined(WPA_OPEN_SOURCE)
 // Conditional sm run order
 void SupAgent_CondEapSMRun()
 {
@@ -1163,6 +1594,7 @@ void SupAgent_CondEapSMRun()
 		}
 	}
 }
+#endif
 
 
 //*******************************************
@@ -1196,11 +1628,14 @@ void  Supplicant_InternalHandler( UINT32 internalRequestID, void *buffer, UINT32
 {
 	pSUP_MESSAGE_HEADER msg = (pSUP_MESSAGE_HEADER)buffer;	
 	char prefix[MAX_SUP_STR_LEN] ="Assign configuration";
-	BOOL isValid = g_SuppConfig.isValid;
+
 
 	UNREFERENCED_PARAMETER(bufferLength);
 	UNREFERENCED_PARAMETER(internalRequestID);
-
+	
+#if !defined(WPA_OPEN_SOURCE)
+	BOOL isValid = g_SuppConfig.isValid;
+	
 	// by default - setting a value to the supplicant will cause a restart request.
 	// the only case where a restart is not required is if this message was illegal (see "default" section below)
 	g_SuppConfig.isValid = FALSE;
@@ -1325,6 +1760,110 @@ void  Supplicant_InternalHandler( UINT32 internalRequestID, void *buffer, UINT32
 			TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_ERR,"Supplicant: Unknown SET message received");
 			break;
 	}	
+#else
+	wmx_Status_t status 		= WMX_ST_OK;
+	int eapmethod;
+
+	if ( SupplicantLoaded == FALSE ) 
+	{
+		if ( (status=DelayLoadSupplicant()) != WMX_ST_OK)
+			return;
+		SupplicantLoaded = TRUE;
+	}
+
+	switch (msg->opcode)
+	{
+	case SUP_OPCODE_SET_IDENTITY:
+		FreeIfAllocated(g_SuppConfig.identity);
+		g_SuppConfig.identity = SupAgent_ExtractString(buffer);
+
+		FreeIfAllocated(eap_ctx.eap_config.identity);
+		eap_ctx.eap_config.identity = (u8*)SupAgent_ExtractString(buffer);
+		eap_ctx.eap_config.identity_len = os_strlen((const char*)eap_ctx.eap_config.identity);
+		Sup_PrintTrace((char *)eap_ctx.eap_config.identity, "Identity", prefix);
+		break;
+	case SUP_OPCODE_SET_ANONYMOUS_IDENTITY:
+		FreeIfAllocated(g_SuppConfig.anonidentity);
+		g_SuppConfig.anonidentity = SupAgent_ExtractString(buffer);	
+
+		FreeIfAllocated(eap_ctx.eap_config.anonymous_identity);
+		eap_ctx.eap_config.anonymous_identity = (u8*)SupAgent_ExtractString(buffer);
+		eap_ctx.eap_config.anonymous_identity_len =
+				os_strlen((const char*)eap_ctx.eap_config.anonymous_identity);
+		Sup_PrintTrace((char *)eap_ctx.eap_config.anonymous_identity, "OuterIdentity", prefix);
+		break;
+	case SUP_OPCODE_SET_PASSWORD:
+		FreeIfAllocated(g_SuppConfig.password);
+		g_SuppConfig.password = SupAgent_ExtractString(buffer);	
+
+		FreeIfAllocated(eap_ctx.eap_config.password);
+		eap_ctx.eap_config.password 	= (u8*)SupAgent_ExtractString(buffer);
+		eap_ctx.eap_config.password_len = os_strlen((const char*)eap_ctx.eap_config.password);
+		Sup_PrintTrace((char*)eap_ctx.eap_config.password, "Password", prefix);
+		break;
+	case SUP_OPCODE_SET_EAP_METHOD:
+		g_SuppConfig.eapmethod = SupAgent_ExtractUnsignedInt(buffer); 
+		
+		eapmethod = SupAgent_ExtractUnsignedInt(buffer);
+		eap_peer_set_method_func(eapmethod);
+		bMethodSet = TRUE;
+		break;
+	case SUP_OPCODE_SET_PHASE2_METHOD:
+		g_SuppConfig.phase2 = SupAgent_ExtractUnsignedInt(buffer);
+		eapmethod = SupAgent_ExtractUnsignedInt(buffer);
+		eap_peer_set_method_func(eapmethod);
+		break;
+	case SUP_OPCODE_SET_TLS_CA_CERT:
+		FreeIfAllocated(g_SuppConfig.cacert);
+		g_SuppConfig.cacert = SupAgent_ExtractString(buffer);
+
+		FreeIfAllocated(eap_ctx.eap_config.ca_cert);
+		eap_ctx.eap_config.ca_cert = (u8*)SupAgent_ExtractString(buffer);
+		break;
+	case SUP_OPCODE_SET_TLS_CA_CERT2:
+		break;
+	case SUP_OPCODE_SET_TLS_CLIENT_CERT:
+		FreeIfAllocated(g_SuppConfig.clientcert);
+		g_SuppConfig.clientcert = SupAgent_ExtractString(buffer);
+
+		FreeIfAllocated(eap_ctx.eap_config.client_cert);
+		eap_ctx.eap_config.client_cert = (u8*)SupAgent_ExtractString(buffer);
+		Sup_PrintTrace((char*)eap_ctx.eap_config.client_cert, "Client cert", prefix);
+		break;
+	case SUP_OPCODE_SET_TLS_CLIENT_CERT2:
+		break;
+	case SUP_OPCODE_SET_TLS_PRIVATE_KEY:
+		FreeIfAllocated(g_SuppConfig.privatekey);
+		g_SuppConfig.privatekey = SupAgent_ExtractString(buffer);
+
+		FreeIfAllocated(eap_ctx.eap_config.private_key);
+		eap_ctx.eap_config.private_key = (u8*)SupAgent_ExtractString(buffer);
+		Sup_PrintTrace((char*)eap_ctx.eap_config.private_key, "Private key", prefix);
+		break;
+	case SUP_OPCODE_SET_TLS_PRIVATE_KEY_PASSWD:
+		FreeIfAllocated(g_SuppConfig.privatekeypasswd);
+		g_SuppConfig.privatekeypasswd = SupAgent_ExtractString(buffer);
+
+		FreeIfAllocated(eap_ctx.eap_config.private_key_passwd);
+		eap_ctx.eap_config.private_key_passwd = (u8*)SupAgent_ExtractString(buffer);
+		Sup_PrintTrace((char*)eap_ctx.eap_config.private_key_passwd, "Private key password", prefix);
+		break;
+	case SUP_OPCODE_SET_TLS_PRIVATE_KEY2:
+		break;
+	case SUP_OPCODE_SET_TLS_PRIVATE_KEY_PASSWD2:
+		break;
+	case SUP_OPCODE_SET_PIN:
+		break;
+	case SUP_OPCODE_SET_PIN_MAX_SIZE:
+    	    break;
+	case SUP_OPCODE_SET_TLS_MAX_SIZE:
+		break;
+	default:
+		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_ERR, ("Unknown message of type SUP_OPCODE_SET arrived to MessageHandler"));
+		break;
+	}
+#endif
+
 }
 
 // AppSrv Agent Interface - MessagesHandler
@@ -1370,11 +1909,15 @@ void Supplicant_MessagesHandler(L5_CONNECTION Conn,
 			}
 			break;
 		case SUP_OPCODE_ENABLE:
+#if !defined(WPA_OPEN_SOURCE)
 			g_SuppConfig.isEnabled = TRUE;
+#endif
 			*pdwResponseMessageID = WMX_ST_OK;
 			break;
 		case SUP_OPCODE_DISABLE:
+#if !defined(WPA_OPEN_SOURCE)
 			g_SuppConfig.isEnabled = FALSE;
+#endif
 			*pdwResponseMessageID = WMX_ST_OK;
 			break;		
 		case SUP_OPCODE_SET:
@@ -1423,8 +1966,10 @@ void Supplicant_MessagesHandler(L5_CONNECTION Conn,
 			// Restart the supplicant with empty context to be assigned later on. (Will erase the supplicant context itself)
 			{
 				TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO, "Supplicant: SUP_OPCODE_RESET received");
+#if !defined(WPA_OPEN_SOURCE)
 				FinalizeSuppConfig();
 				SupAgent_ResetSupplicant();
+#endif
 				*pdwResponseMessageID = WMX_ST_OK;
 				break;
 			}
@@ -1447,6 +1992,7 @@ void Sup_PrintTrace(char *sourceStr, char *caption, char *prefix)
 
 void ReassignSupConfig()
 {
+#if !defined(WPA_OPEN_SOURCE)
 	char prefix[MAX_SUP_STR_LEN] ="Reassign configuration";
 
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_NOTICE,"Supplicant: Reassign configuration - start");
@@ -1515,12 +2061,64 @@ void ReassignSupConfig()
 		Sup_PrintTrace(g_SuppConfig.simpin,"PIN", prefix);		
 		swc_set_pin_ptr(g_SuppData.sc, g_SuppConfig.simpin);
 	}
-	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_NOTICE,"Supplicant: Reassign configuration - end");
-}
+#else
 
+	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_NOTICE,"Supplicant: Reassign configuration - start");
+	if (g_SuppConfig.identity)
+	{
+		FreeIfAllocated(eap_ctx.eap_config.identity);
+		eap_ctx.eap_config.identity = (u8*)SupAgent_ExtractString(g_SuppConfig.identity);
+		eap_ctx.eap_config.identity_len = os_strlen((const char*)eap_ctx.eap_config.identity);
+	}
+	if (g_SuppConfig.anonidentity)
+	{
+	
+		FreeIfAllocated(eap_ctx.eap_config.anonymous_identity);
+		eap_ctx.eap_config.anonymous_identity = (u8*)SupAgent_ExtractString(g_SuppConfig.anonidentity);
+		eap_ctx.eap_config.anonymous_identity_len =
+				os_strlen((const char*)eap_ctx.eap_config.anonymous_identity);
+	}
+	if (g_SuppConfig.password)
+	{
+
+		FreeIfAllocated(eap_ctx.eap_config.password);
+		eap_ctx.eap_config.password 	= (u8*)SupAgent_ExtractString(g_SuppConfig.password);
+		eap_ctx.eap_config.password_len = os_strlen((const char*)eap_ctx.eap_config.password);
+	}
+	if (g_SuppConfig.eapmethod)
+	{
+		eap_peer_set_method_func(g_SuppConfig.eapmethod);
+	}
+	if (g_SuppConfig.cacert)
+	{
+
+		FreeIfAllocated(eap_ctx.eap_config.ca_cert);
+		eap_ctx.eap_config.ca_cert = (u8*)SupAgent_ExtractString(g_SuppConfig.cacert);
+	
+	}
+	if (g_SuppConfig.clientcert)
+	{
+		FreeIfAllocated(eap_ctx.eap_config.client_cert);
+		eap_ctx.eap_config.client_cert = (u8*)SupAgent_ExtractString(g_SuppConfig.clientcert);
+	}
+	if (g_SuppConfig.privatekey)
+	{
+		FreeIfAllocated(eap_ctx.eap_config.private_key);
+		eap_ctx.eap_config.private_key = (u8*)SupAgent_ExtractString(g_SuppConfig.privatekey);
+	}
+	if (g_SuppConfig.privatekeypasswd)
+	{
+		FreeIfAllocated(eap_ctx.eap_config.private_key_passwd);
+		eap_ctx.eap_config.private_key_passwd = (u8*)SupAgent_ExtractString(g_SuppConfig.privatekeypasswd);
+	}
+
+	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_NOTICE,"Supplicant: Reassign configuration - end");
+#endif
+}
 
 void SupAgent_ResetSupplicant()
 {
+#if !defined(WPA_OPEN_SOURCE)
 	if (!g_SuppConfig.isEnabled)
 	{
 		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_WARNING,"Supplicant: Reset - Supplicant disabled. Request discarded");
@@ -1535,6 +2133,13 @@ void SupAgent_ResetSupplicant()
 	// Reassigning new TTLS Identity in TTLS case. Otherwise - Original TLS Identity will be assigned
 	//SupAgent_RefreshIdentity();
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: Reset - end");
+#else
+	if (SupplicantLoaded == TRUE ){
+	ResetSupplicantLibrary();
+	InitSupplicantLibrary();
+	ReassignSupConfig();
+	}
+#endif
 }
 
 void wmxNds_SupOpCodeToStr(SUP_AGENT_CRED_OPCODE supOpCode, char *str, int strLength)
@@ -1649,6 +2254,10 @@ EXTERN_C EXPORT APPSRV_INIT_ST SupplicantAgent_Initialize(tL5DispatcherFunctions
 	pUtils = UtilFn;
 	
 
+// to finding out the libeap.so or ds supplicant
+	char str[MAX_PATH];
+	L4Configurations_getSupplicantLibName(str);
+#if !defined(WPA_OPEN_SOURCE)
 	status = LoadSupplicantLibrary(); // Load DS Supplicant.dll
 	if (status != WMX_ST_OK)
 	{
@@ -1663,10 +2272,11 @@ EXTERN_C EXPORT APPSRV_INIT_ST SupplicantAgent_Initialize(tL5DispatcherFunctions
 		}
 		goto Finalize;
 	}
-
+#endif
 	OSAL_strcpy_s((char*)g_TargetBuf, L4_MSG_MAX_LENGTH, "This is sup test\n");
 
 	AllocIndicatorsList(&indicatorSubscribersList);
+#if !defined(WPA_OPEN_SOURCE)
 	memset(&g_SuppConfig, 0, sizeof(g_SuppConfig));
 	status = InitSupplicantLibrary(); // Init DS Supplicant.dll
 	if (status != WMX_ST_OK)
@@ -1677,7 +2287,7 @@ EXTERN_C EXPORT APPSRV_INIT_ST SupplicantAgent_Initialize(tL5DispatcherFunctions
 		initSt = INIT_FAIL;
 		goto Finalize;
 	}	
-
+#endif
 	// Init L5 connection and methods
 	/*
 	pFuncs = L5_DISPATCHER_GetServiceDispatcherFunctions();
@@ -1727,3 +2337,30 @@ Finalize:
 //*******************************************
 // AppSrv Agent Interface - end
 //*******************************************
+#if defined(WPA_OPEN_SOURCE)
+
+wmx_Status_t DelayLoadSupplicant()
+{
+	wmx_Status_t status = WMX_ST_OK;
+	status = LoadSupplicantLibrary();	// Load open source supplicant
+	if (status != WMX_ST_OK)
+	{
+		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_ERR, ("Can't load Supplicant library"));
+		return status;
+	}
+
+	status = InitSupplicantLibrary(); // Init the open source supplicant
+	if (status != WMX_ST_OK)
+	{
+		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_ERR, ("Can't init Supplicant library"));
+		FinalizeSupplicantLibrary();
+		return status;
+	}
+	
+
+	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_NOTICE, ("SupplicantAgent_Initialize Succeeded. Target ID=%d", L5_TARGET_SUPPLICANT));
+
+	return status;
+
+}
+#endif

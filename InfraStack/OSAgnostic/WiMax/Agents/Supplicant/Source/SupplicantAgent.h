@@ -44,7 +44,7 @@
 
 #include "Act.h"
 
-
+#if !defined(WPA_OPEN_SOURCE)
 // Devicescape's includes
 #include "includes.h"
 #include "common.h"
@@ -54,6 +54,8 @@
 #include "wpa_supplicant_i.h"
 #include "radius.h"
 #include "radius_client.h"
+
+#endif
 
 // Method types
 //typedef enum _tEAPmethod
@@ -82,8 +84,9 @@ typedef enum
 	e_SUPP_ERROR
 } eSuppRetStatus;
 
+#if !defined(WPA_OPEN_SOURCE)
 
-// DS I/F variables
+//#/ DS I/F variables
 typedef struct _EAP_SM_Variables 
 {
 	size_t eapReqData_len;
@@ -112,6 +115,8 @@ typedef struct
 	UINT8			 RespBuffer[RSP_MAX_SIZE];		
 } SupplicantData;
 
+#endif
+
 typedef struct  
 {
 	BOOL isEnabled;
@@ -133,6 +138,8 @@ typedef struct
 	char *simpin;		
 	char *nai;
 } SupplicantConfig;
+
+
 
 // AppSrv Agent Interface:
 void SupplicantAgent_Shutdown();

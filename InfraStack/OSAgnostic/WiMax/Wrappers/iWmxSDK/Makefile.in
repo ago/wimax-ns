@@ -180,6 +180,7 @@ USE_INST = @USE_INST@
 VERSION = @VERSION@
 VER_INFO_BIN = @VER_INFO_BIN@
 WIMAX_DB_BIN = @WIMAX_DB_BIN@
+WPA_SUP_PREFIX = @WPA_SUP_PREFIX@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@

@@ -789,6 +789,9 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+WPA_SUP_ENABLE_FALSE
+WPA_SUP_ENABLE_TRUE
+WPA_SUP_PREFIX
 VER_INFO_BIN
 WIMAX_DB_BIN
 BINDB_ENABLED_FALSE
@@ -923,6 +926,8 @@ enable_instrument
 enable_bindb
 with_wimax_db_bin
 with_ver_info_bin
+enable_sup_ds
+with_sup_wpa
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1577,6 +1582,8 @@ Optional Features:
   --enable-instrument     enable support for instrumentation
   --enable-bindb          enable support for binary databases (disabled by
                           default)
+  --enable-sup-ds         Enable usage of the DS binary supplicant (disabled
+                          by default)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -1601,6 +1608,8 @@ Optional Packages:
   --with-ver-info-bin     path to the pre-generated binary ver_info.bin file;
                           this is only used when --enable-bindb is specified.
                           USE ABSOLUTE PATHS.
+  --with-sup-wpa          Specify prefix where the WPA supplicant can be
+                          found. USE ABSOLUTE PATHS.
 
 Some influential environment variables:
   CC          C compiler command
@@ -4491,13 +4500,13 @@ if test "${lt_cv_nm_interface+set}" = set; then
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:4494: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:4503: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4497: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:4506: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4500: output\"" >&5)
+  (eval echo "\"\$as_me:4509: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -5703,7 +5712,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 5706 "configure"' > conftest.$ac_ext
+  echo '#line 5715 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -7556,11 +7565,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7559: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7568: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7563: \$? = $ac_status" >&5
+   echo "$as_me:7572: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7895,11 +7904,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7898: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7907: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7902: \$? = $ac_status" >&5
+   echo "$as_me:7911: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -8000,11 +8009,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8003: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8012: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:8007: \$? = $ac_status" >&5
+   echo "$as_me:8016: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -8055,11 +8064,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8058: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8067: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:8062: \$? = $ac_status" >&5
+   echo "$as_me:8071: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -10858,7 +10867,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 10861 "configure"
+#line 10870 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10954,7 +10963,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 10957 "configure"
+#line 10966 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -11754,6 +11763,47 @@ WIMAX_DB_BIN=$with_wimax_db_bin
 VER_INFO_BIN=$with_ver_info_bin
 
 
+# Check whether --enable-sup-ds was given.
+if test "${enable_sup_ds+set}" = set; then
+  enableval=$enable_sup_ds;
+else
+  enable_sup_ds=no
+fi
+
+
+with_sup_wpa=/usr
+
+# Check whether --with-sup-wpa was given.
+if test "${with_sup_wpa+set}" = set; then
+  withval=$with_sup_wpa;
+fi
+
+
+if test x$enable_sup_ds = xyes
+then
+	{ $as_echo "$as_me:$LINENO: result: supplicant: configured DS binary supplicant" >&5
+$as_echo "supplicant: configured DS binary supplicant" >&6; }
+        enable_sup_wpa=no
+else
+        enable_sup_wpa=yes
+	{ $as_echo "$as_me:$LINENO: result: supplicant: configured WPA open source supplicant from $with_sup_wpa" >&5
+$as_echo "supplicant: configured WPA open source supplicant from $with_sup_wpa" >&6; }
+        { { $as_echo "$as_me:$LINENO: error: FIXME: not finished, need to detect the supplicant library" >&5
+$as_echo "$as_me: error: FIXME: not finished, need to detect the supplicant library" >&2;}
+   { (exit 1); exit 1; }; }
+fi
+WPA_SUP_PREFIX=$with_sup_wpa
+
+ if test x$enable_sup_wpa = xyes; then
+  WPA_SUP_ENABLE_TRUE=
+  WPA_SUP_ENABLE_FALSE='#'
+else
+  WPA_SUP_ENABLE_TRUE='#'
+  WPA_SUP_ENABLE_FALSE=
+fi
+
+
+
 curr_dir=`pwd`
 mkdir -p InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders
 cd InfraStack/OSDependent/Linux/InfraStackModules/CommonAPIHeaders
@@ -11891,6 +11941,13 @@ if test -z "${BINDB_ENABLED_TRUE}" && test -z "${BINDB_ENABLED_FALSE}"; then
   { { $as_echo "$as_me:$LINENO: error: conditional \"BINDB_ENABLED\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
 $as_echo "$as_me: error: conditional \"BINDB_ENABLED\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${WPA_SUP_ENABLE_TRUE}" && test -z "${WPA_SUP_ENABLE_FALSE}"; then
+  { { $as_echo "$as_me:$LINENO: error: conditional \"WPA_SUP_ENABLE\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+$as_echo "$as_me: error: conditional \"WPA_SUP_ENABLE\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi

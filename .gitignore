@@ -1,4 +1,3 @@
-
 # Build products
 *.a
 *.la
@@ -24,6 +23,8 @@
 /stamp-h1
 /wns-version.h
 Makefile
+cscope.files
+cscope.out
 
 # Source tree management
 *~

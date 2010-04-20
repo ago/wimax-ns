@@ -178,6 +178,9 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
+LIBEAP0_CFLAGS = @LIBEAP0_CFLAGS@
+LIBEAP0_LIBS = @LIBEAP0_LIBS@
+LIBEAP0_PREFIX = @LIBEAP0_PREFIX@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -351,7 +354,7 @@ WPA_SUP_SOURCES = \
 
 WPA_SUP_CFLAGS = \
 	-D "WPA_OPEN_SOURCE" -D "USE_STANDARD_TLS_H_ONLY" \
-	-I "/usr/include/eap_peer"
+	$(LIBEAP0_CFLAGS)
 
 libSupplicantAgent_la_SOURCES = $(srcdir)/Source/SupplicantAgent.c \
 	$(top_srcdir)/InfraStack/OSAgnostic/WiMax/Wrappers/Supplicant/wmxSDK_Sup_Impl.c \

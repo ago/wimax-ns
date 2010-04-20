@@ -141,6 +141,9 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
+LIBEAP0_CFLAGS = @LIBEAP0_CFLAGS@
+LIBEAP0_LIBS = @LIBEAP0_LIBS@
+LIBEAP0_PREFIX = @LIBEAP0_PREFIX@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -287,6 +290,8 @@ VER_INFO_BIN_FILE_SRC = InfraStack/OSDependent/Linux/Ver_info.bin
 @BINDB_ENABLED_FALSE@VER_INFO_BIN_FILE = $(top_srcdir)/$(VER_INFO_BIN_FILE_SRC)
 @BINDB_ENABLED_TRUE@VER_INFO_BIN_FILE = @VER_INFO_BIN@
 git_version = $(shell cd $(top_srcdir) && git describe --abbrev=128 --always)
+@WPA_SUP_ENABLE_FALSE@sup_lib_path = $(libdir)/wimax/libwpa_wimax_supplicant.so
+@WPA_SUP_ENABLE_TRUE@sup_lib_path = @LIBEAP0_PREFIX@/lib/libeap.so.0
 
 # Driver option
 modprobedir = $(sysconfdir)/modprobe.d/
@@ -999,6 +1004,7 @@ config.xml: $(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in
 	sed \
 	-e "s|@@pkgdatadir@@|$(pkgdatadir)|g" \
 	-e "s|@@lib@@dir@@|$(libdir)|g" \
+	-e "s|@@sup_lib_path@@|$(sup_lib_path)|g" \
 	-e "s|@@use_inst@@|$(USE_INST)|g" \
 	-e "s|<DisableObfuscate>.*\<DisableObfuscate>|<DisableObfuscate>$(DISABLE_OBFUSCATE)</DisableObfuscate>|" \
 	$< > $@

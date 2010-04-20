@@ -4,7 +4,7 @@
 	<DriverMode>Driver</DriverMode>
 	<DriverOrDsim>Driver</DriverOrDsim>
 	<IPC>Sockets</IPC>
-	<SupplicantLibName>@@lib@@dir@@/libwpa_wimax_supplicant.so</SupplicantLibName>
+	<SupplicantLibName>@@sup_lib_path@@</SupplicantLibName>
 	<InterfaceName>wmx0</InterfaceName>
 	<DriverInterface>Nlsock</DriverInterface>
 	<dSimIpAddress>0.0.0.0</dSimIpAddress>

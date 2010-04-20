@@ -142,12 +142,20 @@ AC_ARG_ENABLE(sup-ds,
                             supplicant (disabled by default)]),
             [], [enable_sup_ds=no])         
 
-with_sup_wpa=/usr
 AC_ARG_WITH(sup-wpa, 
             AC_HELP_STRING([--with-sup-wpa],
 			   [Specify prefix where the WPA supplicant
                             can be found. USE ABSOLUTE PATHS.]),
-            [], [])
+            [
+                test -z "$with_sup_wpa" && with_sup_wpa=/usr
+                test x"$with_sup_wpa" = xyes && with_sup_wpa=/usr
+                enable_sup_wpa=yes
+                enable_sup_ds=no
+                export PKG_CONFIG_PATH="$with_sup_wpa:$with_sup_wpa/lib/pkgconfig:$PKG_CONFIG_PATH"
+            ], 
+            [
+                with_sup_wpa=/usr
+            ])
 
 if test x$enable_sup_ds = xyes
 then
@@ -155,8 +163,12 @@ then
         enable_sup_wpa=no
 else
         enable_sup_wpa=yes
-	AC_MSG_RESULT([supplicant: configured WPA open source supplicant from $with_sup_wpa])
-        AC_MSG_ERROR([FIXME: not finished, need to detect the supplicant library])
+        PKG_CHECK_MODULES(LIBEAP0, libeap0)
+        libeap0_prefix=`pkg-config libeap0 --variable=prefix`
+        AC_MSG_RESULT(Using EAP library from $libeap0_prefix)
+        AC_SUBST(LIBEAP0_CFLAGS)
+        AC_SUBST(LIBEAP0_LIBS)
+        AC_SUBST(LIBEAP0_PREFIX, $libeap0_prefix)
 fi
 AC_SUBST(WPA_SUP_PREFIX, $with_sup_wpa)
 AM_CONDITIONAL(WPA_SUP_ENABLE, test x$enable_sup_wpa = xyes)

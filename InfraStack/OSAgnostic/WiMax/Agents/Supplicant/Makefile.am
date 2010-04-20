@@ -83,7 +83,7 @@ WPA_SUP_SOURCES = \
 
 WPA_SUP_CFLAGS = \
 	-D "WPA_OPEN_SOURCE" -D "USE_STANDARD_TLS_H_ONLY" \
-	-I "/usr/include/eap_peer"
+	$(LIBEAP0_CFLAGS)
 
 
 libSupplicantAgent_la_SOURCES = $(srcdir)/Source/SupplicantAgent.c \

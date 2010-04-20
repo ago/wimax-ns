@@ -115,10 +115,17 @@ if ! BINDB_ENABLED
 	fi 
 endif
 
+if WPA_SUP_ENABLE
+sup_lib_path=@LIBEAP0_PREFIX@/lib/libeap.so.0
+else
+sup_lib_path=$(libdir)/wimax/libwpa_wimax_supplicant.so
+endif
+
 config.xml: $(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in
 	sed \
 	-e "s|@@pkgdatadir@@|$(pkgdatadir)|g" \
 	-e "s|@@lib@@dir@@|$(libdir)|g" \
+	-e "s|@@sup_lib_path@@|$(sup_lib_path)|g" \
 	-e "s|@@use_inst@@|$(USE_INST)|g" \
 	-e "s|<DisableObfuscate>.*\<DisableObfuscate>|<DisableObfuscate>$(DISABLE_OBFUSCATE)</DisableObfuscate>|" \
 	$< > $@

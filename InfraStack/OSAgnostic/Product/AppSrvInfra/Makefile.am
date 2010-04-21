@@ -49,7 +49,9 @@ pkgdata_DATA =  ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_cert.pem \
 		../Instrumantation/DnDAgent/DefaultTracesAndMonitors.xml \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh \
-		WiMAX_DB.bin WiMAX_Def.bin Ver_info.bin
+		Ver_info.bin
+
+pkglocalstate_DATA = WiMAX_DB.bin WiMAX_Def.bin
 
 DISTCLEANFILES = WiMAX_DB.bin WiMAX_Def.bin Ver_info.bin
 

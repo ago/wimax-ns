@@ -48,7 +48,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(configdir)" \
 	"$(DESTDIR)$(modprobedir)" "$(DESTDIR)$(pkgdatadir)" \
-	"$(DESTDIR)$(udevrulesdir)"
+	"$(DESTDIR)$(pkglocalstatedir)" "$(DESTDIR)$(udevrulesdir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_wimaxd_OBJECTS = wimaxd-Act.$(OBJEXT) wimaxd-L4MsgProxy.$(OBJEXT) \
 	wimaxd-L5SocketsDispatcher.$(OBJEXT) \
@@ -105,7 +105,7 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 DATA = $(config_DATA) $(modprobe_DATA) $(noinst_DATA) $(pkgdata_DATA) \
-	$(udevrules_DATA)
+	$(pkglocalstate_DATA) $(udevrules_DATA)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -277,8 +277,9 @@ pkgdata_DATA = ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_cert.pem \
 		../Instrumantation/DnDAgent/DefaultTracesAndMonitors.xml \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh \
-		WiMAX_DB.bin WiMAX_Def.bin Ver_info.bin
+		Ver_info.bin
 
+pkglocalstate_DATA = WiMAX_DB.bin WiMAX_Def.bin
 DISTCLEANFILES = WiMAX_DB.bin WiMAX_Def.bin Ver_info.bin
 configdir = $(sysconfdir)/$(PACKAGE)
 config_DATA = config.xml
@@ -719,6 +720,26 @@ uninstall-pkgdataDATA:
 	test -n "$$files" || exit 0; \
 	echo " ( cd '$(DESTDIR)$(pkgdatadir)' && rm -f" $$files ")"; \
 	cd "$(DESTDIR)$(pkgdatadir)" && rm -f $$files
+install-pkglocalstateDATA: $(pkglocalstate_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(pkglocalstatedir)" || $(MKDIR_P) "$(DESTDIR)$(pkglocalstatedir)"
+	@list='$(pkglocalstate_DATA)'; test -n "$(pkglocalstatedir)" || list=; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(pkglocalstatedir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(pkglocalstatedir)" || exit $$?; \
+	done
+
+uninstall-pkglocalstateDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(pkglocalstate_DATA)'; test -n "$(pkglocalstatedir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	test -n "$$files" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(pkglocalstatedir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(pkglocalstatedir)" && rm -f $$files
 install-udevrulesDATA: $(udevrules_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(udevrulesdir)" || $(MKDIR_P) "$(DESTDIR)$(udevrulesdir)"
@@ -829,7 +850,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(PROGRAMS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(configdir)" "$(DESTDIR)$(modprobedir)" "$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(udevrulesdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(configdir)" "$(DESTDIR)$(modprobedir)" "$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(pkglocalstatedir)" "$(DESTDIR)$(udevrulesdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -882,7 +903,8 @@ info: info-am
 info-am:
 
 install-data-am: install-configDATA install-modprobeDATA \
-	install-pkgdataDATA install-udevrulesDATA
+	install-pkgdataDATA install-pkglocalstateDATA \
+	install-udevrulesDATA
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-am
@@ -931,7 +953,7 @@ ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-configDATA \
 	uninstall-modprobeDATA uninstall-pkgdataDATA \
-	uninstall-udevrulesDATA
+	uninstall-pkglocalstateDATA uninstall-udevrulesDATA
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
 .MAKE: install-am install-data-am install-strip uninstall-am
@@ -945,13 +967,14 @@ uninstall-am: uninstall-binPROGRAMS uninstall-configDATA \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
 	install-modprobeDATA install-pdf install-pdf-am \
-	install-pkgdataDATA install-ps install-ps-am install-strip \
-	install-udevrulesDATA installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-binPROGRAMS uninstall-configDATA uninstall-hook \
-	uninstall-modprobeDATA uninstall-pkgdataDATA \
+	install-pkgdataDATA install-pkglocalstateDATA install-ps \
+	install-ps-am install-strip install-udevrulesDATA installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-binPROGRAMS \
+	uninstall-configDATA uninstall-hook uninstall-modprobeDATA \
+	uninstall-pkgdataDATA uninstall-pkglocalstateDATA \
 	uninstall-udevrulesDATA
 
 

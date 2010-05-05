@@ -1231,7 +1231,6 @@ aaaamirswc_eap_sm_init_ptr =swc_eap_sm_init_ptr;  //[findme][amirs] buffer for 6
 	eap_key_available_func 	= (eap_key_available_ptr)OSAL_find_symbol(g_DSlib, "eap_key_available");
 	eap_get_eapKeyData_func = (eap_get_eapKeyData_ptr)OSAL_find_symbol(g_DSlib, "eap_get_eapKeyData");
 	eap_get_eapRespData_func= (eap_get_eapRespData_ptr)OSAL_find_symbol(g_DSlib, "eap_get_eapRespData");
-	eap_get_interface_func	= (eap_get_interface_ptr)OSAL_find_symbol(g_DSlib, "eap_get_interface");
 
 // peer functions
 	eap_peer_register_methods_func 	= (eap_peer_register_methods_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_register_methods");
@@ -1247,7 +1246,6 @@ aaaamirswc_eap_sm_init_ptr =swc_eap_sm_init_ptr;  //[findme][amirs] buffer for 6
 	tls_global_set_params_func 	= (tls_global_set_params_ptr)OSAL_find_symbol(g_DSlib, "tls_global_set_params");
 	tls_global_set_verify_func	= (tls_global_set_verify_ptr)OSAL_find_symbol(g_DSlib, "tls_global_set_verify");
 	tls_deinit_func			= (tls_deinit_ptr)OSAL_find_symbol(g_DSlib, "tls_deinit");
-	tls_config_use_external_func	= (tls_config_use_external_ptr)OSAL_find_symbol(g_DSlib, "tls_config_use_external");
 // print fucntion
 	wpa_logproc_ptr = (WpaLogprocPtr)OSAL_find_symbol(g_DSlib, "wpa_printf");
 #endif

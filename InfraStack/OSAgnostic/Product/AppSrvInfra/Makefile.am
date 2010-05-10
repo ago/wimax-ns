@@ -1,11 +1,12 @@
 
-CLEANFILES = iwmxsdk.rules config.xml
+CLEANFILES = iwmxsdk.rules config.xml dhcp_renew.sh
 
 export LD_RUN_PATH=$(libdir)
 
 bin_PROGRAMS = wimaxd
 WIMAXD_NAME = @program_prefix@wimaxd@program_suffix@
 varrundir = $(localstatedir)/run
+varlogdir = ${localstatedir}/log
 pkgvarlogdir = ${varlogdir}/$(PACKAGE)
 pkglocalstatedir = ${localstatedir}/lib/$(PACKAGE)
 
@@ -39,7 +40,7 @@ wimaxd_SOURCES = \
 EXTRA_DIST =	$(srcdir)/i2400m.conf \
 		$(srcdir)/iwmxsdk.rules.in \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in \
-		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh
+		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh.in
 
 noinst_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml \
 		$(top_srcdir)/$(VER_INFO_BIN_FILE_SRC)
@@ -48,7 +49,7 @@ pkgdata_DATA =  ../../WiMax/Agents/Supplicant/Source/Cert/cacert.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_key.pem \
 		../../WiMax/Agents/Supplicant/Source/Cert/supplicant_cert.pem \
 		../Instrumantation/DnDAgent/DefaultTracesAndMonitors.xml \
-		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh \
+		dhcp_renew.sh \
 		Ver_info.bin
 
 pkglocalstate_DATA = WiMAX_DB.bin WiMAX_Def.bin
@@ -130,6 +131,12 @@ config.xml: $(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in
 	-e "s|@@sup_lib_path@@|$(sup_lib_path)|g" \
 	-e "s|@@use_inst@@|$(USE_INST)|g" \
 	-e "s|<DisableObfuscate>.*\<DisableObfuscate>|<DisableObfuscate>$(DISABLE_OBFUSCATE)</DisableObfuscate>|" \
+	$< > $@
+
+dhcp_renew.sh: $(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh.in
+	sed \
+	-e "s|@@varrundir@@|$(varrundir)|g" \
+	-e "s|@@pkgvarlogdir@@|$(pkgvarlogdir)|g" \
 	$< > $@
 
 # Driver option

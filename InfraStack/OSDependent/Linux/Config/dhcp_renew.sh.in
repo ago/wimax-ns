@@ -8,11 +8,11 @@
 #
 #  1. Redistributions of source code must retain the above copyright notice,
 #     this list of conditions and the following disclaimer.
-# 
+#
 #  2. Redistributions in binary form must reproduce the above copyright
 #     notice, this list of conditions and the following disclaimer in the
 #     documentation and/or other materials provided with the distribution.
-# 
+#
 #  3. Neither the name of the Intel Corporation nor the names of its
 #     contributors may be used to endorse or promote products derived from
 #     this software without specific prior written permission.
@@ -32,13 +32,13 @@
 #############################################################################
 # SCRIPTNAME=dhcp_renew.sh
 SCRIPTNAME=$0
-PIDFILE=dhclient.wmx0.pid
-PIDPATH="/var/run"
+PIDPATH="@@varrundir@@"
 IFNAME=$2
+PIDFILE=dhclient.$IFNAME.pid
 RUNNING=0
 EXIT_STATUS=0
 
-LOGFILE="/var/log/wimax/dhcp.log"
+LOGFILE="@@pkgvarlogdir@@/dhcp.$IFNAME.log"
 
 #=== Local Functions ===
 
@@ -65,7 +65,7 @@ case "$1" in
 	    echo "dhclient PID file found" >> $LOGFILE
 	    find_if_process_running
 	    RUNNING=$?
-	    
+
 	    if [ 0 -eq $RUNNING ]; then
 		    echo "dhclient process is already running - removing pending lease (if any) and terminating" >> $LOGFILE
 		/sbin/dhclient -q -r -pf $PIDPATH/$PIDFILE $IFNAME >/dev/null 2>&1
@@ -77,12 +77,12 @@ case "$1" in
 	if [ -f $PIDPATH/$PIDFILE ]; then
 	    find_if_process_running
 	    RUNNING=$?
-	    
+
 	    if [ 0 -eq $RUNNING ]; then
 		    echo "*** dhclient process is still running despite termination order" >> $LOGFILE
 		fi
 	fi
-	
+
 	echo "Starting a new instance of dhclient to aquire a new IP lease" >> $LOGFILE
 	/sbin/dhclient -q -pf $PIDPATH/$PIDFILE $IFNAME >/dev/null 2>&1
 	EXIT_STATUS=$?
@@ -96,7 +96,7 @@ case "$1" in
 	    echo "dhclient PID file found" >> $LOGFILE
 	    find_if_process_running
 	    RUNNING=$?
-	    
+
 	    if [ 0 -eq $RUNNING ]; then
 		    echo "removing pending lease and terminating dhclient" >> $LOGFILE
 		/sbin/dhclient -q -r -pf $PIDPATH/$PIDFILE $IFNAME >/dev/null 2>&1
@@ -106,7 +106,7 @@ case "$1" in
         if [ -f $PIDPATH/$PIDFILE ]; then
 	        find_if_process_running
 	        RUNNING=$?
-	    
+
 	        if [ 0 -eq $RUNNING ]; then
 		        echo "*** dhclient process is still running despite termination order" >> $LOGFILE
 	    fi
@@ -137,7 +137,7 @@ case "$1" in
         if [ -f $PIDPATH/$PIDFILE ]; then
 	        find_if_process_running
 	        RUNNING=$?
-	    
+
 	        if [ 0 -eq $RUNNING ]; then
 		        echo "*** dhclient process is still running despite termination order" >> $LOGFILE
 	    fi
@@ -147,11 +147,11 @@ case "$1" in
 #
 	fi
 	;;
-	
+
 #
 # default case
 #
-   *) 
+   *)
         echo "Unrecognized" $0 "argument"
         exit 1
     ;;
@@ -160,5 +160,3 @@ esac
 echo "Normal process exit from" $0 "script">> $LOGFILE
 
 exit 0
-
-

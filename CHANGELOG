@@ -4,7 +4,7 @@ Changes in 5.10.1114
  - Updated default L4 DB to support UQ and Clear only
  - Enabled wimaxcu to change connect mode while radio is off
  - Using temp file to update the config.xml instead of directly change it.
-
+ - Use open source supplicant
 
 Changes in 5.10.1113
  - Bug fix - 3103853, 3103394, 3015805, 3102375, 3101698, 3014892

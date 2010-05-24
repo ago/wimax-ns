@@ -130,7 +130,7 @@ BOOL OSAL_ConfigController_SetNumValue(const char *ignore, const char *config_na
     xmlTargetElement = FindChild(xmlTopElement, config_name);
     if (xmlTargetElement != NULL) {
 	//convert integer to string
-	snprintf(buf, sizeof(buf), "%d\0", *value);
+	snprintf(buf, sizeof(buf), "%d", *value);
         bSetInnerText = SetElementInnerText(xmlTargetElement, buf);
         if(bSetInnerText == TRUE) {
             // write to XML file

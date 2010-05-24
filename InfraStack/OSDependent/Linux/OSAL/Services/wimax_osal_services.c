@@ -355,7 +355,7 @@ void *ManageIPThread(void *param)
 
 		default:
 			OSALTRACE(OSAL_ERROR, ("Invalid link indication passed"));
-			return;
+			return 0;
 	}
 	strcat (file_name ," ");
 	strcat(file_name, interface_name);
@@ -373,9 +373,8 @@ void *ManageIPThread(void *param)
 	// TODO: Change the TRACE log level to OSAL_DEBUG as soon as 
 	// dhcp renew has stabilized
 	OSALTRACE(OSAL_DEBUG, ("Success Done in IP renew thread exit"));
-
-
-
+ 
+	return 0;
 }
 
 BOOL OSAL_GetOSVersion(char *version)

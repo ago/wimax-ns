@@ -120,7 +120,7 @@ UINT32 GetLastError(void)
 	UINT32 retVal;
 
 	InitLastErrorThreadKey();
-	retVal = (UINT32) pthread_getspecific(LASTERROR_THREAD_KEY);
+	retVal = (UINT32) (size_t) pthread_getspecific(LASTERROR_THREAD_KEY);
 
 	return retVal;
 }
@@ -128,7 +128,7 @@ UINT32 GetLastError(void)
 void SetLastError(UINT32 errCode)
 {
 	InitLastErrorThreadKey();
-	pthread_setspecific(LASTERROR_THREAD_KEY, (void *)errCode);
+	pthread_setspecific(LASTERROR_THREAD_KEY, (void *) (size_t) errCode);
 }
 
 

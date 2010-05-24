@@ -83,7 +83,7 @@ typedef struct _OSAL_filetime_ex
 	unsigned int dwHighDateTime;
 } OSAL_filetime_ex;
 
-typedef void (*OSAL_thread_func)(void *);
+typedef void* (*OSAL_thread_func)(void *);
 typedef void* (*OSAL_linux_thread_func)(void *);
 
 typedef void* OSAL_critical_section;

@@ -40,6 +40,7 @@
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <net/if.h>
 
 #include "wimax_osal_types.h"
@@ -268,7 +269,7 @@ UINT32 OSAL_RenewIP( UINT32 mediaStatus )
 
 	pthread_attr_init(&attr);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-	pthread_create(&ipMgmtThread,&attr, ManageIPThread, (void *)mediaStatus);
+	pthread_create(&ipMgmtThread,&attr, ManageIPThread, (void *) (size_t) mediaStatus);
 	// return OSAL_create_thread(ManageIPThread, (void *)mediaStatus, &ipMgmtThread);
 
 #endif 

@@ -183,7 +183,7 @@ BOOL OSAL_readData (const char *fileName, BYTE *buf, size_t *bufSize)
 int OSAL_GetObfuscateConfig()
 {
 	
-	int Obfuscate_or_not = 0;	// allow obfuscation by default
+	UINT32 Obfuscate_or_not = 0;	// allow obfuscation by default
 	BOOL res;
 	
 	OSALTRACE(OSAL_DEBUG, ("Enter OSAL_GetObfuscateConfig"));

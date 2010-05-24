@@ -39,5 +39,7 @@
 #define OSAL_ERROR_TOO_MANY_OPEN_FILES	EMFILE
 #define OSAL_ERROR_ACCESS_DENIED	EACCES
 
+UINT32 GetLastError(void);
+void SetLastError(UINT32 errCode);
 
 #endif //_WIMAX_OSAL_ERROR_H_ 

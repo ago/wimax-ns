@@ -1634,6 +1634,7 @@ int OSAL_wmemcpy_s(wchar_t *dest, size_t sizeInWords, const wchar_t *src, size_t
 		return 0;	// dont copy
 
 	memcpy(dest, src, count);
+	return count;
 }
 
 
@@ -1648,6 +1649,7 @@ int OSAL_CAPI_wmemcpy_s(OSAL_WIMAX_API_WSTRING dest, size_t sizeInWords, const O
 		return 0;	// dont copy
 
 	memcpy(dest, src, count);
+	return count;
 }
 // TODO::OSAL-WORK::IMPORTANT - OSAL_wcscmp, OSAL_wcslen - What happens when these methods are fed with ansi strings???
 

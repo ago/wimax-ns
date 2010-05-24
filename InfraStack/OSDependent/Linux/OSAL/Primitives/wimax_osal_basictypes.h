@@ -47,7 +47,9 @@
 #endif 
 
 
+#ifndef NATIVE_LINUX
 #define	NATIVE_LINUX			// 	To keep all compilations going...
+#endif
 
 #include "wimax_osal_linux_types.h"
 #include "wimax_osal_error.h"

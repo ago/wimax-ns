@@ -50,6 +50,7 @@
 #include "wimax_osal_ip_services.h"
 #include "wimax_osal_config_controler.h"
 #include "wimax_osal_trace.h"
+#include "wimax_osal_services.h"
 
 #include "L4ConfigurationManager.h"
 

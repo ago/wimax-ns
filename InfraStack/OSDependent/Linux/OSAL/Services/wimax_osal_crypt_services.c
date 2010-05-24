@@ -38,6 +38,7 @@
 #include "wimax_osal_trace.h"
 #include "wimax_osal_primitives.h"
 #include "wimax_osal_string.h"
+#include "wimax_osal_services.h"
 
 //#include "TraceModule.h"
 #include "wimax_osal_services_cmn.h"

@@ -64,7 +64,6 @@ void *ManageIPThread(void *param);
 void OSAL_BuildFullPath(char* src, char* dstFull, int nSizeFull)
 {
 	char pRootPath[OSAL_DEFUALT_STR_LEN] = {0};
-	char pwsFullFileName[OSAL_DEFUALT_STR_LEN] = {0};
 	int len =0;
 
 	// IMPORTANT 
@@ -431,8 +430,6 @@ UINT32 GetHostName(char *hostName, UINT32 hostNameBufSize)
         // hope this size will be OK for one line to read from the fileOB
         char line[1000];
         char *linep=line;
-
-	int buffSize = sizeof(buffer);
 
 	int found = 0;
 

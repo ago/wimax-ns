@@ -185,7 +185,7 @@ BOOL OSAL_Crypt_EncryptBuffer(char *srcbuf, UINT32 srcbufLen, BYTE* encryptedBuf
 
 		//zlib library 
 
-		ret = compress(cBuffer,&cBufferLen,srcbuf,srcbufLen);
+		ret = compress(cBuffer,&cBufferLen,(unsigned char *)srcbuf,srcbufLen);
 
 		if(ret!=0){
 
@@ -213,7 +213,7 @@ BOOL OSAL_Crypt_EncryptBuffer(char *srcbuf, UINT32 srcbufLen, BYTE* encryptedBuf
 
 					if(cBuffer!=NULL)
 
-						ret = compress(cBuffer,&cBufferLen,srcbuf,srcbufLen);
+						ret = compress(cBuffer,&cBufferLen,(unsigned char *)srcbuf,srcbufLen);
 
 					else
 
@@ -389,7 +389,7 @@ BOOL OSAL_Crypt_DecryptBuffer(BYTE* encryptedBuff, size_t encBuffLen,char *decry
 
 			//Most of the times it should not fail here. 
 
-			ret = uncompress(decryptedBuff,sizeOfDecryptedBuff,encryptedBuff+sizeof(headerStruct),encBuffLen - sizeof(headerStruct));
+			ret = uncompress((unsigned char *)decryptedBuff,sizeOfDecryptedBuff,encryptedBuff+sizeof(headerStruct),encBuffLen - sizeof(headerStruct));
 
 			if(ret!=0){
 
@@ -421,7 +421,7 @@ BOOL OSAL_Crypt_ConveretEncryptedToDecryptFile(char* xmlFileName, char* binFileN
 	size_t buffLen = 0;
 	BYTE* buff = NULL;
 	size_t ucbuffLen = 0;
-	BYTE* ucbuff = NULL;
+	char* ucbuff = NULL;
 
 	if(NULL != binFileName)
 	{
@@ -462,7 +462,7 @@ BOOL OSAL_Crypt_ConveretEncryptedToDecryptFile(char* xmlFileName, char* binFileN
 
 	
 	ucbuffLen = buffLen;
-	ucbuff = (BYTE*)malloc(ucbuffLen);
+	ucbuff = (char*)malloc(ucbuffLen);
 	if(ucbuff == NULL) {
 		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_ALERT, "malloc failed");
 		free(buff);

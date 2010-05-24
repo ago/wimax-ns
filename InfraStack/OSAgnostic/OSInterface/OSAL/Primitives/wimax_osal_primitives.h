@@ -43,6 +43,7 @@ int OSAL_kill_thread(OSAL_thread_t thread_id);
 int OSAL_create_mutex(OSAL_mutex_t *pmtx, int owned, char * name);
 int OSAL_delete_mutex(OSAL_mutex_t mtx);
 int OSAL_lock_mutex(OSAL_mutex_t mtx);
+int OSAL_trylock_mutex(OSAL_mutex_t mtx);
 int OSAL_unlock_mutex(OSAL_mutex_t mtx);
 int OSAL_timedlock_mutex(OSAL_mutex_t mtx, unsigned int milliseconds);
 void OSAL_sleep(unsigned int milliSecs);

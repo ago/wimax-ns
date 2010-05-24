@@ -31,6 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "wimax_osal_primitives.h"
 #include "List.h"
 #include "CommonServices.h"
+#include <stdlib.h>
 
 //*******************************************
 //Initialize the list

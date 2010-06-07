@@ -1,0 +1,19 @@
+config.guess -crlf
+missing -crlf
+configure -crlf
+config.h.in -crlf
+.gitignore -crlf
+aclocal.m4 -crlf
+bootstrap -crlf
+depcomp -crlf
+InfraStack/OSDependent/Linux/Ver_info.bin -crlf
+InfraStack/OSDependent/Linux/Config/Ver_info.bin.tmp -crlf
+InfraStack/OSDependent/Linux/Config/dhcp_renew.sh.in -crlf
+InfraStack/OSDependent/Linux/scripts/wimax.ume -crlf
+InfraStack/OSDependent/Linux/scripts/wimax.midinux -crlf
+InfraStack/OSAgnostic/Product/AppSrvInfra/i2400m.conf -crlf
+InfraStack/OSAgnostic/Product/AppSrvInfra/iwmxsdk.rules.in -crlf
+InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/libiWmxSdk-0.pc.in -crlf
+InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/libiWmxSdk-0-uninstalled.pc.in -crlf
+config.sub -crlf
+

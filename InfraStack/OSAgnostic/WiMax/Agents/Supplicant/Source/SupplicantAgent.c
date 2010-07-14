@@ -2356,7 +2356,7 @@ wmx_Status_t DelayLoadSupplicant()
 	}
 	
 
-	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_NOTICE, ("SupplicantAgent_Initialize Succeeded. Target ID=%d", L5_TARGET_SUPPLICANT));
+	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_NOTICE, "SupplicantAgent_Initialize Succeeded. Target ID=%d", L5_TARGET_SUPPLICANT);
 
 	return status;
 

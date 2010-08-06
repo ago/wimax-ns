@@ -34,7 +34,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <unistd.h>
 #include <dirent.h>
 #include <ctype.h>
-#include <signal.h>
 #include <execinfo.h>
 
 /* get REG_EIP from ucontext.h */

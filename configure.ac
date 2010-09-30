@@ -189,6 +189,7 @@ cd $curr_dir
 AC_CONFIG_FILES([
 	Makefile
 	wns-version.h
+        wimax.spec
 	InfraStack/OSDependent/Linux/OSAL/Makefile
 	InfraStack/OSDependent/Linux/InfraStackModules/IPCs/Makefile
 	InfraStack/OSAgnostic/Common/CommonServices/Makefile

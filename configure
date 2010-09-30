@@ -11945,7 +11945,7 @@ ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Primitives/wimax_osal_e
 ln -sf $ac_abs_confdir/InfraStack/OSDependent/Linux/OSAL/Services/wimax_osal_win_config_controller_defines.h
 cd $curr_dir
 
-ac_config_files="$ac_config_files Makefile wns-version.h InfraStack/OSDependent/Linux/OSAL/Makefile InfraStack/OSDependent/Linux/InfraStackModules/IPCs/Makefile InfraStack/OSAgnostic/Common/CommonServices/Makefile InfraStack/OSAgnostic/Common/CommonServices/XmlParser/Makefile InfraStack/OSAgnostic/Common/L4Common/Makefile InfraStack/OSAgnostic/Product/PipeHandler/Makefile InfraStack/OSAgnostic/WiMax/Agents/NDnS/Makefile InfraStack/OSAgnostic/WiMax/Agents/Supplicant/Makefile InfraStack/OSAgnostic/Product/Instrumantation/Makefile InfraStack/OSAgnostic/Product/Instrumantation/DnDAgent/Makefile InfraStack/OSAgnostic/Product/Instrumantation/MocMsgProxy/Makefile InfraStack/OSAgnostic/Product/AppSrvInfra/Makefile InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/Makefile InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/libiWmxSdk-0.pc InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/libiWmxSdk-0-uninstalled.pc InfraStack/OSDependent/Linux/wimaxcu/Makefile InfraStack/OSDependent/Linux/wimax_utils/wimax_monitor/Makefile"
+ac_config_files="$ac_config_files Makefile wns-version.h wimax.spec InfraStack/OSDependent/Linux/OSAL/Makefile InfraStack/OSDependent/Linux/InfraStackModules/IPCs/Makefile InfraStack/OSAgnostic/Common/CommonServices/Makefile InfraStack/OSAgnostic/Common/CommonServices/XmlParser/Makefile InfraStack/OSAgnostic/Common/L4Common/Makefile InfraStack/OSAgnostic/Product/PipeHandler/Makefile InfraStack/OSAgnostic/WiMax/Agents/NDnS/Makefile InfraStack/OSAgnostic/WiMax/Agents/Supplicant/Makefile InfraStack/OSAgnostic/Product/Instrumantation/Makefile InfraStack/OSAgnostic/Product/Instrumantation/DnDAgent/Makefile InfraStack/OSAgnostic/Product/Instrumantation/MocMsgProxy/Makefile InfraStack/OSAgnostic/Product/AppSrvInfra/Makefile InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/Makefile InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/libiWmxSdk-0.pc InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/libiWmxSdk-0-uninstalled.pc InfraStack/OSDependent/Linux/wimaxcu/Makefile InfraStack/OSDependent/Linux/wimax_utils/wimax_monitor/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -12848,6 +12848,7 @@ do
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "wns-version.h") CONFIG_FILES="$CONFIG_FILES wns-version.h" ;;
+    "wimax.spec") CONFIG_FILES="$CONFIG_FILES wimax.spec" ;;
     "InfraStack/OSDependent/Linux/OSAL/Makefile") CONFIG_FILES="$CONFIG_FILES InfraStack/OSDependent/Linux/OSAL/Makefile" ;;
     "InfraStack/OSDependent/Linux/InfraStackModules/IPCs/Makefile") CONFIG_FILES="$CONFIG_FILES InfraStack/OSDependent/Linux/InfraStackModules/IPCs/Makefile" ;;
     "InfraStack/OSAgnostic/Common/CommonServices/Makefile") CONFIG_FILES="$CONFIG_FILES InfraStack/OSAgnostic/Common/CommonServices/Makefile" ;;

@@ -83,6 +83,12 @@ AC_CHECK_FILE([$LINUX_KERNEL/include/linux/wimax.h],
 AC_SUBST(I2400M_INCLUDES, "-I${LINUX_KERNEL}/include")
 AC_SUBST(LINUX_INCLUDE_PATH, "${LINUX_KERNEL}/include")
 
+AC_CHECK_HEADER(zlib.h, [],
+             
+   [AC_MSG_ERROR([Can't locate zlib.h; did you install zlib-devel?])])
+AC_CHECK_LIB(z, gzopen, [],
+             [AC_MSG_ERROR([Can't locate libz; did you install zlib-devel?])])
+
 AC_ARG_ENABLE(instrument, 
 	      AC_HELP_STRING([--enable-instrument],[enable support for instrumentation]), 
 	      [

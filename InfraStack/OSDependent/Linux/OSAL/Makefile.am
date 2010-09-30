@@ -21,6 +21,7 @@ libosal_la_SOURCES = \
 			$(srcdir)/./Primitives/wimax_osal_trace.c \
 			$(srcdir)/./Primitives/wimax_osal_win.c \
 			$(srcdir)/./Services/wimax_osal_services.c \
+			$(srcdir)/./Services/wimax_osal_services.h \
 			$(srcdir)/./Services/wimax_osal_config_controller.c \
 			$(srcdir)/./Services/wimax_osal_crypt_services.c \
 			$(srcdir)/./Services/wimax_osal_win_config_controller_defines.h \

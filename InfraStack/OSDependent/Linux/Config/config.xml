@@ -41,8 +41,8 @@
 		<SecureBootstrap>False</SecureBootstrap>
 		<DisableRenew>1</DisableRenew>
 		<LogFileName>TraceLog</LogFileName>
-		<Modules>1052672</Modules>
-		<Severities>7</Severities>
+	        <Modules>1007812360</Modules>
+	        <Severities>31</Severities>
 		<DumpEnable>0</DumpEnable>
 		<CoexistingMode>CM</CoexistingMode>
 		<AddNAPs>1</AddNAPs>

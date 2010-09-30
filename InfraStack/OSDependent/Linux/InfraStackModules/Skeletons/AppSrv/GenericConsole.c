@@ -36,7 +36,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <ctype.h>
 #include <execinfo.h>
 
-/* get REG_EIP from ucontext.h */
 #define __USE_GNU
 #include <ucontext.h>
 
@@ -100,7 +99,6 @@ void print_callstack_to_file(int sig, siginfo_t *info, void *secret)
 	void *trace[16];
   	char **messages = (char **)NULL;
   	int i, trace_size = 0;
-  	ucontext_t *uc = (ucontext_t *)secret;
 	FILE *fp;	
 	BOOL res;
 	// printf("Came here %d\n", __LINE__);
@@ -111,6 +109,15 @@ void print_callstack_to_file(int sig, siginfo_t *info, void *secret)
 		// printf("Came here %d\n", __LINE__);
 		return;
 	}
+	trace[0] = NULL;
+  	trace_size = backtrace(trace, sizeof(trace)/sizeof(trace[0]));
+	if (trace_size == 0)
+		syslog(LOG_WARNING, "Couldn't get backtrace information\n");
+  	/* overwrite sigaction with caller's address */
+  	trace[1] = (void *) trace[0];
+	messages[0] = NULL;
+  	messages = backtrace_symbols(trace, trace_size);
+
 	res = GetConfig_LogPath(gcLogFilePathName, MAX_FILENAME_LEN);   
 	if (res == FALSE) {
 		// printf("Came here %d\n", __LINE__);
@@ -119,7 +126,7 @@ void print_callstack_to_file(int sig, siginfo_t *info, void *secret)
 	strcat(gcLogFilePathName, "/callstack.log");
 	if(OSAL_fopen(&fp, gcLogFilePathName, "a", 0) < 0) {
 		syslog(LOG_ERR, "Got signal %d, faulty address is %p, from %p", 
-		       sig, info->si_addr, uc->uc_mcontext.gregs[REG_EIP]);
+		       sig, info->si_addr, trace[0]);
 		syslog(LOG_ERR, "Could not open a file %s to log call stack");
 		// printf("Came here %d\n", __LINE__);
   		return;
@@ -138,14 +145,9 @@ void print_callstack_to_file(int sig, siginfo_t *info, void *secret)
 	fprintf(fp, "==================================================================================\n\n");
 	
 	fprintf(fp, "Got signal %d, faulty address is %p, from %p\n", 
-		sig, info->si_addr, uc->uc_mcontext.gregs[REG_EIP]);
-	// printf("Came here %d\n", __LINE__);
-  	
-  	trace_size = backtrace(trace, 16);
-  	/* overwrite sigaction with caller's address */
-  	trace[1] = (void *) uc->uc_mcontext.gregs[REG_EIP];
+		sig, info->si_addr, trace[0]);
+	// printf("Came here %d\n", __LINE__);  	
 	
-  	messages = backtrace_symbols(trace, trace_size);
   	/* skip first stack frame (points here) */
   	fprintf(fp,"[bt] Execution path: \n");	
   	for (i=1; i<trace_size; ++i) {
@@ -157,7 +159,7 @@ void print_callstack_to_file(int sig, siginfo_t *info, void *secret)
 void console_signal_handler(int sig, siginfo_t *info, void *secret) 
 {
 	// signals are captured
-  	static no_of_signals;
+  	static int no_of_signals;
 	if(no_of_signals >= 1)  {
 		// printf("Second ctrl +c recieived \n");
 		exit(0);

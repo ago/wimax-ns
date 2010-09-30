@@ -1,4 +1,4 @@
-AC_INIT([wimax],[1.5],[wimax-linux@wimaxlinux.org])
+AC_INIT([wimax],[1.5.1],[wimax-linux@wimaxlinux.org])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign tar-ustar])
 AC_PROG_CC
 AC_PROG_LIBTOOL

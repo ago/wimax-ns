@@ -1,3 +1,11 @@
+Changes in [1.]5.1
+ - fix build issues (especially on other arches)
+ - cleanups: killed a lot of compile warnings, still many left; many
+   thanks to Dan Williams
+ - move to use libeap >= 0.7 (patches in http://linuxwimax.org)
+ - fix bug 15 http://linuxwimax.org/bugzilla/show_bug.cgi?id=15
+ - misc small fixes
+
 Changes in 5.10.1114
  - Fixed merge issue with trace handler in KDapi.c
  - Increated shutdown sleep time to 5 seconds before sending SIGKILL

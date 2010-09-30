@@ -88,6 +88,7 @@ size_t OSAL_fread(void *buffer, size_t size, size_t count, FILE *stream );
 size_t OSAL_fwrite(const void *buffer, size_t size, size_t count, FILE *stream );
 int OSAL_fprintf(FILE *stream, const char *format , ...);
 int OSAL_vsprintf(char *buffer, size_t sizeInBytes, const char *format, ... ); 
+int OSAL_sprintf(char *str, const char *format, ...);
 
 //Time:
 UINT32 OSAL_timeGetTime();

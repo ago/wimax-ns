@@ -58,17 +58,11 @@ so we use symlink to actual supplicant tls.h */
 #include "tls-wpa.h"
 #endif
 
-extern void	(*wpa_logproc_ptr)(int level, char *fmt, ...);
 static void __keep_silence(void) {}
 #ifdef NATIVE_WINDOWS
 #define SUPPLICANT_LOG	(!wpa_logproc_ptr) ? __keep_silence() : wpa_logproc_ptr
 #else
 
-#ifdef _WIMAX_SDK_
-#define SUPPLICANT_LOG	__keep_silence() 
-#else
-#define SUPPLICANT_LOG	wpa_logproc_ptr
-#endif
 
 #endif
 
@@ -264,7 +258,7 @@ void wmxSup_MessagesHandler(L5_CONNECTION Conn,
 									wmxSup_InternalHandler	);
 			break;		
 		case L3_L4_OPCODE_REPORT_EMSK_RELATED_KEYS:
-			SUPPLICANT_LOG(1, "Received BEK (%d bytes)", l3L4CompleteHeader->Length);
+			TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_INFO, "Received BEK (%d bytes)", l3L4CompleteHeader->Length);
 			break;
 		default:
 			TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_ERR,"Unknown message arrived");
@@ -1135,7 +1129,7 @@ static wmx_Status_t SendTLSRequest(tTLSOperationRequest *pr,
 	pr->Common.Connection = OSAL_PtrToLong(Connection);		
 	pr->Common.LParameter1 = Parameter1;
 	pr->Common.LParameter2 = Parameter2;
-	SUPPLICANT_LOG(1, "SuppWrapper: sending down op. %d, ctx %X, conn %X, p1 %d, p2 %d", 
+	TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_ERR, "SuppWrapper: sending down op. %d, ctx %X, conn %X, p1 %d, p2 %d", 
 		pr->Common.Operation, pr->Common.Context, pr->Common.Connection, 
 		pr->Common.LParameter1, pr->Common.LParameter2);
 	if (InputBuffer)
@@ -1148,22 +1142,26 @@ static wmx_Status_t SendTLSRequest(tTLSOperationRequest *pr,
 	
 	if( send_st != WMX_ST_OK )
 	{
-		SUPPLICANT_LOG(1, "SuppWrapper: bad send status %d", send_st);
+		TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_ERR,
+		      "SuppWrapper: bad send status %d", send_st);
 		res = send_st;
 	}
 	else if( driver_st != WMX_ST_OK )
 	{
-		SUPPLICANT_LOG(1, "SuppWrapper: bad driver status %d", driver_st);
+		TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_ERR,
+		      "SuppWrapper: bad driver status %d", driver_st);
 		res = driver_st;
 	}
 	else if (pr->Common.Type != L3L4_TLV_TYPE_TLS_OPERATION_DESCRIPTOR)
 	{
-		SUPPLICANT_LOG(1, "SuppWrapper: No mandatory common descriptor received!");
+		TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_ERR,
+		      "SuppWrapper: No mandatory common descriptor received!");
 		res = WMX_ST_FAIL;
 	}
 	else
 	{
-		SUPPLICANT_LOG(1, "SuppWrapper: received op. %d, ctx %X, conn %X, p1 %d, p2 %d", 
+		TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_ERR,
+		      "SuppWrapper: received op. %d, ctx %X, conn %X, p1 %d, p2 %d", 
 			pr->Common.Operation, pr->Common.Context, pr->Common.Connection, 
 			pr->Common.LParameter1, pr->Common.LParameter2);
 	}
@@ -1187,7 +1185,8 @@ struct tls_connection * tls_connection_init(void *tls_ctx)
 	res = SendTLSRequest(&r, ETLSOP_CONNECTION_INIT, tls_ctx, NULL, 0, 0, NULL, 0);
 	if (!res && !r.Common.LParameter1)
 	{
-		SUPPLICANT_LOG(1, "SuppWrapper: Connection init => %lX", r.Common.Connection);
+		TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_ERR,
+		      "SuppWrapper: Connection init => %lX", r.Common.Connection);
 		return (void *)(INT_PTR)r.Common.Connection;
 	}
 	return NULL;
@@ -1228,7 +1227,7 @@ u8 * tls_connection_handshake(void *tls_ctx, struct tls_connection *conn,
 		}
 		else
 		{
-			SUPPLICANT_LOG(1, "SuppWrapper: No data received!!!");
+			TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_ERR, "SuppWrapper: No data received!!!");
 		}
 		if (r.ExchangeBuffer.Type == L3L4_TLV_TYPE_TLS_APP_OUTPUT_BUFFER)
 		{
@@ -1401,7 +1400,8 @@ int tls_connection_set_params(void *tls_ctx, struct tls_connection *conn,
 								tTLSOperationRequest r;
 								wmx_Status_t res;
 								OSAL_fread(buf, 1, len, f);
-								SUPPLICANT_LOG(1, "SuppWrapper: Loading RootCert (%d bytes) from %s", 
+								TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_ERR,
+								      "SuppWrapper: Loading RootCert (%d bytes) from %s", 
 									len, secondsideRoot);
 								res = SendTLSRequest(&r, 97, tls_ctx, conn, 0, 0, (UINT8 *)buf, len);
 								

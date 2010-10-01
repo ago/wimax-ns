@@ -924,7 +924,7 @@ BOOL L4C_HandleFastReconnect(wmx_pSystemStateUpdate systemStateUpdate)
 		}
 		else // fast reconnect is enabled
 		{
-			TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "Starting fast reconnect. Reason: %s", wmx_StateReason_tStr[systemStateUpdate->ReportStateReason]);
+			TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "Starting fast reconnect. Reason: %s", WMX_STATE_REASON_STR(systemStateUpdate->ReportStateReason));
 			// get the recent connected NSP
 			status = L4db_GetRecentNsp(&lastConnectedNSPid);
 			if(status != WMX_ST_OK)

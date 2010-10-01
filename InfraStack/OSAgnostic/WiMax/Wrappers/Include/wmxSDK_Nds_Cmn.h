@@ -141,38 +141,45 @@ typedef enum _wmx_StateReason_t
 	StateReasonFWRequestFuncReset,
 }wmx_StateReason_t, *wmx_pStateReason_t;
 
-static char *wmx_StateReason_tStr[] = {
-	"Illegal value",
-	"Normal",
-	"Failed to connect to NW",
-	"Failed to connect - Ranging",
-	"Failed to connect - SBC",
-	"Failed to connect - EAPAuth",
-	"Failed to connect - 3WayHandshake",
-	"Failed to connect - REG",
-	"Failed to connect - Datapath",
-	"Failed to connect - CoexNoRF",
-	"Disconnected - Dreg",
-	"Disconnected - Abort",
-	"Disconnected - Reset",
-	"Disconnected - Drop",
-	"SPLock validation failed",
-	"Disconnected - ReAuth",
-	"Reset - HwWdt",
-	"Reset - SwWdt",
-	"Reset - Assert",
-	"Reset - Thermal",
-	"Reset - RfKill",
-	"Reset - CoExistence",
-	"Reset - Host",
-	"Disconnected - Protocol Error",
-	"FW Requested Reset - Device",
-	"FW Requested Reset - Function"
-};
+static inline
+const char * WMX_STATE_REASON_STR(unsigned index)
+{
+	static const char *wmx_StateReason_tStr[] = {
+		"Illegal value",
+		"Normal",
+		"Failed to connect to NW",
+		"Failed to connect - Ranging",
+		"Failed to connect - SBC",
+		"Failed to connect - EAPAuth",
+		"Failed to connect - 3WayHandshake",
+		"Failed to connect - REG",
+		"Failed to connect - Datapath",
+		"Failed to connect - CoexNoRF",
+		"Disconnected - Dreg",
+		"Disconnected - Abort",
+		"Disconnected - Reset",
+		"Disconnected - Drop",
+		"SPLock validation failed",
+		"Disconnected - ReAuth",
+		"Reset - HwWdt",
+		"Reset - SwWdt",
+		"Reset - Assert",
+		"Reset - Thermal",
+		"Reset - RfKill",
+		"Reset - CoExistence",
+		"Reset - Host",
+		"Disconnected - Protocol Error",
+		"FW Requested Reset - Device",
+		"FW Requested Reset - Function"
+	};
+	static const unsigned count =
+		sizeof(wmx_StateReason_tStr) / sizeof(wmx_StateReason_tStr[0]);
+	if (index < count)
+		return wmx_StateReason_tStr[index];
+	else
+		return "Illegal";
+}
 
-#define WMX_STATE_REASON_COUNT 26
-
-#define WMX_STATE_REASON_STR(wmx_StateReason) (wmx_StateReason < WMX_STATE_REASON_COUNT ? wmx_StateReason_tStr[wmx_StateReason] : "Ilegal")
 
 /// <summary>
 /// Type definition for an enum specifying the possible outcomes of a connect attempt.

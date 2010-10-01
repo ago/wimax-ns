@@ -28,7 +28,6 @@
  POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
-#pragma warning(disable:4054) // type-cast from function ptr to data ptr (void*)
 
 #include "SupplicantAgent.h"
 
@@ -118,6 +117,7 @@ typedef void (*eap_peer_unregister_methods_ptr) (void);
 typedef int (*eap_peer_set_method_ptr) (int);
 
 //tls functions
+struct tls_functions_table_t;
 typedef void* (*tls_init_ptr) (const struct tls_config *conf);
 typedef int (*tls_global_set_params_ptr) (void *tls_ctx, const struct tls_connection_params *params);
 typedef int (*tls_global_set_verify_ptr) (void *tls_ctx, int check_crl);
@@ -277,6 +277,10 @@ void Sup_PrintTrace(char *sourceStr, char *caption, char *prefix);
 void wmxNds_SupOpCodeToStr(SUP_AGENT_CRED_OPCODE supOpCode, char *str, int strLength);
 void DS_EapRestart(VOID);
 #endif
+
+void ResetSupplicantLibrary();
+void Sup_PrintTrace(char *sourceStr, char *caption, char *prefix);
+void wmxNds_SupOpCodeToStr(SUP_AGENT_CRED_OPCODE supOpCode, char *str, int strLength);
 /////////////////////
 
 
@@ -324,7 +328,7 @@ void PrintBuff(UINT8* buf, UINT32 len)
 		{
 			for (j=0; j<16; j++) printf("%02x ",buf[i++]); 	len-=16;
 		}
-		printf("\n");
+ 		printf("\n");
 	}
 }*/
 #if defined(WPA_OPEN_SOURCE)
@@ -489,10 +493,12 @@ void FinalizeSuppConfig()
 // Initialize the supplicant .dll by registering the callbacks
 wmx_Status_t InitSupplicantLibrary(VOID)
 {
+#if ! defined(WPA_OPEN_SOURCE)
 	int rc;	
 	BOOL res;
 	char answer[MAX_ANSWER_SIZE];
 	void *ft;
+#endif
 
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: InitSupplicantLibrary (IN)");
 	// init DS status variable
@@ -1354,8 +1360,8 @@ void WMX_EXT_CALL_CONV SupAgent_EapRequestAvailable( wmx_EapMsgLength_t	eapMsgLe
 //*******************************************
 void WMX_EXT_CALL_CONV SupAgent_AlternativeEapSuccess()
 {
-	int rc;
 #if !defined(WPA_OPEN_SOURCE)
+	int rc;
 	rc = CondEapSMInit();
 	if (rc != WMX_ST_OK) // sm init error
 	{
@@ -1377,9 +1383,9 @@ void WMX_EXT_CALL_CONV SupAgent_AlternativeEapSuccess()
 void WMX_EXT_CALL_CONV SupAgent_EapKeyRequest()
 {
 	//TODO
-	UINT8 targetBuffer[L4_MSG_MAX_LENGTH];
 
 #if !defined(WPA_OPEN_SOURCE)
+	UINT8 targetBuffer[L4_MSG_MAX_LENGTH];
 
 	memcpy((void*)targetBuffer, g_SuppData.MskKey, g_SuppData.MskKeyActualLen);
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: EAP_SET_KEY was sent to Driver. Buffer length: %d", g_SuppData.MskKeyActualLen);
@@ -2195,6 +2201,11 @@ void wmxNds_SupOpCodeToStr(SUP_AGENT_CRED_OPCODE supOpCode, char *str, int strLe
 	case SUP_OPCODE_SET_TLS_MAX_SIZE:
 		OSAL_strncpy_s(str, strLength,"Set TLS max size", strLength);
 		break;
+	case SUP_OPCODE_IND_EVENT:
+	case SUP_OPCODE_ERROR:
+	default:
+		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_ERR,
+		      "Unhandled supplicant opcode %d\n", supOpCode);
 	}
 }
 

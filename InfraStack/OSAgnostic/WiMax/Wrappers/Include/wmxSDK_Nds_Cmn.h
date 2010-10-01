@@ -234,13 +234,19 @@ typedef enum _wmx_ConnectProgressInfo_t
 	Registration	
 }wmx_ConnectProgressInfo_t, *wmx_pConnectProgressInfo_t;
 
-static char *wmxConnectProgressInfoName[] = {
-	"NotApplicable",
-	"Ranging",
-	"SBC",
-	"EAPAuthentication",
-	"ThreeWayHandshake",
-	"Registration"
+static inline
+const char * wmxConnectProgressInfoName(unsigned index)
+{
+	static const char *strs[] = {
+		"NotApplicable",
+		"Ranging",
+		"SBC",
+		"EAPAuthentication",
+		"ThreeWayHandshake",
+		"Registration"
+	};
+	static const unsigned index_max = sizeof(strs) / sizeof(strs[0]);
+	return index < index_max? strs[index] : "Illegal";
 };
 
 /// <summary>

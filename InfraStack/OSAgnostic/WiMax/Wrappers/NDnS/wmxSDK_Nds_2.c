@@ -103,7 +103,7 @@ wmx_Status_t WMX_WRAPPER_API WMX_EXT_CALL_CONV wmx_GetSystemState(	wmx_pSystemSt
 
     TRACE(TR_MOD_WRAPPER_LOGS, TR_SEV_NOTICE, "wmx_GetSystemState(OUT). SystemState=%s, ConnectState=%s, swRf=%d, hwRf=%d",
 			NDnSSystemStates[*systemState>=UnknownState?UnknownState:*systemState],
-			wmxConnectProgressInfoName[*connectProgressInfo>=Registration?NotApplicable:*connectProgressInfo],
+	 		wmxConnectProgressInfoName(*connectProgressInfo>=Registration?NotApplicable:*connectProgressInfo),
 			rfSwitchesStatus->swRfStatus, 
 			rfSwitchesStatus->hwRfStatus);
 	return WMX_ST_OK;

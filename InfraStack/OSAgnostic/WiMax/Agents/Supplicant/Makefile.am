@@ -85,6 +85,9 @@ WPA_SUP_CFLAGS = \
 	-D "WPA_OPEN_SOURCE" -D "USE_STANDARD_TLS_H_ONLY" \
 	$(LIBEAP0_CFLAGS)
 
+WPA_SUP_LIBS = \
+	$(LIBEAP0_LIBS)
+
 
 libSupplicantAgent_la_SOURCES = $(srcdir)/Source/SupplicantAgent.c \
 				$(top_srcdir)/InfraStack/OSAgnostic/WiMax/Wrappers/Supplicant/wmxSDK_Sup_Impl.c \
@@ -130,6 +133,7 @@ libSupplicantAgent_la_CFLAGS = 	-I "$(top_srcdir)/InfraStack/OSAgnostic/Product/
 if WPA_SUP_ENABLE
 libSupplicantAgent_la_SOURCES += $(WPA_SUP_SOURCES)
 libSupplicantAgent_la_CFLAGS += $(WPA_SUP_CFLAGS)
+libSupplicantAgent_la_LIBS = $(WPA_SUP_LIBS)
 EXTRA_DIST += $(DS_SUP_SOURCES)
 else
 libSupplicantAgent_la_SOURCES += $(DS_SUP_SOURCES)

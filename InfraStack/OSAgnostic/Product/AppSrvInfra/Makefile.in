@@ -59,12 +59,13 @@ am_wimaxd_OBJECTS = wimaxd-Act.$(OBJEXT) wimaxd-L4MsgProxy.$(OBJEXT) \
 	wimaxd-LoadInstrumentation.$(OBJEXT) \
 	wimaxd-DeviceConfiguration.$(OBJEXT)
 wimaxd_OBJECTS = $(am_wimaxd_OBJECTS)
+am__DEPENDENCIES_1 =
 wimaxd_DEPENDENCIES = ../../WiMax/Agents/NDnS/libNDnSAgent.la \
 	../../WiMax/Agents/Supplicant/libSupplicantAgent.la \
 	../PipeHandler/libPipeHandler.la \
 	../Instrumantation/libWmxInstrument.la \
 	../../Common/CommonServices/libServices.la \
-	../../Common/L4Common/libL4Common.la
+	$(am__DEPENDENCIES_1) ../../Common/L4Common/libL4Common.la
 wimaxd_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(wimaxd_CFLAGS) $(CFLAGS) \
 	$(wimaxd_LDFLAGS) $(LDFLAGS) -o $@
@@ -340,6 +341,7 @@ wimaxd_CFLAGS = \
 		-D WIMAXD_NAME="\"$(WIMAXD_NAME)\"" \
 		-D LIB_DIR="\"$(libdir)\""
 
+@WPA_SUP_ENABLE_TRUE@WPA_SUP_LIBS = @LIBEAP0_LIBS@
 wimaxd_LDADD = \
 	../../WiMax/Agents/NDnS/libNDnSAgent.la \
 	../../WiMax/Agents/Supplicant/libSupplicantAgent.la \
@@ -347,6 +349,7 @@ wimaxd_LDADD = \
 	../Instrumantation/libWmxInstrument.la \
 	../../Common/CommonServices/libServices.la \
 	@LIBWIMAX_LIBS@ \
+	$(WPA_SUP_LIBS) \
 	../../Common/L4Common/libL4Common.la \
 	-lpthread \
 	-ldl

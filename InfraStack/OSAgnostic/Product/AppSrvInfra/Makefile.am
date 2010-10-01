@@ -194,6 +194,10 @@ wimaxd_CFLAGS = \
 		-D WIMAXD_NAME="\"$(WIMAXD_NAME)\"" \
 		-D LIB_DIR="\"$(libdir)\""
 
+if WPA_SUP_ENABLE
+WPA_SUP_LIBS = @LIBEAP0_LIBS@
+endif
+
 wimaxd_LDADD = \
 	../../WiMax/Agents/NDnS/libNDnSAgent.la \
 	../../WiMax/Agents/Supplicant/libSupplicantAgent.la \
@@ -201,6 +205,7 @@ wimaxd_LDADD = \
 	../Instrumantation/libWmxInstrument.la \
 	../../Common/CommonServices/libServices.la \
 	@LIBWIMAX_LIBS@ \
+	$(WPA_SUP_LIBS) \
 	../../Common/L4Common/libL4Common.la \
 	-lpthread \
 	-ldl

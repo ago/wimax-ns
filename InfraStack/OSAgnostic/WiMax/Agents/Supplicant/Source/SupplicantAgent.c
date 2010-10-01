@@ -46,13 +46,12 @@
 
 #if defined(WPA_OPEN_SOURCE)
 //open source supplicant include files
-#include "includes.h"
 #include <eap_peer/util/common.h>
 #include <eap_peer/eap.h>
 #include <eap_peer/eap_config.h>
 #include <eap_peer/util/wpabuf.h>
-#include "tls-wpa.h"
-#include "dlfcn.h"
+#include <eap_peer/eap_methods.h>
+
 //////////////////////////////////////
 // wpa_supplicant open source structures
 struct eap_peer_ctx {
@@ -94,67 +93,6 @@ void Opensource_SupAgent_SendEapResponse(const u8 *data, size_t data_len);
 /************************************************************************
 ***********************	   Loading libeap.so wpa_supplicant	*********
 *************************************************************************/
-
-// helper functions
-typedef struct wpabuf * (*wpabuf_alloc_copy_ptr) (const void *data, size_t len);
-typedef void (*wpabuf_free_ptr) (struct wpabuf *buf);
-typedef void (*wpa_hexdump_ptr) (int level, const char *title, const u8 *buf, size_t len);
-
-// eap methods
-typedef int (*eap_key_available_ptr) (struct eap_sm *sm);
-typedef const u8 * (*eap_get_eapKeyData_ptr) (struct eap_sm *sm, size_t *len);
-typedef struct wpabuf * (*eap_get_eapRespData_ptr) (struct eap_sm *sm);
-typedef struct eap_eapol_interface * (*eap_get_interface_ptr) (struct eap_sm *sm);
-
-// peer functions
-typedef int (*eap_peer_register_methods_ptr) (void);
-typedef struct eap_sm * (*eap_peer_sm_init_ptr) (void *eapol_ctx,
-				 struct eapol_callbacks *eapol_cb,
-				 void *msg_ctx, struct eap_config *conf);
-typedef int (*eap_peer_sm_step_ptr) (struct eap_sm *sm);
-typedef void (*eap_peer_sm_deinit_ptr) (struct eap_sm *sm);
-typedef void (*eap_peer_unregister_methods_ptr) (void);
-typedef int (*eap_peer_set_method_ptr) (int);
-
-//tls functions
-struct tls_functions_table_t;
-typedef void* (*tls_init_ptr) (const struct tls_config *conf);
-typedef int (*tls_global_set_params_ptr) (void *tls_ctx, const struct tls_connection_params *params);
-typedef int (*tls_global_set_verify_ptr) (void *tls_ctx, int check_crl);
-typedef void (*tls_deinit_ptr) (void *tls_ctx);
-typedef int (*tls_config_use_external_ptr) (const struct tls_functions_table_t *ft, const char *name_if_internal);
-typedef void			(*WpaLogprocPtr)(int level, char *fmt, ...);
-
-// helper functions
-wpabuf_alloc_copy_ptr 	wpabuf_alloc_copy_func 	= NULL;
-wpabuf_free_ptr 	wpabuf_free_func	= NULL;
-wpa_hexdump_ptr 	wpa_hexdump_func	= NULL;
-
-// eap methods
-eap_key_available_ptr 	eap_key_available_func	= NULL;
-eap_get_eapKeyData_ptr 	eap_get_eapKeyData_func	= NULL;
-eap_get_eapRespData_ptr eap_get_eapRespData_func= NULL;
-eap_get_interface_ptr 	eap_get_interface_func	= NULL;
-
-// peer functions
-eap_peer_register_methods_ptr	eap_peer_register_methods_func	= NULL;
-eap_peer_sm_init_ptr		eap_peer_sm_init_func		= NULL;
-eap_peer_sm_step_ptr		eap_peer_sm_step_func		= NULL;
-eap_peer_sm_deinit_ptr		eap_peer_sm_deinit_func		= NULL;
-eap_peer_unregister_methods_ptr	eap_peer_unregister_methods_func= NULL;
-
-eap_peer_set_method_ptr eap_peer_set_method_func=NULL;
-
-
-//tls functions
-tls_init_ptr			tls_init_func			= NULL;
-tls_global_set_params_ptr	tls_global_set_params_func	= NULL;
-tls_global_set_verify_ptr	tls_global_set_verify_func	= NULL;
-tls_deinit_ptr			tls_deinit_func			= NULL;
-tls_config_use_external_ptr	tls_config_use_external_func	= NULL;
-
-// print function
-WpaLogprocPtr					wpa_logproc_ptr  = NULL;
 #else
 
 
@@ -226,11 +164,18 @@ EapSmGetBEKFuncPtr				swc_get_BEK_ptr;
 *	     Globals         *
 **************************/
 
+/*
+ * Yes, this being static sinks ... anyway,should be inside
+ * SupplicantConfig, but then we'd go into #include hell and thanks
+ * but no, thanks.
+ */
+
 SupplicantData g_SuppData;
 SupplicantData g_SuppData1; //[findme][amirs] buffer for 64bit
 
 SupplicantConfig g_SuppConfig1; //[findme][amirs] buffer for 64bit
 #endif
+static struct eap_method_type eap_methods[2];
 SupplicantConfig g_SuppConfig;
 
 OSAL_dynlib_t	g_DSlib = NULL;
@@ -331,6 +276,29 @@ void PrintBuff(UINT8* buf, UINT32 len)
  		printf("\n");
 	}
 }*/
+
+
+
+/*
+ * Methods configuration is set in  InitSupplicantLibrary()
+ *
+ * eap_ctx.eap_config.eap_methods = eap_methods
+ */
+static
+void peer_set_method1(unsigned method)
+{
+	eap_methods[0].vendor = EAP_VENDOR_IETF;
+	eap_methods[0].method = method;
+}
+
+static
+void peer_set_method2(unsigned method)
+{
+	eap_methods[1].vendor = EAP_VENDOR_IETF;
+	eap_methods[1].method = method;
+}
+
+
 #if defined(WPA_OPEN_SOURCE)
 // eap_eample source code
 static struct eap_peer_config * peer_get_config(void *ctx)
@@ -506,6 +474,7 @@ wmx_Status_t InitSupplicantLibrary(VOID)
 	smInitRequired = TRUE;
 
 #if defined(WPA_OPEN_SOURCE)
+	memset(&eap_methods, 0, sizeof(eap_methods));
 	memset(&eap_ctx, 0, sizeof(eap_ctx));
 
 	eap_ctx.eap_config.identity = (u8 *) os_strdup("user");
@@ -514,6 +483,7 @@ wmx_Status_t InitSupplicantLibrary(VOID)
 	eap_ctx.eap_config.password_len = 8;
 	eap_ctx.eap_config.ca_cert = (u8 *) os_strdup("ca.pem");
 	eap_ctx.eap_config.fragment_size = TLS_MAX_SIZE;
+	eap_ctx.eap_config.eap_methods = eap_methods;
 
 	memset(&eap_cb, 0, sizeof(eap_cb));
 	eap_cb.get_config = peer_get_config;
@@ -527,7 +497,7 @@ wmx_Status_t InitSupplicantLibrary(VOID)
 	eap_cb.notify_pending = peer_notify_pending;
 
 	memset(&eap_conf, 0, sizeof(eap_conf));
-	eap_ctx.eap = eap_peer_sm_init_func(&eap_ctx, &eap_cb, &eap_ctx, &eap_conf);
+	eap_ctx.eap = eap_peer_sm_init(&eap_ctx, &eap_cb, &eap_ctx, &eap_conf);
 	if (eap_ctx.eap == NULL)
 		return WMX_ST_FAIL;
 
@@ -648,30 +618,30 @@ int eap_sm_peer_step(void)
 	if ( bMethodSet == FALSE)
 	{
 		
-		eap_peer_register_methods_func(); 	
+		eap_peer_register_methods(); 	
 		bMethodSet = TRUE;
 	}
 
-	res = eap_peer_sm_step_func(eap_ctx.eap);
+	res = eap_peer_sm_step(eap_ctx.eap);
 
 	if (eap_ctx.eapResp) {
 		struct wpabuf *resp;
 		eap_ctx.eapResp = FALSE;
-		resp = eap_get_eapRespData_func(eap_ctx.eap);
+		resp = eap_get_eapRespData(eap_ctx.eap);
 		if (resp) {
 			Opensource_SupAgent_SendEapResponse(wpabuf_head(resp),
 					      wpabuf_len(resp));
-			wpabuf_free_func(resp);
+			wpabuf_free(resp);
 		}
 	}
 
 	if (eap_ctx.eapSuccess) {
 		res = 0;
-		if (eap_key_available_func(eap_ctx.eap)) {
+		if (eap_key_available(eap_ctx.eap)) {
 			const u8 *key;
 			size_t key_len;
-			key = eap_get_eapKeyData_func(eap_ctx.eap, &key_len);
-			wpa_hexdump_func(MSG_DEBUG, "EAP keying material",
+			key = eap_get_eapKeyData(eap_ctx.eap, &key_len);
+			wpa_hexdump(MSG_DEBUG, "EAP keying material",
 				    key, key_len);
 			memcpy(eap_ctx.MskKey,key,key_len);
 			eap_ctx.MskKeyActualLen = key_len;
@@ -685,8 +655,8 @@ void eap_sm_peer_rx(const u8 *data, size_t data_len)
 {
 	/* Make received EAP message available to the EAP library */
 	eap_ctx.eapReq = TRUE;
-	wpabuf_free_func(eap_ctx.eapReqData);
-	eap_ctx.eapReqData = wpabuf_alloc_copy_func(data, data_len);
+	wpabuf_free(eap_ctx.eapReqData);
+	eap_ctx.eapReqData = wpabuf_alloc_copy(data, data_len);
 }
 #else
 // for DEBUG
@@ -1147,9 +1117,9 @@ void ResetSupplicantLibrary()
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: Reset library - end");
 #else
 	if( bMethodSet == TRUE ){	
-		eap_peer_sm_deinit_func(eap_ctx.eap);
-		eap_peer_unregister_methods_func();
-		wpabuf_free_func(eap_ctx.eapReqData);
+		eap_peer_sm_deinit(eap_ctx.eap);
+		eap_peer_unregister_methods();
+		wpabuf_free(eap_ctx.eapReqData);
 	
 		FreeIfAllocated(eap_ctx.eap_config.identity);
 		FreeIfAllocated(eap_ctx.eap_config.anonymous_identity);
@@ -1227,33 +1197,6 @@ wmx_Status_t LoadSupplicantLibrary()
 	swc_set_tls_function_table_ptr = (EapSetTlsFunctionTable)OSAL_find_symbol(g_DSlib, "swc_config_use_external_tls");
 swc_get_BEK_ptr = (EapSmGetBEKFuncPtr)OSAL_find_symbol(g_DSlib, "swc_eap_get_BEK_data");
 aaaamirswc_eap_sm_init_ptr =swc_eap_sm_init_ptr;  //[findme][amirs] buffer for 64bit
-#else
-// helper functions
-	wpabuf_alloc_copy_func 	= (wpabuf_alloc_copy_ptr)OSAL_find_symbol(g_DSlib, "wpabuf_alloc_copy");
-	wpabuf_free_func 	= (wpabuf_free_ptr)OSAL_find_symbol(g_DSlib, "wpabuf_free");
-	wpa_hexdump_func	= (wpa_hexdump_ptr)OSAL_find_symbol(g_DSlib, "wpa_hexdump");
-
-// eap methods
-	eap_key_available_func 	= (eap_key_available_ptr)OSAL_find_symbol(g_DSlib, "eap_key_available");
-	eap_get_eapKeyData_func = (eap_get_eapKeyData_ptr)OSAL_find_symbol(g_DSlib, "eap_get_eapKeyData");
-	eap_get_eapRespData_func= (eap_get_eapRespData_ptr)OSAL_find_symbol(g_DSlib, "eap_get_eapRespData");
-
-// peer functions
-	eap_peer_register_methods_func 	= (eap_peer_register_methods_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_register_methods");
-	eap_peer_sm_init_func 		= (eap_peer_sm_init_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_sm_init");
-	eap_peer_sm_step_func		= (eap_peer_sm_step_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_sm_step");
-	eap_peer_sm_deinit_func		= (eap_peer_sm_deinit_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_sm_deinit");
-	eap_peer_unregister_methods_func= (eap_peer_unregister_methods_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_unregister_methods");
-
-	eap_peer_set_method_func = (eap_peer_set_method_ptr)OSAL_find_symbol(g_DSlib, "eap_peer_set_method");
-
-//tls functions
-	tls_init_func 			= (tls_init_ptr)OSAL_find_symbol(g_DSlib, "tls_init");
-	tls_global_set_params_func 	= (tls_global_set_params_ptr)OSAL_find_symbol(g_DSlib, "tls_global_set_params");
-	tls_global_set_verify_func	= (tls_global_set_verify_ptr)OSAL_find_symbol(g_DSlib, "tls_global_set_verify");
-	tls_deinit_func			= (tls_deinit_ptr)OSAL_find_symbol(g_DSlib, "tls_deinit");
-// print fucntion
-	wpa_logproc_ptr = (WpaLogprocPtr)OSAL_find_symbol(g_DSlib, "wpa_printf");
 #endif
 	return WMX_ST_OK;
 }
@@ -1806,16 +1749,15 @@ void  Supplicant_InternalHandler( UINT32 internalRequestID, void *buffer, UINT32
 		Sup_PrintTrace((char*)eap_ctx.eap_config.password, "Password", prefix);
 		break;
 	case SUP_OPCODE_SET_EAP_METHOD:
-		g_SuppConfig.eapmethod = SupAgent_ExtractUnsignedInt(buffer); 
-		
 		eapmethod = SupAgent_ExtractUnsignedInt(buffer);
-		eap_peer_set_method_func(eapmethod);
+		g_SuppConfig.eapmethod = eapmethod;
+		peer_set_method1(eapmethod);
 		bMethodSet = TRUE;
 		break;
 	case SUP_OPCODE_SET_PHASE2_METHOD:
-		g_SuppConfig.phase2 = SupAgent_ExtractUnsignedInt(buffer);
 		eapmethod = SupAgent_ExtractUnsignedInt(buffer);
-		eap_peer_set_method_func(eapmethod);
+		g_SuppConfig.phase2 = eapmethod;
+		peer_set_method2(eapmethod);
 		break;
 	case SUP_OPCODE_SET_TLS_CA_CERT:
 		FreeIfAllocated(g_SuppConfig.cacert);
@@ -2091,7 +2033,7 @@ void ReassignSupConfig()
 	}
 	if (g_SuppConfig.eapmethod)
 	{
-		eap_peer_set_method_func(g_SuppConfig.eapmethod);
+		peer_set_method1(g_SuppConfig.eapmethod);
 	}
 	if (g_SuppConfig.cacert)
 	{
@@ -2351,13 +2293,6 @@ Finalize:
 wmx_Status_t DelayLoadSupplicant()
 {
 	wmx_Status_t status = WMX_ST_OK;
-	status = LoadSupplicantLibrary();	// Load open source supplicant
-	if (status != WMX_ST_OK)
-	{
-		TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_ERR, ("Can't load Supplicant library"));
-		return status;
-	}
-
 	status = InitSupplicantLibrary(); // Init the open source supplicant
 	if (status != WMX_ST_OK)
 	{

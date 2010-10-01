@@ -57,7 +57,7 @@ EXPORT IndicatorSubscribers *GetIndicatorSubscribers(List *pList, UINT32 indicat
 EXPORT void AllocIndicatorsList(List **ppList);
 EXPORT void EmptyIndicatorsList(List **ppList);
 EXPORT void CleanIndicatorsList(List **ppList);
-EXPORT void SendIndicationToSubscribers( UINT32 indication_id, SendIndData *pSendIndicationData, UINT32 sendIndicationDataLength );
+EXPORT void SendIndicationToSubscribers( UINT32 indication_id, void *pSendIndicationData, UINT32 sendIndicationDataLength );
 
 
 #endif //INDICATIONS_SUBSCRIBERS_DEFINE

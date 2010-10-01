@@ -147,8 +147,9 @@ EXPORT BOOL Indications_RemoveSubscriber(IndicatorSubscribers *indSubscribers, U
 
 // This  function go over the specific list (L4 SS or status SS) and send all its registered targets the indication.
 // Can be used as the InternalHandler with Messenger_PostRequest
-EXPORT void SendIndicationToSubscribers( UINT32 internalRequestID, SendIndData *buffer, UINT32 bufferLength )
+EXPORT void SendIndicationToSubscribers( UINT32 internalRequestID, void *_buffer, UINT32 bufferLength )
 {
+	SendIndData *buffer = _buffer;
 	ListItem* handle;
 	L5_TARGET_ID targetID;
 	ULONG_PTR data;

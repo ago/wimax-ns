@@ -14,7 +14,7 @@ License:    BSD
 URL:        http://linuxwimax.org
 Source0:    wimax-%{version}.tar.gz
 #Source100:  wimax.yaml
-BuildRequires:  pkgconfig(libeap0)
+BuildRequires:  pkgconfig(libeap0) >= 0.7
 BuildRequires:  pkgconfig(libwimaxll-0)
 BuildRequires:  zlib-devel
 Obsoletes:  WiMAX-Network-Service

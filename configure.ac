@@ -169,7 +169,7 @@ then
         enable_sup_wpa=no
 else
         enable_sup_wpa=yes
-        PKG_CHECK_MODULES(LIBEAP0, libeap0)
+        PKG_CHECK_MODULES(LIBEAP0, libeap0 >= 0.7.0)
         libeap0_prefix=`pkg-config libeap0 --variable=prefix`
         AC_MSG_RESULT(Using EAP library from $libeap0_prefix)
         AC_SUBST(LIBEAP0_CFLAGS)

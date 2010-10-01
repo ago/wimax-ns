@@ -48,10 +48,10 @@
 #if defined(WPA_OPEN_SOURCE)
 //open source supplicant include files
 #include "includes.h"
-#include <eap_peer/common.h>
+#include <eap_peer/util/common.h>
 #include <eap_peer/eap.h>
 #include <eap_peer/eap_config.h>
-#include "wpabuf.h"
+#include <eap_peer/util/wpabuf.h>
 #include "tls-wpa.h"
 #include "dlfcn.h"
 //////////////////////////////////////

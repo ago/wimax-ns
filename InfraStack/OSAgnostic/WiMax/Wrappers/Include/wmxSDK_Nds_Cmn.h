@@ -219,12 +219,6 @@ typedef enum _wmx_MediaStatus_t
 	LinkRenew
 } wmx_MediaStatus_t, *wmx_pMediaStatus_t;
 
-static char *wmxMediaStatusName[] = {
-	"LinkUp",
-	"LinkDown",
-	"LinkRenew"
-};
-
 /// <summary>
 /// (IN) A wmx_ConnectProgressInfo_t enum giving further information on the progress of a connection attempt.
 ///

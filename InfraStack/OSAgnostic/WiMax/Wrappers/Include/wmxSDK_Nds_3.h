@@ -207,25 +207,6 @@ typedef enum _wmx_UserConnectStatus_t
 	UnknownConnectStatus
 } wmx_UserConnectStatus_t, *wmx_pUserConnectStatus_t;
 
-static char *wmxUserConnectStatusName[] = {
-	"UserConnectSuccessful",
-	"UserConnectCancelled",
-	"UserConnectFailToConnectToNW",
-	"UserConnectFailToConnectRanging",
-	"UserConnectFailToConnectSBC",
-	"UserConnectFailToConnectEAPAuth",
-	"UserConnectFailToConnect3WayHandshake",
-	"UserConnectFailToConnectREG",
-	"UserConnectFailToConnectDatapath",
-	"UserConnectFailToConnectCoexNoRf",
-	"UserConnectDisconnectDreg",
-	"UserConnectDisconnectAbort",
-	"UserConnectDisconnectReset",
-	"UserConnectDisconnectDrop",
-	"UserConnectFailed",
-	"UnknownConnectStatus"
-};
-
 /// <summary>
 /// Type definition for a struct containing information about the link's status.
 /// (i.e. the status of the link between the device and the network it is connected to).

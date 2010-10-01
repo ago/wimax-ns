@@ -261,12 +261,18 @@ typedef enum _wmx_ScanType_t
 	SCAN_TYPE_DIRECT
 } wmx_ScanType_t, *wmx_pScanType_t;
 
-static char *wmx_ScanType_tStr[] = {
-	"Preferred Scan",
-	"Wide Scan",
-	"Scan for reconnect",
-	"Scan for auto connect",
-	"Direct Scan"
+static inline
+const char * wmx_ScanType_tStr(unsigned index)
+{
+	static const char *strs[] = {
+		"Preferred Scan",
+		"Wide Scan",
+		"Scan for reconnect",
+		"Scan for auto connect",
+		"Direct Scan"
+	};
+	static const unsigned index_max = sizeof(strs) / sizeof(strs[0]);
+	return index < index_max? strs[index] : "Illegal";
 };
 
 typedef enum _wmx_LinkLossType_t
@@ -276,10 +282,16 @@ typedef enum _wmx_LinkLossType_t
 	LinkLossType_Infinite
 } wmx_LinkLossType_t;
 
-static char* wmx_LinkLossType_tStr[] = {
-	"Short Link Loss",
-	"Long Link Loss",
-	"Infinite Link Loss"
+static inline
+const char * wmx_LinkLossType_tStr(unsigned index)
+{
+	static const char *strs[] = {
+		"Short Link Loss",
+		"Long Link Loss",
+		"Infinite Link Loss"
+	};
+	static const unsigned index_max = sizeof(strs) / sizeof(strs[0]);
+	return index < index_max? strs[index] : "Illegal";
 };
 
 typedef enum _wmx_ConnectionType_t
@@ -340,24 +352,30 @@ typedef enum _wmx_SystemState_t
 	UnknownState
 }wmx_SystemState_t, *wmx_pSystemState_t;
 
-static char* NDnSSystemStates[] = {
-	"UnInitialized",
-	"Config",
-	"Initialized",
-	"Production",
-	"RfOff",
-	"Ready",
-	"Scan",
+static inline
+const char * NDnSSystemStates(unsigned index)
+{
+	static const char *strs[] = {
+		"UnInitialized",
+		"Config",
+		"Initialized",
+		"Production",
+		"RfOff",
+		"Ready",
+		"Scan",
 //	"OOZ",
 //	"Standby",
-	"Connecting",
-	"WimaxConnected",
-	"DataPathConnected",
-	"Idle",
+		"Connecting",
+		"WimaxConnected",
+		"DataPathConnected",
+		"Idle",
 //	"SleepActive",
-	"Disconnecting",
-	"RfShutDown",
-	"UnknownState"
+		"Disconnecting",
+		"RfShutDown",
+		"UnknownState"
+	};
+	static const unsigned index_max = sizeof(strs) / sizeof(strs[0]);
+	return index < index_max? strs[index] : "Illegal";
 };
 
 typedef enum _wmx_ProvisioningOperation_t

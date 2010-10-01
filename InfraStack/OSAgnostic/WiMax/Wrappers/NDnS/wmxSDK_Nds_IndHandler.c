@@ -84,7 +84,7 @@ void wmxNds_CBsCaller( UINT32 internalRequestID, void *buffer, UINT32 bufferLeng
 		TRACE(TR_MOD_NDNS_WRAPPER, TR_SEV_INFO, "got connection state update");
 		if ( NULL != ConnectionStateUpdateCB )
 		{
-			TRACE(TR_MOD_NDNS_WRAPPER, TR_SEV_NOTICE, "Calling ConnectionStateUpdate callback. ConnectionState=%s",ConnectionStateName[*(wmx_pConnectionState_t)buffer>=UnknownConnectionState?UnknownConnectionState:*(wmx_pConnectionState_t)buffer]);
+			TRACE(TR_MOD_NDNS_WRAPPER, TR_SEV_NOTICE, "Calling ConnectionStateUpdate callback. ConnectionState=%s",ConnectionStateName(*(wmx_pConnectionState_t)buffer>=UnknownConnectionState?UnknownConnectionState:*(wmx_pConnectionState_t)buffer));
 			ConnectionStateUpdateCB( *(wmx_pConnectionState_t)buffer );
 		}
 		break;
@@ -388,7 +388,7 @@ wmx_Status_t wmxNds_StateReportArrived( ReportState_type stateReport )
 	
 	// update the system state
 	wmxNds_DriverSystemStateToSystemState( &(systemStateUpdate.SystemState), stateReport.SystemState.value );
-	TRACE(TR_MOD_NDNS_WRAPPER, TR_SEV_INFO, "System State Arrived: %s", NDnSSystemStates[systemStateUpdate.SystemState]);
+	TRACE(TR_MOD_NDNS_WRAPPER, TR_SEV_INFO, "System State Arrived: %s", NDnSSystemStates(systemStateUpdate.SystemState));
 
 	old_SystemState = GetCurrentSystemState();
 

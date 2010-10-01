@@ -445,7 +445,7 @@ BOOL L4Configurations_getLedBlinkRate(UINT8 LEDBlinkRate[], LPCTSTR name_of_subk
 		
 	for(i=0; i<NUM_OF_LED_BLINK_RATE; i++)
 	{
-		Valent[i].ve_valuename = OSAL_LED_REG_ARR[i];
+		Valent[i].ve_valuename = OSAL_LED_REG_ARR(i);
 	}
 
 	readFromReg = OSAL_ConfigController_GetMultValues(name_of_subkey, Valent, NUM_OF_LED_BLINK_RATE, regBuffer, sizeof(regBuffer));

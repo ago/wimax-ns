@@ -55,12 +55,18 @@ typedef enum _wmx_ConnectionState_t
 	UnknownConnectionState
 }wmx_ConnectionState_t, *wmx_pConnectionState_t;
 
-static char *ConnectionStateName[] = {
-	"ConnectionStateRfOff",
-	"Disconnected",
-	"OutOfZone",
-	"Connected",
-	"UnknownConnectionState"
+static inline
+const char * ConnectionStateName(unsigned index)
+{
+	static const char *strs[] = {
+		"ConnectionStateRfOff",
+		"Disconnected",
+		"OutOfZone",
+		"Connected",
+		"UnknownConnectionState"
+	};
+	static const unsigned index_max = sizeof(strs) / sizeof(strs[0]);
+	return index < index_max? strs[index] : "Illegal";
 };
 /// <summary>
 /// The signature defintion of a wmx_pConnectionStateUpdateCB_t callback function. 

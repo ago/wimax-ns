@@ -327,7 +327,7 @@ wmx_Status_t SetConnectMode(wmx_pUserConnectMode_t pConnectMode, UINT32 bufferSi
 	wmx_Status_t status = WMX_ST_FAIL;
 
 	UNREFERENCED_PARAMETER(bufferSize);
-	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "SetConnectMode(IN). systemState=%s, pConnectMode = [%d]", NDnSSystemStates[g_ndnsContext.systemState], *pConnectMode);
+	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "SetConnectMode(IN). systemState=%s, pConnectMode = [%d]", NDnSSystemStates(g_ndnsContext.systemState), *pConnectMode);
 	// in case a scan/connect process is taking place, notify device
 	if(L4C_GetInitialCoexMode() == WMX_MODE_CM && g_ndnsContext.processStarted)
 	{
@@ -1351,7 +1351,7 @@ wmx_Status_t L4C_SetControllerModeEx(wmx_pSystemStateUpdate systemStateUpdate, B
 	if (systemStateUpdate->SystemState != UnInitialized)
 	{
 		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "L4C_SetControllerModeEx(IN): systemStateUpdate=%s, swRfStatus=%d, hwRfStatus=%d",
-		NDnSSystemStates[systemStateUpdate->SystemState], systemStateUpdate->rfSwitchesStatus.swRfStatus,
+		      NDnSSystemStates(systemStateUpdate->SystemState), systemStateUpdate->rfSwitchesStatus.swRfStatus,
 		systemStateUpdate->rfSwitchesStatus.hwRfStatus);
 	}
 	else
@@ -1713,7 +1713,7 @@ wmx_Status_t L4C_SetPS(wmx_LinkLossType_t linkLossType, BOOL delayStart, BOOL is
 
 	//g_ndnsContext.currentScanType = SCAN_TYPE_PREFERRED;
 
-	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "Link Loss config: Type = %s, Delay = %d sec, Repetitions = %d", wmx_LinkLossType_tStr[linkLossType], delayTime, repetitionsCount);
+	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "Link Loss config: Type = %s, Delay = %d sec, Repetitions = %d", wmx_LinkLossType_tStr(linkLossType), delayTime, repetitionsCount);
 	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_DEBUG, "L4C_SetPS(OUT)");
 	return L4S_SetPSCfg(mcp,
 						numChannels,
@@ -1776,7 +1776,7 @@ wmx_Status_t L4C_SetWS(wmx_LinkLossType_t linkLossType, BOOL delayStart, BOOL is
 
 	//g_ndnsContext.currentScanType = SCAN_TYPE_WIDE;
 
-	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "Link Loss config: Type = %s, Delay = %d sec, Repetitions = %d", wmx_LinkLossType_tStr[linkLossType], delayTime, repetitionsCount);
+	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "Link Loss config: Type = %s, Delay = %d sec, Repetitions = %d", wmx_LinkLossType_tStr(linkLossType), delayTime, repetitionsCount);
 
 	return L4S_SetWhileSCfg(mcp,
 							numChannels,
@@ -1821,7 +1821,7 @@ wmx_Status_t L4C_StartScan(wmx_ScanType_t scanType, wmx_LinkLossType_t linkLossT
 	wmx_Status_t status = WMX_ST_OK;
 
 	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "L4C_StartScan(IN): type = <%s>\tlink loss type = <%s>\ttrigger = <%s%s>",
-		wmx_ScanType_tStr[scanType], wmx_LinkLossType_tStr[linkLossType],
+	        wmx_ScanType_tStr(scanType), wmx_LinkLossType_tStr(linkLossType),
 		(g_ndnsContext.isSingleManualScan == TRUE ? NDNS_STR_MANUAL : NDNS_STR_AUTOMATIC),
 		(delayStart == TRUE ? NDNS_STR_DELAYED : ""));
 
@@ -1873,7 +1873,7 @@ wmx_Status_t L4C_StartManualScanPhase2(wmx_ScanType_t scanType, BOOL isInternal)
 	L4CState fsmState = FSM_GetState(&g_ndnsContext.fsm);
 
 	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_DEBUG, "L4C_StartManualScanPhase2(IN) - scanType=%s, isInternal=%d",
-		wmx_ScanType_tStr[scanType], isInternal);
+	      wmx_ScanType_tStr(scanType), isInternal);
 	L4S_Reset(TRUE); // reset the L4Scanner
 
 	if (!FSM_SetStateIfNotEqual(&g_ndnsContext.fsm, L4C_SINGLE_SCAN, L4C_SINGLE_SCAN) &&
@@ -2296,7 +2296,7 @@ void L4C_ApplyNextScanParams(wmx_ScanType_t scanType,
 
 	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE,
 		"L4C_ApplyNextScanParams (IN) - scanType=%s, scanStatus=%d, isResumeScan=%d, isScanCycleComplete=%d, numOfNSPs=%d",
-		wmx_ScanType_tStr[scanType], scanStatus, isResumeScan, isScanCycleComplete, numOfNSPs);
+	        wmx_ScanType_tStr(scanType), scanStatus, isResumeScan, isScanCycleComplete, numOfNSPs);
 	if (isResumeScan)
 	{
 		OSAL_atomic_exchange(&g_ndnsContext.isResumeScan, TRUE);
@@ -3196,7 +3196,7 @@ wmx_Status_t NDnSAgent_GetLinkStatus( UINT32 *bufferLength, UINT8 *buffer )
 
 	fIsCacheState = (g_ndnsContext.systemState == Idle);
 
-	TRACE(TR_MOD_NDNS_WRAPPER, TR_SEV_DEBUG, "NDnSAgent_GetLinkStatus - device status = %s", NDnSSystemStates[g_ndnsContext.systemState>=UnknownState?UnknownState:g_ndnsContext.systemState]);
+	TRACE(TR_MOD_NDNS_WRAPPER, TR_SEV_DEBUG, "NDnSAgent_GetLinkStatus - device status = %s", NDnSSystemStates(g_ndnsContext.systemState>=UnknownState?UnknownState:g_ndnsContext.systemState));
 
 	//get the information also for cases the AppSrv reset while in DataPathConnected
 	if( !fIsCacheState ||
@@ -3423,7 +3423,7 @@ void L4C_TaskHandler(UINT32 internalRequestID, void *buffer, UINT32 bufferLength
 			{	 // only when getting to Ready state
 				TRACE(TR_MOD_NDNS_AGENT, TR_SEV_DEBUG,
 					"State is not ready or scanner is stil scanning: system state=%s, scanner state=%s",
-					NDnSSystemStates[systemState],
+				        NDnSSystemStates(systemState),
 					ScannerStateStr[L4S_GetScannerState()]);
 				L4C_ScheduleTask(Task_StartManualScan); // start Connect on the next Ready state
 			}
@@ -4548,7 +4548,7 @@ void NDnSAgent_OnProgressDualFlush(L4C_Task task, DualFlushOp ExecuteTask, UINT3
 	}
 	else
 	{
-		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_OnProgressDualFlush - scheduling the task '%s' for the next Ready state (current state=%s)", L4C_TaskStr[task], NDnSSystemStates[systemState]);
+		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_OnProgressDualFlush - scheduling the task '%s' for the next Ready state (current state=%s)", L4C_TaskStr[task], NDnSSystemStates(systemState));
 		// we are still not in Ready state - schedule the Connect task to be executed
 		// only when getting to Ready state
 		L4C_ScheduleTask(task); // start the task on the next Ready state

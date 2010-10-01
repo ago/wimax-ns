@@ -494,21 +494,28 @@
 //## Value verify between the different OEMs
 //## Comment There would be a list of REG_DWORD define as �A� ,�B� ��M� that indicate the on time for each behavior.
 //## Comment In addition the last key which call "PowerSave" indicate the on time for Power Save behavior
-static char * OSAL_LED_REG_ARR[]  =   {("A"),
-("B"),
-("C"),
-("D"),
-("E"),
-("F"),
-("G"),
-("H"),
-("I"),
-("J"),
-("K"),
-("L"),
-("M"),
-("PowerSave")};
-
+static inline
+const char * OSAL_LED_REG_ARR(unsigned index)
+{
+	static const char *strs[] = {
+		("A"),
+		("B"),
+		("C"),
+		("D"),
+		("E"),
+		("F"),
+		("G"),
+		("H"),
+		("I"),
+		("J"),
+		("K"),
+		("L"),
+		("M"),
+		("PowerSave")
+	};
+	return strs[index];
+}
+	
 //## End Root path
 //## General Comment under the Root path Software\\Intel\\WiMAX\\LED\\LEDBlinkRate\\OffBlinkRate we define the same array
 //## General Comment (same key names) for the off time

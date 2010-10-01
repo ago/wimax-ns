@@ -210,7 +210,7 @@ void WMX_EXT_CALL_CONV NDnSAgent_SystemStateUpdate( wmx_pSystemStateUpdate syste
 	free(pSendIndData);
 
 	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_SystemStateUpdate: SystemState=%s, ConnectState=%s, swRf=%d, hwRf=%d",
-	        NDnSSystemStates[systemStateUpdate->SystemState>=UnknownState?UnknownState:systemStateUpdate->SystemState],
+	      NDnSSystemStates(systemStateUpdate->SystemState>=UnknownState?UnknownState:systemStateUpdate->SystemState),
 	        wmxConnectProgressInfoName(systemStateUpdate->ConnectProgress>=Registration?NotApplicable:systemStateUpdate->ConnectProgress),
 		systemStateUpdate->rfSwitchesStatus.swRfStatus,
 		systemStateUpdate->rfSwitchesStatus.hwRfStatus);	

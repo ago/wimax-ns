@@ -144,15 +144,17 @@ typedef enum _L5_EVENT
 	L5_EVENT_DRIVER_DISCONNECTED
 } L5_EVENT;
 
-#define L5_EVENT_COUNT 4
-
-#define L5_EVENT_STR(l5event) (l5event < L5_EVENT_COUNT ? L5EventStrArr[l5event] :"Ilegal")
-
-static char* L5EventStrArr[] = {
-	"<Disconnected>",
-	"<Other Disconnected>",
-	"<Driver Up>",
-	"<Driver Down>"
+static inline
+const char *L5_EVENT_STR(unsigned index) 
+{
+	static const char *strs[] = {
+		"<Disconnected>",
+		"<Other Disconnected>",
+		"<Driver Up>",
+		"<Driver Down>"
+	};
+	static const unsigned index_max = sizeof(strs) / sizeof(strs[0]);
+	return index < index_max? strs[index] : "Illegal";
 };
 
 typedef enum _THREAD_ID

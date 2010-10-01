@@ -117,8 +117,7 @@
 #define DEFAULT_TRUE_LOWER "true"
 
 #define UPDATER_FILE_NAME "WiMaxUpdateManager.exe"
-static char defaultPreamble[] = "ffffffffffffffffffffffffffffff";
-static char C_L4DB_EMPTY_STRING[] = "";
+#define C_L4DB_EMPTY_STRING ""
 
 typedef enum _Any_t
 {

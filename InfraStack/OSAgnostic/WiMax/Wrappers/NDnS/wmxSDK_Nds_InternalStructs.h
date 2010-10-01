@@ -61,12 +61,6 @@ typedef enum _wmx_AgingStatus_t
 	AgingStatus_Remove
 } wmx_AgingStatus_t, *wmx_pAgingStatus_t;
 
-static char *wmx_AgingStatus_tStr[] = {
-	"New",
-	"Old",
-	"Remove (filtered)"
-};
-
 // TODO: Oran - check if a similar enum has already been defined
 typedef enum _wmx_ConnectType_t
 {

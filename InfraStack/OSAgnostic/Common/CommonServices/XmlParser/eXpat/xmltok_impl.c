@@ -1,8 +1,8 @@
 /* Copyright (c) 1998, 1999 Thai Open Source Software Center Ltd
    See the file COPYING for copying permission.
 */
-#pragma warning(disable:4100) // disable the "unreferenced formal parameter" warning
-#pragma warning(disable:4127) // disable the "conditional expression is constant" warning
+//#pragma warning(disable:4100) // disable the "unreferenced formal parameter" warning
+//#pragma warning(disable:4127) // disable the "conditional expression is constant" warning
 #ifndef IS_INVALID_CHAR
 #define IS_INVALID_CHAR(enc, ptr, n) (0)
 #endif

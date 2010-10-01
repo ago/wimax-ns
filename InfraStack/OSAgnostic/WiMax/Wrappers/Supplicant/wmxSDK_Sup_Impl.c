@@ -58,13 +58,6 @@ so we use symlink to actual supplicant tls.h */
 #include "tls-wpa.h"
 #endif
 
-static void __keep_silence(void) {}
-#ifdef NATIVE_WINDOWS
-#define SUPPLICANT_LOG	(!wpa_logproc_ptr) ? __keep_silence() : wpa_logproc_ptr
-#else
-
-
-#endif
 
 #ifndef WPA_OPEN_SOURCE
 /* temporary, remove*/
@@ -1106,7 +1099,7 @@ void *wmx_GetTlsFunctionTable(int param)
 }
 #endif //WPA_OPEN_SOURCE
 
-#pragma warning (disable:4100)
+//#pragma warning (disable:4100)
 
 
 typedef TLSOperationRequest_type  tTLSOperationRequest;

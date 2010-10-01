@@ -1,8 +1,8 @@
 /* Copyright (c) 1998, 1999 Thai Open Source Software Center Ltd
    See the file COPYING for copying permission.
 */
-#pragma warning(disable:4100) // disable the "unreferenced formal parameter" warning
-#pragma warning(disable:4244) // disable the "conversion from 'int' to 'char', possible loss of data" warning
+//#pragma warning(disable:4100) // disable the "unreferenced formal parameter" warning
+//#pragma warning(disable:4244) // disable the "conversion from 'int' to 'char', possible loss of data" warning
 
 #ifdef COMPILED_FROM_DSP
 #include "winconfig.h"

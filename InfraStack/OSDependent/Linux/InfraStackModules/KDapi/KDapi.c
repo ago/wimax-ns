@@ -882,7 +882,6 @@ static int init_device()
 
 static int preinit_device()
 {
-	UINT32 BytesWritten = 0;
 	// Request Fields
 	UINT8 *requestBuffer;
 	UINT32 requestBufferSize;
@@ -890,7 +889,6 @@ static int preinit_device()
 	struct i2400m_l3l4_hdr *ack;
 
 	// Response Fields
-	UINT32 responseID;
 	UINT8 *responseBuffer;
 	UINT32 responseBufferSize;
 	char *OpcodeName;

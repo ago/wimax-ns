@@ -55,7 +55,6 @@ OSAL_event_t deviceInsertRemoveEvent;
 OSAL_critical_section csDeviceInsertRemove;
 
 static sem_t dsem;
-static char gcLogFilePathName[MAX_FILENAME_LEN];
 
 int IsDaemonRunning()
 {

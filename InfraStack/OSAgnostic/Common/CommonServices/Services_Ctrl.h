@@ -33,41 +33,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "wimax_osal_types.h"
 
-static char* SystemStates[] = {
-	"Uninit",
-	"Init",
-	"Ready",
-	"Scan",
-	"Standby",
-	"Connecting",
-	"Wimax_Connected",
-	"Data_Path_Connected",
-	"Idle",
-	"Disconnecting",
-	"Out_Of_Zone",
-	"Sleep_Active",
-	"Producation",
-	"Config",
-	"RF_Off",
-	"RF_Shutdown"
-};
-
-static char *L4ResponseStatus[] = {
-	"L3L4_RESPONSE_STATUS_SUCCESS_DONE",
-	"L3L4_RESPONSE_STATUS_SUCCESS_IN_PROCESS",
-	"L3L4_RESPONSE_STATUS_INVALID_OPCODE",
-	"L3L4_RESPONSE_STATUS_ERROR_BAD_STATE",
-	"L3L4_RESPONSE_STATUS_ILLEGAL_VALUE",
-	"L3L4_RESPONSE_STATUS_MISSING_PARAMS",
-	"L3L4_RESPONSE_STATUS_VERSION_ERROR",
-	"L3L4_RESPONSE_STATUS_ACCESSIBILITY_ERROR",
-	"L3L4_RESPONSE_STATUS_BUSY",
-	"L3L4_RESPONSE_STATUS_CORRUPTED_TLV",
-	"L3L4_RESPONSE_STATUS_UNINITIALIZED",
-	"L3L4_RESPONSE_STATUS_UNKNOWN_ERROR",
-	"L3L4_RESPONSE_STATUS_PRODUCTION_ERROR"
-};
-
 
 BOOL Services_Init();
 void Services_Fini();

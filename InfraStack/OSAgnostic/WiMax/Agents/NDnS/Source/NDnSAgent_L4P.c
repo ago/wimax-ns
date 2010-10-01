@@ -663,7 +663,7 @@ wmx_Status_t l4P_RemoveRedundantChannels(wmx_pChannelInfoArr pOriginalArr)
 	uniqueSize = origSize;
 
 
-	for(origSize; origSize < pOriginalArr->arrSize; origSize++)
+	for(; origSize < pOriginalArr->arrSize; origSize++)
 	{
 		foundMatch = FALSE;
 		for(i=0; i < uniqueSize ;i++)

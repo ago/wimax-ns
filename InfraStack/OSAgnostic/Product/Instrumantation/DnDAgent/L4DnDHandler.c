@@ -50,8 +50,6 @@
 //#define L4_DND_HEADER_LENGTH HEADER_SIZE + SIZE_OF_TYPE_LENGTH + BM_L4DnDMonitorHeader_HostTimestamp_BYTES_SIZE
 //static UINT8 monHeader[HEADER_SIZE + SIZE_OF_TYPE_LENGTH + TIMESTAMP_LENGTH];
 static UINT8 monHeader[BM_L4DnDMonitorHeader_BYTES_SIZE];
-static UINT8 traceHeader[BM_L4DnDMonitorHeader_BYTES_SIZE];
-static UINT8 timeStamp[BM_L4DnDMonitorHeader_HostTimestamp_BYTES_SIZE];
 static UINT8 monitorFilterTable[MONITOR_FILTER_TABLE_SIZE];
 static BOOL isMonitorOn = FALSE;
 static BOOL isInitialized = FALSE;

@@ -164,11 +164,6 @@ static BOOL				isOutputEnabled = FALSE;
 
 static char				*sDsimDefault = "C:\\temp\\dSim_Default\\";
 
-static char				g_TraceLoggerDirPathBuf[_MAX_DIR] = {INITIAL_DIR_PATH};
-static UINT32			fileSignatureSDillo = 0;
-static UINT32			fileSignatureNDillo = 0;
-static UINT32			fileSignatureArm0 = 0;
-static UINT32			fileSignatureArm1 = 0;
 
 // file variables
 static FILE				*pTraceLogFile					= NULL;	/* At the first run - open a new log file, overwriting the previous*/
@@ -187,12 +182,6 @@ static UINT32			path_len						= 0;
 static char				path_buffer[_MAX_PATH];
 static char				parentDirectory[_MAX_PATH];
 static BOOL				isSetPathInInitRequired = TRUE;
-
-// trace files names
-static char			arm0StringFileName[_MAX_PATH] = "";
-static char			arm1StringFileName[_MAX_PATH] = "";
-static char			NdilloStringFileName[_MAX_PATH] = "";
-static char			SdilloStringFileName[_MAX_PATH] = "";
 
 // L5 connections
 static L5_CONNECTION			nDisTraceConnection = NULL;

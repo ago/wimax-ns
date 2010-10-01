@@ -40,28 +40,6 @@
 #include "L4MsgProxy.h"
 
 
-static SOCKETS_CLIENT_CONTEXT oidClient;
-static SOCKETS_CLIENT_ID oidClientID;
-
-static SOCKETS_CLIENT_CONTEXT indClient;
-static SOCKETS_CLIENT_ID indClientID;
-
-static char g_host[100]; // TODO
-static unsigned short g_oidsPort;
-static unsigned short g_indsPort;
-
-//static HANDLE kdapiForSim_mutex = NULL;
-static OSAL_critical_section kdapiforsimLock;
-
-static int oidResponseResult;
-static char* oidResponseBuffer;
-static int oidResponseSize;
-
-static OSAL_event_t g_hReceivedOidResponseEvent = NULL;
-static OSAL_event_t g_hStopWaitingForOidResponseEvent = NULL;
-
-static KDAPI_FOR_SIM_IndicationHandler indsFunc;
-
 // set the oidResponseBuffer and the oidResponseSize
 // and raise the receivedOidResponseEvent
 void HandleOids( char* buffer, int size, SOCKETS_CLIENT_ID client, void* context )

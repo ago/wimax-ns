@@ -71,16 +71,12 @@ static OSAL_thread_t gkThread = NULL;	// thread handle
 static OSAL_critical_section lockIsConnected;		// @@@ : JSS : Replaced CRITICAL_SECTION
 static OSAL_critical_section lockConnParams;
 static wmx_CtrlStatus_t isConnected;
-static DRIVER_STATUS driverStatus = DRIVER_DOWN;
 static BOOL isInitialized = FALSE;
 static List *eventsSubsList = NULL;
 static BOOL firstRun = TRUE;
 static BOOL isOverrideConnParams = FALSE;
 static L5_RESULT l5status = L5_RESULT_ALREADY_DISCONNECTED;
-static L5_RESULT returnedL5status = L5_RESULT_ALREADY_DISCONNECTED;
 static BOOL isRestartRequired = FALSE;
-static LONG numOfInits = 0;
-static int clientCount = 0;
 
 // methods declarations
 void PIPE_HANDLER_EventHandler(L5_CONNECTION Conn, L5_EVENT eEvent, void *pvEventData, void *pvUserContext);

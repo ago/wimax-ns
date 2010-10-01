@@ -64,8 +64,6 @@ POSSIBILITY OF SUCH DAMAGE.
 static UINT32 agentsInitialized;
 static UINT32 agentsStarted;
 
-static tACTFunctions pACTFunctions[10] = {NULL};
-
 // for L5 layer
 static L5_CONNECTION g_act_Connection = NULL;
 static tL5DispatcherFunctions *g_act_pFuncs = NULL;
@@ -76,12 +74,10 @@ static tUtilityFunctions *g_act_Utils = NULL;
 OSAL_mutex_t act_mutex_ctrl = NULL;	
 
 static wmx_ModeOfOperation_t operationMode = ModeOfOperationNormal; 
-static BOOL act_down = TRUE;
 static BOOL isL5DispatcherOpen = FALSE;
 // because both error reports (internal and ctrl) will restart all entities, we will act only apon the first report
 // (internal problem report won't reset the driver, but if after
 // restarting all appsrv entities we will still have driver problems then we will reset the driver)
-static BOOL error_reported = FALSE;
 
 // The thread that handles the messages ACT receives -
 // We cannot process these messages on the context of the sending thread (because we need to stop the 
@@ -106,7 +102,6 @@ static OSAL_event_t act_event_driverUpEvent = NULL;
 static OSAL_event_t act_event_driverDownEvent = NULL;
 
 static BOOL devicePresent = TRUE;
-static BOOL firstRun = TRUE;
 
 static UINT32	configReason;
 static BOOL		isConfigReasonValid = FALSE;
@@ -117,7 +112,6 @@ DRIVER_STATUS lastReportedIsDriverConnected = DRIVER_DOWN;
 static LONG isDriverInitialized = 0;
 static BOOL useTraces = FALSE;
 static BOOL isActStarted = FALSE;
-static BOOL loadMOCMsgProxy = FALSE;
 static BOOL isRemote = FALSE;
 
 extern struct L4Configurations;
@@ -132,8 +126,6 @@ void Act_RestartDriver();
 BOOL UpdateDriverStateToAgents();
 
 // ----------- Instrumentation related changes -----------------
-
-static OSAL_dynlib_t p_inst_lib = NULL;
 
 agent_Initialize pfn_DnDAgent_Initialize;
 agent_Finalize pfn_DnDAgent_Finalize;
@@ -516,7 +508,6 @@ void Act_MessagesHandler(L5_CONNECTION Conn,
 	wmx_Version_t expectedPipeHandlerVersion;
 	VERSION_RESULT versionResult;
 	UINT32 responseBufferSize;
-	UINT32 res;
 	ReportState_type stateReport;
 	wmx_Status_t st;	
 

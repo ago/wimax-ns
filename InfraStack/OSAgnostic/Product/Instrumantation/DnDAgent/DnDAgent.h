@@ -67,6 +67,4 @@ void DnDAgent_EventHandler(			L5_CONNECTION Conn,
 									 void *pvEventData,
 									 void *pvUserContext );
 
-static void CreateOverrunBuff(char * buff);
-
 #endif //_DND_AGENT_H_

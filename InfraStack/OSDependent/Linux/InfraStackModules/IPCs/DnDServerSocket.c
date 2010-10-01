@@ -396,7 +396,6 @@ int DND_SERVER_SOCKETS_SendToClient(char *buf, int len, int socket_id)
 	int res = 0;
 	//#define MAX_DATA_SIZE 8232
 #define STATUS_INTEL_80216_CUSTOM	( 0x20000000 )	// Custom status has "1" on 29h bit
-	char retMsg[MAX_DATA_SIZE];
 	//int bytesSent;
 
 

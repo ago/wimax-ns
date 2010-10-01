@@ -1065,7 +1065,6 @@ void l4db_AddApdoOperatorConfigurationToXml(pXmlElement parentXmlData, wmx_ApdoO
 	pXmlElement	configurationInternalNode;
 	pXmlElement	nextData;
 	pXmlElement	nextNextData, currentNode;
-	char		buf[BUFF_SIZE];
 	int i=0;
 	UNREFERENCED_PARAMETER(buf);
 	//UNREFERENCED_PARAMETER(configurationNode);

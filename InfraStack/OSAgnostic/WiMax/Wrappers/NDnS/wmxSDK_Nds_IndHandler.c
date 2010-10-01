@@ -45,8 +45,6 @@
 #include "wimax_osal_ip_services.h"
 #include "TraceModule.h"
 
-static OSAL_thread_t IPRenewThread = NULL;
-
 void wmxNds_CBsCaller( UINT32 internalRequestID, void *buffer, UINT32 bufferLength )
 {
 	wmx_pSystemStateUpdate pSystemStateUpdate;

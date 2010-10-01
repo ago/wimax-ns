@@ -75,7 +75,6 @@ static LONG isDeviceOpen = FALSE;
 OSAL_critical_section cs;
 static WIMAX_API_DEVICE_ID DeviceID = {0};
 static LONG isReady = FALSE;
-static UINT8 systemStateCBRefCount = 0;
 static IndDeviceInsertRemove ctrlStatusCB = NULL;
 static IndPermissionsUpdate permissionsUpdateCB = NULL;
 static IndControlPowerManagement powerStateCB = NULL;
@@ -102,7 +101,6 @@ static WIMAX_API_RF_STATE rfState = WIMAX_API_RF_OFF;
 static BOOL isConnected = FALSE;
 static WIMAX_API_NSP_INFO_EX nspsEx[WMX_NSPS_MAX_NUM];
 static UINT32 numberOfNSPs = 0;
-static HANDLE namedEvent;
 static OSAL_event_t hijackedEvent;
 static BOOL exitLoop = TRUE;
 static OSAL_event_t releasedEvent;
@@ -1269,7 +1267,6 @@ void CheckNamedEvent(void *dummy)
 {
 	//	UINT32 waitRes;
 	int resNamed = 999;
-	static int lastResult = 0;
 	UNREFERENCED_PARAMETER(dummy);
 
 

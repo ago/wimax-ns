@@ -159,8 +159,6 @@ L5_RESULT PIPE_HANDLER_ConnectInternal(
 	UINT32 dwWaitResult;
 	L5_RESULT res;
 
-	char tempIpAddress[32];
-	size_t numOfChars;
 	// Progress variables for initialization
 	BOOL bCreatedCriticalSection = FALSE;
 	BOOL bSocketsInitialized = FALSE;

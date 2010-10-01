@@ -263,7 +263,6 @@ void Trace_CloseLogFile()
 BOOL Trace_OpenLogFile()
 {
 	char fileName[MAX_PATH];
-	int lastLogFileIndex;
 //	struct stat fileStat;
 
 	OSAL_snprintf(fileName, MAX_FILENAME_LEN, "%s/%s%s", gcLogFilePathName,

@@ -51,21 +51,6 @@
 
 static tUtilityFunctions *pUtils;
 
-static void MyPrintf(const char* format, ...)
-{
-//	if (mLogToConsole == 0)
-//	{
-//		return;
-//	}
-
-    va_list args;
-    va_start(args, format);
-    vfprintf(stdout, format, args);
-
-	//TRACE(TR_MOD_MOCMsgProxy, TR_SEV_ERR, (format, args);
-}
-
-
 EXTERN_C EXPORT BOOL MocMsgProxy_Start()
 {
 	TRACE(TR_MOD_MocMsgProxy, TR_SEV_DEBUG, "MocMsgProxy_Start");
@@ -480,32 +465,6 @@ static void MocMsgProxy_ReleaseSocketID(L5_TARGET_ID nOriginID, void *buf, UINT3
 	TRACE(TR_MOD_MocMsgProxy, TR_SEV_INFO, "Released SocketID = %d held by TargetID = %d. ", socketID, nOriginID);
 }
 
-static void MocMsgProxy_ReleaseSocketIDByTarget(L5_TARGET_ID targetID)
-{
-	int i;
-	BOOL success = FALSE;
-	
-	OSAL_enter_critical_section(&perAppInfoGuard);
-	for (i = 0; i < MOC_MSG_PROXY_MAX_APPS; i++)
-	{
-		if (perAppInfo[i].originID == targetID)
-		{
-			perAppInfo[i].isValid = FALSE;
-			perAppInfo[i].originID = 0;
-			//MyPrintf("\nMocMsgProxy - MocMsgProxy_ReleaseSocketIDByTarget - Released SocketID = %d, associated with TargetID = %d. \n", i, targetID);
-			TRACE(TR_MOD_MocMsgProxy, TR_SEV_INFO, "Released SocketID = %d, associated with TargetID = %d. ", i, targetID);
-			success = TRUE;
-			break;
-		}
-	}
-	OSAL_exit_critical_section(&perAppInfoGuard);
-
-	if (!success)
-	{
-		//MyPrintf("\nMocMsgProxy - MocMsgProxy_ReleaseSocketIDByTarget - Failed to find a SocketID matching TargetID = %d. \n", targetID);
-		TRACE(TR_MOD_MocMsgProxy, TR_SEV_INFO, "Released SocketID = Failed to find a SocketID matching TargetID = %d.", targetID);
-	}
-}
 
 static void MocMsgProxy_SendMocResponse(L5_CONNECTION Conn, L5_TARGET_ID nOriginID, void *buf, UINT32 bufSize)
 {

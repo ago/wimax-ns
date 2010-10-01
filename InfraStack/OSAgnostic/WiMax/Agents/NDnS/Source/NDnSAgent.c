@@ -3179,7 +3179,6 @@ wmx_Status_t NDnSAgent_GetLinkStatus( UINT32 *bufferLength, UINT8 *buffer )
 	wmx_Status_t status=WMX_ST_OK;
 	wmx_pUserLinkStatus_t userLinkStatus;
 	//static wmx_LinkStatus_t linkStatus;
-	static BOOL fIsLastTimeWasIdle = FALSE;
 	BOOL fIsCacheState;
 
 	if (*bufferLength < sizeof(wmx_UserLinkStatus_t))
@@ -3235,8 +3234,6 @@ wmx_Status_t NDnSAgent_GetStatistics( UINT32 *bufferLength, UINT8 *buffer )
 	wmx_UserStatistics_t userStatistics;
 	BOOL fIsCacheState;
 	static wmx_Statistics_t Statistics={0};
-
-	static BOOL fIsLastTimeWasIdle = FALSE;
 
 
 	if (*bufferLength < sizeof(wmx_UserStatistics_t))
@@ -4587,7 +4584,6 @@ wmx_Status_t GetInstallationInfo(void *buffer, UINT32 *bufferSize)
 wmx_Status_t GeneratePseudoNAI (char *pseudoNai, int buffSize){
 
 	BOOL st;
-	static char *lastString;
 
 	if (pseudoNai == NULL || buffSize == 0) {
 		return WMX_ST_FAIL;

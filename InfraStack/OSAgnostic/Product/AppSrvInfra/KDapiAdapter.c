@@ -28,7 +28,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
-#pragma warning(disable : 4201) // warning C4201: nonstandard extension used : nameless struct/union
+//#pragma warning(disable : 4201) // warning C4201: nonstandard extension used : nameless struct/union
 
 #include "KDapiAdapter.h"
 #include "SVstatus.h"

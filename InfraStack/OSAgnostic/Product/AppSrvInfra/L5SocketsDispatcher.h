@@ -30,7 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 
 #pragma once
-#pragma warning(disable : 4127) // warning C4201: nonstandard extension used : nameless struct/union
+////#pragma warning(disable : 4127) // warning C4201: nonstandard extension used : nameless struct/union
 //////////////////////////////////////////////////////////////////////////
 // Headers
 

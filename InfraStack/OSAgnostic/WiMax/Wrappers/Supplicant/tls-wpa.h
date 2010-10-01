@@ -96,7 +96,7 @@ struct tls_connection_params {
 #ifdef CONFIG_API_H
 	swc_config_t 
 #else
-#pragma message("TLS.H build as supplicant agnostic")	
+	//#pragma message("TLS.H build as supplicant agnostic")	
 	void
 #endif
 		*sc;

@@ -31,8 +31,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef KDAPI_H
 #define KDAPI_H
 
-#pragma warning(disable : 4201) // warning C4201: nonstandard extension used : nameless struct/union
-
 #include "CommonServices.h"
 #include "wimax_osal_types.h"
 

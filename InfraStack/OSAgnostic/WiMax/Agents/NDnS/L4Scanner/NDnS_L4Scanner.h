@@ -52,13 +52,19 @@ typedef enum _ScannerState
 	L4S_TRANSIENT // a special state that represents a "between states" state
 } ScannerState;
 
-static char* ScannerStateStr[] = {
-	"L4S_READY",
-	"L4S_SCANNING",
-	"L4S_DISCOVER",
-	"L4S_DISCONNECT",
-	"L4S_STANDBY",
-	"L4S_TRANSIENT"
+static inline
+const char *ScannerStateStr(unsigned index)
+{
+	static const char* strs[] = {
+		"L4S_READY",
+		"L4S_SCANNING",
+		"L4S_DISCOVER",
+		"L4S_DISCONNECT",
+		"L4S_STANDBY",
+		"L4S_TRANSIENT"
+	};
+	static const unsigned index_max = sizeof(strs) / sizeof(strs[0]);
+	return index < index_max? strs[index] : "Illegal";
 };
 
 // TODO: Oran - merge with Sivanne's version (L4P)

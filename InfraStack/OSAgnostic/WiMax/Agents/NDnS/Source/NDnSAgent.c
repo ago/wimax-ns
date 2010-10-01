@@ -1207,7 +1207,7 @@ wmx_Status_t L4C_HandleReadyState(wmx_pSystemStateUpdate systemStateUpdate, BOOL
 
 	while (!isHandled)
 	{
-		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "Executing the current scheduled task: <%s>", L4C_TaskStr[g_ndnsContext.scheduledTask]);
+		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "Executing the current scheduled task: <%s>", L4C_TaskStr(g_ndnsContext.scheduledTask));
 
 		L4db_SetSwRfState(On);
 		wmx_InternalRfOn();
@@ -3395,7 +3395,7 @@ void L4C_TaskHandler(UINT32 internalRequestID, void *buffer, UINT32 bufferLength
 		 systemState = g_ndnsContext.systemState;
 	OSAL_exit_critical_section(&g_ndnsContext.lockSystemState);
 
-	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "L4C_TaskHandler(IN): Got '%s' task", L4C_TaskStr[internalRequestID]);
+	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "L4C_TaskHandler(IN): Got '%s' task", L4C_TaskStr(internalRequestID));
 
 	switch (internalRequestID)
 	{
@@ -3424,7 +3424,7 @@ void L4C_TaskHandler(UINT32 internalRequestID, void *buffer, UINT32 bufferLength
 				TRACE(TR_MOD_NDNS_AGENT, TR_SEV_DEBUG,
 					"State is not ready or scanner is stil scanning: system state=%s, scanner state=%s",
 				        NDnSSystemStates(systemState),
-					ScannerStateStr[L4S_GetScannerState()]);
+					ScannerStateStr(L4S_GetScannerState()));
 				L4C_ScheduleTask(Task_StartManualScan); // start Connect on the next Ready state
 			}
 			break;
@@ -3542,7 +3542,7 @@ wmx_Status_t NDnSAgent_SetConnectModePhase2()
 								g_ndnsContext.scheduledTaskData.connectInfo.forceManualConnect = TRUE;
 								g_ndnsContext.scheduledTaskData.connectInfo.nspIDs[0] = currentPreferredNsp.nspIDs[j];
 
-								TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_SetConnectModePhase2 - scheduling the task '%s' for the next Ready state", L4C_TaskStr[Task_AutoConnect]);
+								TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_SetConnectModePhase2 - scheduling the task '%s' for the next Ready state", L4C_TaskStr(Task_AutoConnect));
 								//NDnSAgent_OnProgressDualFlush(Task_AutoConnect, NULL);
 								L4C_ScheduleTask(Task_AutoConnect);
 								OSAL_enter_critical_section(&g_ndnsContext.lockSystemState);
@@ -4481,11 +4481,11 @@ wmx_Status_t NDnSAgent_InvokeDualFlushOp(L4C_Task task, void * paramsBuf, UINT32
 
 	Messenger_PostRequest(MEDIUM, task, paramsBuf, bufSize, &L4C_TaskHandler);
 
-	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "Task '%s' was scheduled for the L4C_TaskHandler", L4C_TaskStr[task]);
+	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "Task '%s' was scheduled for the L4C_TaskHandler", L4C_TaskStr(task));
 
 	if (OSAL_wait_event(g_ndnsContext.dualFlushOpEvent, L4C_TIMEOUT * 2) != WAIT_OBJECT_0)
 	{
-		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_ERR, "Timout - task '%s' execution is too long (more than %d sec)", L4C_TaskStr[task], (L4C_TIMEOUT * 2 / 1000));
+		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_ERR, "Timout - task '%s' execution is too long (more than %d sec)", L4C_TaskStr(task), (L4C_TIMEOUT * 2 / 1000));
 		L4C_ScheduleTask(Task_StartScan); // reset the scheduler back to normal scan
 		L4S_EnableScanner(TRUE);
 		status = WMX_ST_FAIL;
@@ -4503,7 +4503,7 @@ void NDnSAgent_OnProgressDualFlush(L4C_Task task, DualFlushOp ExecuteTask, UINT3
 {
 	wmx_SystemState_t systemState;
 
-	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_OnProgressDualFlush(IN) - task: '%s'", L4C_TaskStr[task]);
+	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_OnProgressDualFlush(IN) - task: '%s'", L4C_TaskStr(task));
 	// get the current system state
 	OSAL_enter_critical_section(&g_ndnsContext.lockSystemState);
 	systemState = g_ndnsContext.systemState;
@@ -4521,7 +4521,7 @@ void NDnSAgent_OnProgressDualFlush(L4C_Task task, DualFlushOp ExecuteTask, UINT3
 	// (even if we are in Ready state - there could be a pending Scanning state indication from a previous scan)
 	if ((systemState == Ready) && (!L4S_IsScanning()))
 	{
-		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_OnProgressDualFlush - executing the task: '%s'", L4C_TaskStr[task]);
+		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_OnProgressDualFlush - executing the task: '%s'", L4C_TaskStr(task));
 		// in case the scanner is active (and NOT scanning) - it means that
 		// it is sleeping (LinkLoss / Standby state) - so we need to reset it
 		if (L4S_READY != L4S_GetScannerState())
@@ -4542,13 +4542,13 @@ void NDnSAgent_OnProgressDualFlush(L4C_Task task, DualFlushOp ExecuteTask, UINT3
 			g_ndnsContext.scheduledTaskData.status = WMX_ST_OK;
 		}
 
-		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_OnProgressDualFlush - task: '%s' executed", L4C_TaskStr[task]);
+		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_OnProgressDualFlush - task: '%s' executed", L4C_TaskStr(task));
 		//Set Event to release the thread that is waiting for the answer (NDnSAgent_InvokeDualFlushOp())
 		OSAL_set_event(g_ndnsContext.dualFlushOpEvent);
 	}
 	else
 	{
-		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_OnProgressDualFlush - scheduling the task '%s' for the next Ready state (current state=%s)", L4C_TaskStr[task], NDnSSystemStates(systemState));
+		TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "NDnSAgent_OnProgressDualFlush - scheduling the task '%s' for the next Ready state (current state=%s)", L4C_TaskStr(task), NDnSSystemStates(systemState));
 		// we are still not in Ready state - schedule the Connect task to be executed
 		// only when getting to Ready state
 		L4C_ScheduleTask(task); // start the task on the next Ready state

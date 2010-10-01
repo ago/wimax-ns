@@ -105,14 +105,20 @@ typedef enum _L4C_Task
 	Task_SetConnectMode
 } L4C_Task;
 
-static char* L4C_TaskStr[] = {
-	"Start Scan",	
-	"Start Manual Scan",
-	"Connect",
-	"Auto Connect",
-	"Reset",
-	"Stop Scan",
-	"Set Connect Mode"
+static inline
+const char* L4C_TaskStr(unsigned index)
+{
+	static const char *strs[] = {
+		"Start Scan",	
+		"Start Manual Scan",
+		"Connect",
+		"Auto Connect",
+		"Reset",
+		"Stop Scan",
+		"Set Connect Mode"
+	};
+	static const unsigned index_max = sizeof(strs) / sizeof(strs[0]);
+	return index < index_max? strs[index] : "Illegal";
 };
 
 typedef enum _L4C_ScanMode

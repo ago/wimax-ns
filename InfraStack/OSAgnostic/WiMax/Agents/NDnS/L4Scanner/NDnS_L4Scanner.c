@@ -315,21 +315,21 @@ ScannerState L4S_GetScannerState()
 // set the scanner to a new state
 void L4S_SetScannerState(ScannerState state)
 {
-	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_INFO, "L4 Scanner: SetState = %s", ScannerStateStr[state]);
+	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_INFO, "L4 Scanner: SetState = %s", ScannerStateStr(state));
 	FSM_SetState(&g_l4ScannerContext.fsm, state);
 }
 
 // set the scanner to a new state ONLY if its current state is equal to the source state parameter
 BOOL L4S_SetScannerStateIfEqual(ScannerState sourceState, ScannerState targetState)
 {
-	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_INFO, "L4 Scanner: SetStateIfEqual - source = %s, target = %s", ScannerStateStr[sourceState], ScannerStateStr[targetState]);
+	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_INFO, "L4 Scanner: SetStateIfEqual - source = %s, target = %s", ScannerStateStr(sourceState), ScannerStateStr(targetState));
 	return FSM_SetStateIfEqual(&g_l4ScannerContext.fsm, sourceState, targetState);
 }
 
 // set the scanner to a new state ONLY if its current state is NOT equal to the source state parameter
 BOOL L4S_SetScannerStateIfNotEqual(ScannerState sourceState, ScannerState targetState)
 {
-	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_INFO, "L4 Scanner: SetStateIfNotEqual - source = %s, target = %s", ScannerStateStr[sourceState], ScannerStateStr[targetState]);
+	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_INFO, "L4 Scanner: SetStateIfNotEqual - source = %s, target = %s", ScannerStateStr(sourceState), ScannerStateStr(targetState));
 	return FSM_SetStateIfNotEqual(&g_l4ScannerContext.fsm, sourceState, targetState);	
 }
 
@@ -919,7 +919,7 @@ void L4S_StopRollBackScanner()
 {
 	TRACE(TR_MOD_NDNS_AGENT, TR_SEV_DEBUG,
 		"L4S_StopRollBackScanner(IN) Scanner state=%s.",
-		ScannerStateStr[L4S_GetScannerState()]);
+		ScannerStateStr(L4S_GetScannerState()));
 
 	// scanner is stopped. no need for system update anymore
 	wmx_UnregisterSystemStateUpdateCB(&HandleSystemState);

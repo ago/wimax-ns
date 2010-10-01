@@ -73,8 +73,6 @@ static OSAL_critical_section perAppInfoGuard;
 static BOOL initialized;
 
 
-static void MyPrintf(const char* format, ...);
-
 EXTERN_C EXPORT APPSRV_INIT_ST MocMsgProxy_Initialize(tL5DispatcherFunctions *L5disp, tUtilityFunctions *UtilFn);
 EXTERN_C EXPORT BOOL MocMsgProxy_Start();
 EXTERN_C EXPORT BOOL MocMsgProxy_Stop();

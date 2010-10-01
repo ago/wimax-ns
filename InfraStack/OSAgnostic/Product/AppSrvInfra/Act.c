@@ -114,9 +114,6 @@ static BOOL useTraces = FALSE;
 static BOOL isActStarted = FALSE;
 static BOOL isRemote = FALSE;
 
-extern struct L4Configurations;
-
-
 #define INTIALIZE(x)	&x##_Initialize()
 #define FINALIZE(x)		&x##_Finalize()
 #define START(x)		&x##_Start()

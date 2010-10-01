@@ -58,6 +58,7 @@
 #include "wimax_osal_services_cmn.h"
 #include "wimax_osal_ip_services.h"
 #include "wimax_osal_crypt_services.h"
+#include <math.h>
 
 typedef wmx_Status_t (*DualFlushOp)();
 

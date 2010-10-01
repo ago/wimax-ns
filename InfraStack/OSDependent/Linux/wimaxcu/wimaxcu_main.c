@@ -324,7 +324,7 @@ void wimaxcu_stop_signal_handler(int sig)
 	wmxStatus = CmdStopScan(&gbl_device_id);
 	if (WIMAX_API_RET_SUCCESS != wmxStatus) {
 		printf("ERROR: Failed to stop scanning.\n");
-		return 1;
+		return;
 	}
 	(void)signal(SIGINT,wimaxcu_stop);
 	
@@ -362,7 +362,6 @@ int main(int argc, char *argv[])
 	WIMAX_API_RET wmxStatus;
 	
 	parsed_cmd out_cmd;
-	struct sigaction sa;
 
 	//checking user priviledge
 	//Disabled permission checking so non-root can run it

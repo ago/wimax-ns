@@ -28,6 +28,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
+#include <unistd.h>
 #include "wimax_osal_primitives.h"
 #include "Queue.h"
 #include "CommonServices.h"

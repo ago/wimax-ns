@@ -34,6 +34,8 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "TraceModule.h"
 
+#include <math.h>
+#include <stdlib.h>
 #include "AES_CCM.h"
 #include "TypesProxy.h"
 #include "AES.h"

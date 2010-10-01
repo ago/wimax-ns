@@ -710,14 +710,14 @@ void wimaxcu_get_odm_info(WIMAX_API_DEVICE_ID_P p_device_id)
 	{
 		printf("ERROR: Failed to get ODM version\n");
 		PrintWmxStatus(wmxStatus);
-		return 1;
+		return;
 	}
 	printf("ODM Information\n");
 	for(i = 0; i < bin_blob_size; i++) {
 		printf("%c",bin_blob[i]);	
 	}
 	printf("\n");
-	return 0;
+	return;
 }
 
 void wimaxcu_get_nvm_info(WIMAX_API_DEVICE_ID_P p_device_id)
@@ -730,12 +730,12 @@ void wimaxcu_get_nvm_info(WIMAX_API_DEVICE_ID_P p_device_id)
 	{
 		printf("ERROR: Failed to get NVM image version\n");
 		PrintWmxStatus(wmxStatus);
-		return 1;
+		return;
 	}
 	
 	PrintNVMImageVersion(&NVMImageVersion);
 	
-	return 0;
+	return;
 }
 
 void wimaxcu_get_ip_interface(WIMAX_API_DEVICE_ID_P p_device_id)

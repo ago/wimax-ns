@@ -706,7 +706,6 @@ void l5_sockets_dispatcher_HandleNewConnection( SOCKETS_CLIENT_ID Socket, void**
 
 	*context = pConn;
 
-	printf("New connection established. pCon=0x%x . isActive=%d\n",pConn, pConn->bActive);
 	TRACE(TR_MOD_L5_SOCKETS_DISPATCHER, TR_SEV_INFO, "New connection established - pConn = %x", pConn);
 	return;
 
@@ -754,7 +753,6 @@ void l5_sockets_dispatcher_HandleDisconnection( SOCKETS_CLIENT_ID Socket, void* 
 		(tL5SocketsDispatcherConnection *)context,
 		L5_RESULT_OTHER_SIDE_DISCONNECTED );
 
-	printf("Got disconnected. pCon=0x%x . isActive=%d\n",context, ((tL5SocketsDispatcherConnection *)context)->bActive);
 }
 
 void l5_sockets_dispatcher_EventHandler( 

@@ -50,13 +50,9 @@
 typedef unsigned char u8;
 #define TLS_IMPLEMENTATION Arm1
 
-/* the supplicant calls procedures in this file, 
-so we use symlink to actual supplicant tls.h */
-#ifndef WPA_OPEN_SOURCE
-#include "tls.h"
-#else
-#include "tls-wpa.h"
-#endif
+/* the supplicant calls the tls_ methods, so we make sure the declarations match to what it expects. */ 
+#include <eap_peer/util/common.h>
+#include <eap_peer/crypto/tls.h>
 
 
 #ifndef WPA_OPEN_SOURCE
@@ -1200,23 +1196,29 @@ int tls_connection_established(void *tls_ctx, struct tls_connection *conn)
 	return (!res && r.Common.LParameter1) ? 1 : 0;
 }
 
+#if 0
 u8 * tls_connection_handshake(void *tls_ctx, struct tls_connection *conn,
-								 const u8 *in_data, size_t in_len,
-								 size_t *out_len, u8 **appl_data,
-								 size_t *appl_data_len)
+			      const u8 *in_data, size_t in_len,
+			      size_t *out_len, u8 **appl_data,
+			      size_t *appl_data_len);
+#endif
+
+struct wpabuf * tls_connection_handshake(
+	void *tls_ctx, struct tls_connection *conn,
+	const struct wpabuf *in_data, struct wpabuf **appl_data)
 {
+	struct wpabuf *out_wpabuf = NULL, *appl_wpabuf = NULL;
 	tTLSOperationRequest r;
-	u8 *data = NULL;
 	wmx_Status_t res;
-	res = SendTLSRequest(&r, ETLSOP_HANDSHAKE, tls_ctx, conn, 0, 0, in_data, (UINT32)in_len);
+	res = SendTLSRequest(&r, ETLSOP_HANDSHAKE, tls_ctx, conn, 0, 0,
+			     wpabuf_head(in_data), wpabuf_len(in_data));
 	if (!res && !r.Common.LParameter1)
 	{
 		/* reallocate data & appl_data, if returned */
 		if (r.ExchangeBuffer.Type == L3L4_TLV_TYPE_TLS_EXCHANGE_BUFFER)
 		{
-			data = malloc(r.ExchangeBuffer.ActualLen + 1);
-			memcpy(data, r.ExchangeBuffer.BufferArr, r.ExchangeBuffer.ActualLen);
-			*out_len = r.ExchangeBuffer.ActualLen;
+			out_wpabuf = wpabuf_alloc_copy(r.ExchangeBuffer.BufferArr,
+						       r.ExchangeBuffer.ActualLen);
 		}
 		else
 		{
@@ -1224,12 +1226,15 @@ u8 * tls_connection_handshake(void *tls_ctx, struct tls_connection *conn,
 		}
 		if (r.ExchangeBuffer.Type == L3L4_TLV_TYPE_TLS_APP_OUTPUT_BUFFER)
 		{
-			*appl_data = malloc(r.AppOutputBuffer.ActualLen + 1);
-			memcpy(*appl_data, r.AppOutputBuffer.BufferArr, r.AppOutputBuffer.ActualLen);
-			*appl_data_len = r.AppOutputBuffer.ActualLen;
+			appl_wpabuf  = wpabuf_alloc_copy(r.AppOutputBuffer.BufferArr,
+							 r.AppOutputBuffer.ActualLen);
+			if (appl_wpabuf == NULL) {
+				wpabuf_free(out_wpabuf);
+				out_wpabuf = NULL;
+			}			
 		}
 	}
-	return data;
+	return out_wpabuf;
 }
 
 int tls_connection_prf(void *tls_ctx, struct tls_connection *conn, const char *label, int server_random_first, u8 *out, size_t out_len)
@@ -1253,34 +1258,49 @@ int tls_connection_prf(void *tls_ctx, struct tls_connection *conn, const char *l
 	return -1;
 }
 
-int tls_connection_encrypt(void *tls_ctx, struct tls_connection *conn,
-						   const u8 *in_data, size_t in_len,
-						   u8 *out_data, size_t out_len)
+struct wpabuf * tls_connection_encrypt(
+	void *tls_ctx, struct tls_connection *conn,
+	const struct wpabuf *in_data)
 {
+	struct wpabuf *wpabuf = NULL;
 	tTLSOperationRequest r;
 	wmx_Status_t res;
-	res	= (wmx_Status_t)SendTLSRequest(&r, ETLSOP_ENCRYPT, tls_ctx, conn, 0, (UINT32)out_len, in_data, (UINT32)in_len);
-	if (!res && out_len >= r.ExchangeBuffer.ActualLen)
-	{
-		memcpy(out_data, r.ExchangeBuffer.BufferArr, r.ExchangeBuffer.ActualLen);
-		return r.Common.LParameter1;
-	}
-	return -1;
+	res = (wmx_Status_t)SendTLSRequest(&r, ETLSOP_ENCRYPT, tls_ctx, conn, 0,
+					   sizeof(r.ExchangeBuffer.BufferArr),
+					   wpabuf_head(in_data), wpabuf_len(in_data));
+	if (res != WMX_ST_OK)
+		return NULL;
+#if 0
+#warning FIXME: original code returned r.Common.LParameter1
+	fprintf(stderr, "Ixxx: ENCRYPT param1 %d param2 %d out_len %u\n",
+		r.Common.LParameter1, r.Common.LParameter2,
+		sizeof(r.ExchangeBuffer.BufferArr));
+#endif
+	wpabuf = wpabuf_alloc_copy(r.ExchangeBuffer.BufferArr, r.Common.LParameter1);
+	return wpabuf;
 }
 
-int tls_connection_decrypt(void *tls_ctx, struct tls_connection *conn,
-						   const u8 *in_data, size_t in_len,
-						   u8 *out_data, size_t out_len)
+	
+struct wpabuf * tls_connection_decrypt(
+	void *tls_ctx, struct tls_connection *conn,
+	const struct wpabuf *in_data)
 {
+	struct wpabuf *wpabuf = NULL;
 	tTLSOperationRequest r;
 	wmx_Status_t res;
-	res = (wmx_Status_t)SendTLSRequest(&r, ETLSOP_DECRYPT, tls_ctx, conn, 0, (UINT32)out_len, in_data, (UINT32)in_len);
-	if (!res && out_len >= r.ExchangeBuffer.ActualLen)
-	{
-		memcpy(out_data, r.ExchangeBuffer.BufferArr, r.ExchangeBuffer.ActualLen);
-		return r.Common.LParameter1;
-	}
-	return -1;
+	res = (wmx_Status_t)SendTLSRequest(&r, ETLSOP_DECRYPT, tls_ctx, conn, 0,
+					   sizeof(r.ExchangeBuffer.BufferArr),
+					   wpabuf_head(in_data), wpabuf_len(in_data));
+	if (res != WMX_ST_OK)
+		return NULL;
+#if 0
+#warning FIXME: original code returned r.Common.LParameter1
+	fprintf(stderr, "Ixxx: DECRYPT param1 %d param2 %d out_len %u\n",
+		r.Common.LParameter1, r.Common.LParameter2,
+		sizeof(r.ExchangeBuffer.BufferArr));
+#endif
+	wpabuf = wpabuf_alloc_copy(r.ExchangeBuffer.BufferArr, r.Common.LParameter1);
+	return wpabuf;
 }
 
 
@@ -1324,10 +1344,8 @@ unsigned int tls_capabilities(void *tls_ctx)
 	return 0;
 }
 
-int tls_connection_ia_send_phase_finished(void *tls_ctx,
-struct tls_connection *conn,
-	int final,
-	u8 *out_data, size_t out_len)
+struct wpabuf * tls_connection_ia_send_phase_finished(
+	void *tls_ctx, struct tls_connection *conn, int final)
 {
 	return 0;
 }
@@ -1342,6 +1360,7 @@ int tls_connection_ia_permute_inner_secret(void *tls_ctx, struct tls_connection 
 	return -1;
 }
 
+struct tls_set_master_secret;
 int tls_set_master_secret_cb(void *tls_ctx, int (*cb)(void *tls_ctx, struct tls_set_master_secret *info, void *ctx), void *ctx)
 {
 	return -1;
@@ -1447,10 +1466,10 @@ int tls_connection_get_keys(void *tls_ctx, struct tls_connection *conn, struct t
 	return -1;
 }
 
-u8 * tls_connection_server_handshake(void *tls_ctx,
-struct tls_connection *conn,
-	const u8 *in_data, size_t in_len,
-	size_t *out_len)
+struct wpabuf * tls_connection_server_handshake(void *tls_ctx,
+						struct tls_connection *conn,
+						const struct wpabuf *in_data,
+						struct wpabuf **appl_data)
 {
 	return NULL;
 }

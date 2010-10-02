@@ -81,7 +81,6 @@ struct eap_peer_ctx {
 
 // open source peer structure instance
 static struct eap_peer_ctx eap_ctx;
-static struct eap_config eap_conf;
 static struct eapol_callbacks eap_cb;
 BOOL SupplicantLoaded = FALSE;
 BOOL bMethodSet = FALSE;
@@ -496,8 +495,8 @@ wmx_Status_t InitSupplicantLibrary(VOID)
 	eap_cb.get_config_blob = peer_get_config_blob;
 	eap_cb.notify_pending = peer_notify_pending;
 
-	memset(&eap_conf, 0, sizeof(eap_conf));
-	eap_ctx.eap = eap_peer_sm_init(&eap_ctx, &eap_cb, &eap_ctx, &eap_conf);
+	eap_peer_register_methods();
+	eap_ctx.eap = eap_peer_sm_init(&eap_ctx, &eap_cb, &eap_ctx, &eap_ctx.eap_config);
 	if (eap_ctx.eap == NULL)
 		return WMX_ST_FAIL;
 

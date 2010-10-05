@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 // Project
 #include <unistd.h>
+#include <stdlib.h>
 #include "PipeHandlerInternal.h"
 #include "VersionUtils.h"
 #include "L5OpCodes.h"	

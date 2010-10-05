@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 //#pragma warning(disable : 4201) // warning C4201: nonstandard extension used : nameless struct/union
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "Services_Ctrl.h"
 #include "L5Common.h"

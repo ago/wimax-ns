@@ -29,6 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 #include <unistd.h>
+#include <stdlib.h>
 #include "wimax_osal_primitives.h"
 
 #include "Messenger.h"

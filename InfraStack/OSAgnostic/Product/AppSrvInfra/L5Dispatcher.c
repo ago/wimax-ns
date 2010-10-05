@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 // OSAL
 #include "wimax_osal_primitives.h"
 #include <unistd.h>
+#include <stdlib.h>
 
 // Project
 #include "L5Dispatcher.h"

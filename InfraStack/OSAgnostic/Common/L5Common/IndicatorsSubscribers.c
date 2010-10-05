@@ -29,6 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ***************************************************************************/
 #include <unistd.h>
+#include <stdlib.h>
 #include "IndicatorsSubscribers.h"
 
 #include "CommonServices.h"

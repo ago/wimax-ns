@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 #include "wimax_osal_primitives.h"
 #include <unistd.h>
+#include <stdlib.h>
 #include "Services_Ctrl.h"
 #include "WrappersUtils.h"
 #include "WrappersCommon.h"

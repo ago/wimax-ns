@@ -51,6 +51,7 @@ typedef struct _wmx_Version_t
 	UINT32	revision;
 	UINT32	branch;
 } wmx_Version_t, *wmx_pVersion_t;
+#pragma pack( pop )
 
 typedef char* wmx_ModuleName_t;
 typedef char* wmx_pVersionStr_t;
@@ -62,6 +63,7 @@ typedef struct _wmx_VersionEntry_t
 	wmx_ModuleName_t moduleName;
 	wmx_Version_t version;
 } wmx_VersionEntry_t, *wmx_pVersionEntry_t;
+#pragma pack( pop )
 
 
 BOOL VersionUtils_Init();

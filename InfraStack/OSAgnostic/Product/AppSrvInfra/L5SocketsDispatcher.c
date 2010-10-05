@@ -61,7 +61,7 @@ typedef struct
 	L5_CONNECTION L5Conn;			// Can be NULL before handshake
 
 	// Is this an active slot?
-	// Updated using OSAL_atomic_exchange, so this must be a LONG not a BOOL
+	// Updated using OSAL_atomic_exchange(), so this must be a LONG not a BOOL
 	LONG bActive;
 
 	// Connections from both sides

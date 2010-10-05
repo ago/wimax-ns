@@ -435,6 +435,7 @@ typedef struct _wmx_RfSwitchesStatus_t
 	wmx_RfStatus_t swRfStatus;
 	wmx_RfStatus_t hwRfStatus;
 }wmx_RfSwitchesStatus_t, *wmx_pRfSwitchesStatus_t;
+#pragma pack( pop )
 
 /// <summary>
 /// A struct in which the API will place information (such as URLs, VoIP numbers, �) that are relevant to the
@@ -446,6 +447,7 @@ typedef struct _wmx_APDOContactInfo_t
 {
 	char	contactDetails[MAX_CONTACT_DETAILS_SIZE];
 } wmx_APDOContactInfo_t, *wmx_pAPDOContactInfo_t;
+#pragma pack( pop )
 
 /// <summary>
 /// A struct in which the API will place information which is needed in the package update process.
@@ -460,6 +462,7 @@ typedef struct _wmx_PackageInfo_t
 	BOOL	mandatoryUpdate;                     /**< (TRUE = mandatory FALSE, optional) */
 	BOOL	warnUser;                            /**< (TRUE = warn user, FALSE = no user warning */
 } wmx_PackageInfo_t, *wmx_pPackageInfo_t;
+#pragma pack( pop )
 
 typedef enum _wmx_SPLockStatus_t
 {
@@ -507,5 +510,6 @@ typedef struct _wmx_InstallationInfo_t
 	char	fwVersion[MAX_INSTALLAION_VERSION_SIZE];		 
 	char	hwVersion[MAX_INSTALLAION_VERSION_SIZE];
 } wmx_InstallationInfo_t, *wmx_pInstallationInfo_t;
+#pragma pack( pop )
 
 #endif // _WMX_SDK_NDS_CMN_H

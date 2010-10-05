@@ -487,8 +487,8 @@ void NDnSAgent_HandleApdoLinkStatus(wmx_ApdoLinkStatus_t linkStatus)
 	lastConnectedStatus = Ndns_GetLastConnectedState();	
 
 	// Check if the link status has changed
-	if (linkStatus == APDO_linkUp && lastConnectedStatus == FALSE ||
-		linkStatus == APDO_linkDown && lastConnectedStatus == TRUE)
+	if ((linkStatus == APDO_linkUp && lastConnectedStatus == FALSE) ||
+		(linkStatus == APDO_linkDown && lastConnectedStatus == TRUE))
 	{
 		return; // No change in the link status
 	}

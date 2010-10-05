@@ -173,7 +173,7 @@ void osallog(char *ch, int flush)
 		}
 	}
 	// write into file
-	fprintf(log, ch);
+	fprintf(log, "%s", ch);
 	// put extra to log next line to build
 	//fprintf(log,"\n");
 	if (flush == 1)

@@ -305,7 +305,7 @@ typedef struct _WIMAX_API_RF_SWITCHES_STATUS
 	{
 		UINT32                structureSize;                          /**< size of this structure. */
 		WIMAX_API_PROFILE_ID  profileID;                              /**< profile ID. Profile id 0 is reserve to connection without specifying a user account. */
-		char	                profileName[MAX_SIZE_OF_STRING_BUFFER]; /**< profile name. */ 
+		WIMAX_CHAR            profileName[MAX_SIZE_OF_STRING_BUFFER]; /**< profile name. */ 
 	} WIMAX_API_PROFILE_INFO, *WIMAX_API_PROFILE_INFO_P;
 	
 	/// Device version
@@ -466,6 +466,8 @@ typedef struct _WIMAX_API_RF_SWITCHES_STATUS
 		UCHAR16  interfaceName[MAX_SIZE_OF_STRING_BUFFER];	/**< interface name. This is a string caption to be compatible for all OS. */ 
 	} WIMAX_API_INTERFACE_INFO, *WIMAX_API_INTERFACE_INFO_P;
 #endif
+
+#pragma pack( pop )
 
 /// The statuses provided by this API can generally be mapped to movements along the SDK common state machine. The indications may provide further detailed information using the API�s arguments when relevant.
 /// \param[in] pDeviceId - Pointer to Device Identifier passed on open of device.

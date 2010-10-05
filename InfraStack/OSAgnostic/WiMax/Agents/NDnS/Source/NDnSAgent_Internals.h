@@ -200,8 +200,8 @@ typedef struct _wmx_NDnS_Context_t
 	wmx_ConnectStatus_t connectStatus;
 	int  DummyForCompilerHappy3;
 	TinyFSM_t fsm;
-	L4C_Task scheduledTask;
-	wmx_ScheduledTaskData_t scheduledTaskData;	
+	LONG scheduledTask;  // Updated using OSAL_atomic_exchange(), so this must be a LONG not an L4C_Task
+	wmx_ScheduledTaskData_t scheduledTaskData;
 	wmx_Status_t scanStatus;
 	wmx_LinkLossType_t linkLossType;
 	wmx_ScanType_t currentScanType;

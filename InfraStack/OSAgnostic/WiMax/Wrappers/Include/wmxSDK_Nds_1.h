@@ -235,6 +235,7 @@ typedef struct _wmx_Statistics_t
 	UINT32	TotalTxBytes;
 	UINT32	TotalTxPackets;
 } wmx_Statistics_t, *wmx_pStatistics_t;
+#pragma pack( pop )
 
 /// <summary>
 /// Type definition for a structure giving a detailed info on a system state.

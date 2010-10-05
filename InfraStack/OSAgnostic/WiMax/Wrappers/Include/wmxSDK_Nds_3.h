@@ -110,6 +110,7 @@ typedef struct _wmx_SLA_t
 	wmx_LinkSpeed_t		downLinkSpeed;
 	UINT32				agreementLevel;
 } wmx_SLA_t, *wmx_pSLA_t;
+#pragma pack( pop )
 
 #define WMX_SUBSCRIBER_NAME_MAX_SIZE 100
 #define WMX_SUBSCRIBER_ID_MAX_SIZE 256
@@ -125,6 +126,7 @@ typedef struct _wmx_SubscriberInfo_t
 	BOOL					userCredRequired;
 	//////////////////
 } wmx_SubscriberInfo_t, *wmx_pSubscriberInfo_t;
+#pragma pack( pop )
 
 /// <summary>
 /// Type definition for a struct containing information of a specific NSP.
@@ -149,6 +151,7 @@ typedef struct _wmx_NSP_t
 	wmx_SubscriberInfo_t	subscribers[WMX_NSP_SUBSCRIBERS_MAX_NUM];		// The list of subscribers associated with this NSP on this device.
 	UINT32					numOfSubscribers;
 } wmx_NSP_t, *wmx_pNSP_t;
+#pragma pack( pop )
 
 // TODO: Add description
 #pragma pack( push, 1 )
@@ -158,6 +161,7 @@ typedef struct _wmx_ContactInformation_t
 	UINT32	uriType; //TODO - don't forget to validate the values 0-255
 	char	text[MAX_SIZE_OF_STRING_BUFFER];
 } wmx_ContactInformation_t, *wmx_pContactInformation_t;
+#pragma pack( pop )
 
 /// <summary>
 /// Type definition for an enum specifying the possible outcomes of a scan cycle.
@@ -224,6 +228,7 @@ typedef struct _wmx_UserLinkStatus_t
 	wmx_LinkSpeed_t				downLinkSpeed;
 	wmx_BSid_t					bsId;
 } wmx_UserLinkStatus_t, *wmx_pUserLinkStatus_t;
+#pragma pack( pop )
 
 #pragma pack( push, 1 )
 typedef struct _wmx_UserStatistics_t
@@ -234,6 +239,7 @@ typedef struct _wmx_UserStatistics_t
 	UINT32	TotalTxBytes;
 	UINT32	TotalTxPackets;
 } wmx_UserStatistics_t, *wmx_pUserStatistics_t;
+#pragma pack( pop )
 
 /// <summary>
 /// A constant specifying the maximal length of a NSPs structs vector (in terms of the number of wmx_NSP_t structs the vector can contain).

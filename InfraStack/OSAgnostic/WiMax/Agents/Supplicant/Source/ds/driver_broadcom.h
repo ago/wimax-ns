@@ -20,15 +20,15 @@ typedef s8 int8;
 typedef	unsigned char	bool;			/* consistent w/BOOL */
 
 /* require default structure packing */
-#if !defined(__GNUC__)
-#pragma pack(push,8)
-#endif
+//#if !defined(__GNUC__)
+//#pragma pack(push,8)
+//#endif
 
 /* enable structure packing */
 #if defined(__GNUC__)
 #define	PACKED	__attribute__((packed))
 #else
-#pragma pack(1)
+#pragma pack(push,1)
 #define	PACKED
 #endif
 

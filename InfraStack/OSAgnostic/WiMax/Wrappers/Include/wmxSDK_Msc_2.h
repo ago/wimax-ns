@@ -87,6 +87,7 @@ typedef struct _wmx_ModelType_t
 	UINT32	modelTypeID;
 	char	modelTypeName[WMX_MODEL_TYPE_NAME_MAX_LENGTH];
 } wmx_ModelType_t, *wmx_pModelType_t;
+#pragma pack( pop )
 
 /// <summary>
 /// A constant specifying the maximal length of the manufacturer string.
@@ -102,6 +103,7 @@ typedef struct _wmx_Manufacturer_t
 	UINT32	manufacturerID;
 	char	manufacturerName[WMX_MANUFACTURER_NAME_MAX_LENGTH];
 } wmx_Manufacturer_t, *wmx_pManufacturer_t;
+#pragma pack( pop )
 
 /// <summary>
 /// Definition of a struct that holds the manufacturer ID and string. 
@@ -111,6 +113,7 @@ typedef struct _wmx_DevicePID_t
 {
 	UINT32	productID;	
 } wmx_DevicePID_t, *wmx_pDevicePID_t;
+#pragma pack( pop )
 
 /// <summary>
 /// A constant specifying the maximal length of the serial number string.
@@ -125,6 +128,7 @@ typedef struct _wmx_SerialNumber_t
 {	
 	char	serialNumber[WMX_SERIAL_NUMBER_MAX_LENGTH];
 } wmx_SerialNumber_t, *wmx_pSerialNumber_t;
+#pragma pack( pop )
 
 
 
@@ -140,6 +144,7 @@ typedef struct _wmx_SerialNumber_t
 //	UINT32	TotalTxBytes;
 //	UINT32	TotalTxPackets;
 //} wmx_Statistics_t, *wmx_pStatistics_t;
+//#pragma pack( pop )
 
 
 /// <summary>
@@ -153,6 +158,7 @@ typedef struct _wmx_SfStatistics_t
 	UINT32	noReceivedBytes;
 	UINT32	noTransmittedBytes;
 } wmx_SfStatistics_t, *wmx_pSfStatistics_t;
+#pragma pack( pop )
 
 /// <summary>
 /// A constant specifying the maximal length of the strings in the wmx_DeviceVersion_t struct.
@@ -171,6 +177,7 @@ typedef struct _wmx_DeviceVersion_t
 	char	BoardName[WMX_DEVICE_VERSION_MAX_LENGTH];
 	char	Software[WMX_DEVICE_VERSION_MAX_LENGTH];
 } wmx_DeviceVersion_t, *wmx_pDeviceVersion_t;
+#pragma pack( pop )
 
 
 

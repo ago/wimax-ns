@@ -64,7 +64,7 @@ wmx_Status_t wmx_SetCoexistenceMode(wmx_CoexistenceMode_t coexMode)
 		if (coexMode == WMX_MODE_CM && UserCall){
 			TRACE(TR_MOD_NDNS_AGENT, TR_SEV_NOTICE, "SetCoexistanceMode recieved set CM mode in CM mode.");
 			if (act_thread_coexHandler!=NULL){
-				OSAL_kill_thread(&act_thread_coexHandler);
+				OSAL_kill_thread(act_thread_coexHandler);
 				retStatus = WMX_ST_OK;
 			}
 			// setting fall to xor key to zero so we never fall to xor even when driver falls and brings itself up

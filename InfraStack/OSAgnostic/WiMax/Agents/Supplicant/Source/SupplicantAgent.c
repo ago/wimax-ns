@@ -482,7 +482,7 @@ wmx_Status_t InitSupplicantLibrary(VOID)
 	eap_ctx.eap_config.password_len = 8;
 	eap_ctx.eap_config.ca_cert = (u8 *) os_strdup("ca.pem");
 	eap_ctx.eap_config.fragment_size = TLS_MAX_SIZE;
-	eap_ctx.eap_config.eap_methods = eap_methods;
+	eap_ctx.eap_config.eap_methods = &eap_methods;
 
 	memset(&eap_cb, 0, sizeof(eap_cb));
 	eap_cb.get_config = peer_get_config;

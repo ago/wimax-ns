@@ -105,7 +105,7 @@ typedef unsigned long long UINT64;
 
 typedef unsigned int DWORD;
 
-typedef int INT_PTR;
+typedef int * INT_PTR;
 
 
 typedef char INT8;

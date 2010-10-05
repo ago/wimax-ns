@@ -468,7 +468,7 @@ int wimaxcu_get_network_list(WIMAX_API_DEVICE_ID_P p_device_id, CMD_ARGS scan_mo
 
 	} else if (scan_mode == CMD_SCAN_ARG_WIDE) {
 		// Get User Connect Mode
-		int userConnectMode;
+		WIMAX_API_CONNECTION_MODE userConnectMode;
 		wmxStatus = GetConnectionMode(p_device_id, &userConnectMode);
 		if (WIMAX_API_RET_SUCCESS != wmxStatus) {
 			PrintWmxStatus(wmxStatus);

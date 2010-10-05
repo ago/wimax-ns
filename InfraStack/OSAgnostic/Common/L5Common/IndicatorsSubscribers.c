@@ -153,7 +153,7 @@ EXPORT void SendIndicationToSubscribers( UINT32 internalRequestID, void *_buffer
 	SendIndData *buffer = _buffer;
 	ListItem* handle;
 	L5_TARGET_ID targetID;
-	ULONG_PTR data;
+	L5_TARGET_ID data;
 	L5_RESULT res;
 	IndicatorSubscribers *indSubscribers;
 	List tempList;
@@ -174,12 +174,12 @@ EXPORT void SendIndicationToSubscribers( UINT32 internalRequestID, void *_buffer
 		handle = CreateIterator(&(indSubscribers->subscribersList));
 //		handle = Iterator_GetNext(&(indSubscribers->subscribersList), handle, (void**)&targetID);
 		handle = Iterator_GetNext(&(indSubscribers->subscribersList), handle, (void**)(&data));
-		targetID = (int) data; 
+		targetID = data;
 		while (handle != NULL)
 		{
 			List_AddItem(&tempList, (void *)targetID);
 			handle = Iterator_GetNext(&(indSubscribers->subscribersList), handle, (void**)(&data));
-    		targetID = (int)data; ////
+    		targetID = data; ////
 
 	//		handle = Iterator_GetNext(&(indSubscribers->subscribersList), handle, (void**)&targetID);
 		}
@@ -189,7 +189,7 @@ EXPORT void SendIndicationToSubscribers( UINT32 internalRequestID, void *_buffer
 		//iterate the temp list and send the targets indication:
 		handle = CreateIterator(&tempList);
 		handle = Iterator_GetNext(&tempList, handle, (void**)(&data));
-    	targetID = (int) data;
+    	targetID = data;
 
 	//	handle = Iterator_GetNext(&tempList, handle, (void**)&targetID);
 		while (handle != NULL)
@@ -219,7 +219,7 @@ EXPORT void SendIndicationToSubscribers( UINT32 internalRequestID, void *_buffer
 	//		handle = Iterator_GetNext(&tempList, handle, (void**)&targetID);
 
 			handle = Iterator_GetNext(&tempList, handle, (void**)(&data));
-    		targetID = (int) data;
+    		targetID = data;
 
 
 			// TODO - XXX - check L5_COMMON_UTILS_IsTargetNotExist

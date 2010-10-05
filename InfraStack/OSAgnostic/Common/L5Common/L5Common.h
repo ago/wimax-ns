@@ -282,5 +282,6 @@ typedef struct _tL5DispatcherFunctions
 extern tL5DispatcherFunctions *GetL5Funcs();
 extern tUtilityFunctions *GetUtilsFuncs();
 
+#pragma pack(pop)
 
 #endif

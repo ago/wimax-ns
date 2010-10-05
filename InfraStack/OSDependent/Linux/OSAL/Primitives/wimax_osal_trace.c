@@ -53,7 +53,7 @@ int g_iloglevel = 2;
 int g_iloglevelreadflag = 0;
 
 // to avoid multi tread environment to log the thread
-pthread_mutex_t g_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t g_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /*
  *
@@ -97,22 +97,18 @@ pthread_mutex_t g_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void OSALTrace(char *szformat, ...)
 {
-	time_t currTime;
-        struct tm timeinfo;
-
 	// log type should be 0 to 4 default value will assign info
 	if (g_OsalTraceInfo.loglevel > g_iloglevel
 	    || g_OsalTraceInfo.loglevel < 0) {
-		// release the lock if get any errors
-		pthread_mutex_unlock(&g_mutex);
-		return;
+		goto out;
 	}
 	// if argument path  null....
 	if (szformat == NULL) {
-		// release the lock if get any errors
-		pthread_mutex_unlock(&g_mutex);
-		return;
+		goto out;
 	}
+
+	time_t currTime;
+        struct tm timeinfo;
 
 	va_list args;
 	static char Buffer[EGIHT_X_BUFFER] = { 0 };
@@ -137,6 +133,10 @@ void OSALTrace(char *szformat, ...)
 	sprintf(outBuffer, "%s\n", Buffer);
 
 	osallog(outBuffer, 1);
+
+out:
+	// release the lock once done
+	pthread_mutex_unlock(&g_mutex);
 }
 
 /*
@@ -167,8 +167,6 @@ void osallog(char *ch, int flush)
             log = fopen(OSALTRACE_FILE, "wt");
 		if (!log) {
 			syslog(LOG_ERR, "wimaxd[osal] - can not open logfile (%s) for writing.\n", OSALTRACE_FILE);
-			// release the lock if get any errors
-			pthread_mutex_unlock(&g_mutex);
 			return;	// bail out if we can't log
 		}
 	}
@@ -182,8 +180,6 @@ void osallog(char *ch, int flush)
 #ifdef OSAL_CONSOLE
 	printf(ch);
 #endif
-	// release the lock once done with log
-	pthread_mutex_unlock(&g_mutex);
 
 	// fclose(log);
 }

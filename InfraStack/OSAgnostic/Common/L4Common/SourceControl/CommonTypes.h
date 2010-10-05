@@ -91,6 +91,8 @@ typedef const char*	PCSTR;
 /// when you need to hold both a pointer and a number
 #ifdef WIN64
 typedef UINT64 POINTER_AND_UINT;
+#elif __x86_64__
+typedef UINT64 POINTER_AND_UINT;
 #else
 typedef UINT POINTER_AND_UINT;
 #endif

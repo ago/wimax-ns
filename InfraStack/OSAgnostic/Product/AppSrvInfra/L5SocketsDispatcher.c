@@ -61,7 +61,8 @@ typedef struct
 	L5_CONNECTION L5Conn;			// Can be NULL before handshake
 
 	// Is this an active slot?
-	BOOL bActive;
+	// Updated using OSAL_atomic_exchange, so this must be a LONG not a BOOL
+	LONG bActive;
 
 	// Connections from both sides
 	SOCKETS_CLIENT_ID Socket;
@@ -702,7 +703,7 @@ void l5_sockets_dispatcher_HandleNewConnection( SOCKETS_CLIENT_ID Socket, void**
 	// XXX SEH error handling
 	OSAL_init_critical_section( &(pConn->csSendReceive) );
 	OSAL_init_critical_section( &(pConn->csHandlingRequest) );
-	OSAL_atomic_exchange( (LPLONG)&(pConn->bActive), TRUE );
+	OSAL_atomic_exchange( &(pConn->bActive), TRUE );
 
 	*context = pConn;
 
@@ -1034,7 +1035,7 @@ void l5_sockets_dispatcher_DisconnectClient( tL5SocketsDispatcherConnection *pCo
 			L5_DISPATCHER_Disconnect( pConn->L5Conn );
 		}
 
-		OSAL_atomic_exchange( (LPLONG)&(pConn->bActive), FALSE );
+		OSAL_atomic_exchange( &(pConn->bActive), FALSE );
 
 		OSAL_exit_critical_section( &(pConn->csHandlingRequest) );
 		OSAL_delete_critical_section(&pConn->csSendReceive);

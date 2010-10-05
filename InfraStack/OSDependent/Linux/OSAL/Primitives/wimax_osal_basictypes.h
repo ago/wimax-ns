@@ -39,6 +39,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <sys/stat.h>
+#include <pthread.h>
 
 #if 0
 #include <sys/socket.h>
@@ -90,7 +91,7 @@ typedef void* OSAL_critical_section;
 
 typedef int pid_t;
 
-typedef int OSAL_thread_t;
+typedef pthread_t OSAL_thread_t;
 
 typedef void * OSAL_event_t;
 

@@ -182,7 +182,7 @@ L5_RESULT L5_COMMON_UTILS_SendControlMessage(
 
 	result = l5_common_utils_ActuallySendMessage( Socket, pMessage );
 
-	TRACE(TR_MOD_SERVICE, TR_SEV_NOTICE, "Result of ActuallySendMessage is %d %d", result);
+	TRACE(TR_MOD_SERVICE, TR_SEV_NOTICE, "Result of ActuallySendMessage is %d", result);
 
 	return result;
 }

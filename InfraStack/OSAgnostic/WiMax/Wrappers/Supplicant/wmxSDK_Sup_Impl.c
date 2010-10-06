@@ -47,7 +47,6 @@
 #include "NDnSAgent.h"
 
 
-typedef unsigned char u8;
 #define TLS_IMPLEMENTATION Arm1
 
 /* the supplicant calls the tls_ methods, so we make sure the declarations match to what it expects. */ 

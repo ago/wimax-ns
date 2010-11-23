@@ -466,6 +466,12 @@ wmx_Status_t InitSupplicantLibrary(VOID)
 	char answer[MAX_ANSWER_SIZE];
 	void *ft;
 #endif
+	struct eap_config eap_config_null = {
+		.opensc_engine_path = NULL,
+		.pkcs11_engine_path = NULL,
+		.pkcs11_module_path = NULL,
+		.wps = NULL,
+	};
 
 	TRACE(TR_MOD_SUPPLICANT_AGENT, TR_SEV_INFO,"Supplicant: InitSupplicantLibrary (IN)");
 	// init DS status variable
@@ -496,7 +502,7 @@ wmx_Status_t InitSupplicantLibrary(VOID)
 	eap_cb.notify_pending = peer_notify_pending;
 
 	eap_peer_register_methods();
-	eap_ctx.eap = eap_peer_sm_init(&eap_ctx, &eap_cb, &eap_ctx, &eap_ctx.eap_config);
+	eap_ctx.eap = eap_peer_sm_init(&eap_ctx, &eap_cb, &eap_ctx, &eap_config_null);
 	if (eap_ctx.eap == NULL)
 		return WMX_ST_FAIL;
 

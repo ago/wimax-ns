@@ -210,7 +210,7 @@ struct cu_cmd_specs
 
 	char *default_arg;	// eg. scan [preferred]
 
-	cmd_arg_map cmd_args[6];	// Maximum number of arguments any of cmds can accept (un-used ones will be either NULL or empty strings)
+	cmd_arg_map cmd_args[7];	// Maximum number of arguments any of cmds can accept (un-used ones will be either NULL or empty strings)
 
 	size_3_string_array scan_connect_mode_options[2];
 	char *cmd_mode_options[2];

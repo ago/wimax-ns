@@ -174,7 +174,7 @@ SupplicantData g_SuppData1; //[findme][amirs] buffer for 64bit
 
 SupplicantConfig g_SuppConfig1; //[findme][amirs] buffer for 64bit
 #endif
-static struct eap_method_type eap_methods[2];
+static struct eap_method_type eap_methods[3];
 SupplicantConfig g_SuppConfig;
 
 OSAL_dynlib_t	g_DSlib = NULL;
@@ -480,6 +480,8 @@ wmx_Status_t InitSupplicantLibrary(VOID)
 
 #if defined(WPA_OPEN_SOURCE)
 	memset(&eap_methods, 0, sizeof(eap_methods));
+	eap_methods[2].vendor = EAP_VENDOR_IETF;
+	eap_methods[2].method = EAP_TYPE_NONE;
 	memset(&eap_ctx, 0, sizeof(eap_ctx));
 
 	eap_ctx.eap_config.identity = (u8 *) os_strdup("user");
@@ -488,7 +490,7 @@ wmx_Status_t InitSupplicantLibrary(VOID)
 	eap_ctx.eap_config.password_len = 8;
 	eap_ctx.eap_config.ca_cert = (u8 *) os_strdup("ca.pem");
 	eap_ctx.eap_config.fragment_size = TLS_MAX_SIZE;
-	eap_ctx.eap_config.eap_methods = &eap_methods;
+	eap_ctx.eap_config.eap_methods = eap_methods;
 
 	memset(&eap_cb, 0, sizeof(eap_cb));
 	eap_cb.get_config = peer_get_config;

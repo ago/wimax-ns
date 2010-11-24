@@ -330,27 +330,6 @@ void wimaxcu_stop_signal_handler(int sig)
 	
 }
 
-
-void handler(int sig)
-{
-	void *array[10];
-	size_t size;
-	size_t i;
-	char **strings;
-	size = backtrace(array,10);
-	fprintf(stderr,"Error: signal %d: \n",sig);
-	strings = backtrace_symbols (array, size);
-
-	printf ("Obtained %zd stack frames.\n", size);
-     
-       for (i = 0; i < size; i++)
-          printf ("%s\n", strings[i]);
-     
-       free (strings);
-  
-//	backtrace_symbols_fd(array,size,2);
-	exit(1);
-}
 /*
  * Function: main
  * Description: main function calls functions for intialization and 
@@ -402,7 +381,6 @@ int main(int argc, char *argv[])
 	// sleep(1);
 	// Execute the command
 	ret = cmd_handler(&gbl_device_id, &out_cmd);
-	signal(SIGSEGV,handler);
 	// Finalize the SDK
 	wimaxcu_finalize(&gbl_device_id);
 

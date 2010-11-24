@@ -3055,7 +3055,7 @@ void print_callstack_to_file(int sig, siginfo_t *info,
 //	 printf("Came here %d\n", __LINE__);
 	char command[MAX_STR_LEN + MAX_FILENAME_LEN];
 	 /* Do something useful with siginfo_t */
-  	if ((sig != SIGSEGV) && (sig != SIGINT)) {
+  	if (sig != SIGINT) {
 		syslog(LOG_ERR,"Got signal %d#92", sig);
 //		 printf("Came here %d\n", __LINE__);
 		return;
@@ -3136,20 +3136,6 @@ void wimaxcu_signal_handler(int sig, siginfo_t *info,
 	printf("Please check /var/log/wimax folder \n");
 
  	print_callstack_to_file(sig, info, secret);
-	
-	
-	// kalyan
-	// If wimaxcu recieved segmentation fault 
-	// Stack might be corrupted
-	// So it is good idea to just exit
-	// This may recives some system resources hanging
-
-	if(sig == SIGSEGV) {
-		printf("Exit \n");
-		exit(0);
-	}
-		
-
 	wimaxcu_stop_signal_handler(sig);
 	
 }
@@ -3191,7 +3177,6 @@ int main(int argc, char *argv[])
     	sigemptyset (&sa.sa_mask);
     	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 
-    	sigaction(SIGSEGV, &sa, NULL);
     	sigaction(SIGUSR1, &sa, NULL);  
 
     	signal(SIGINT, wimaxcu_stop_signal_handler);

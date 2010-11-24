@@ -254,7 +254,6 @@ int main_daemon(void)
 	sigemptyset (&sa.sa_mask);
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 
-	sigaction(SIGSEGV, &sa, NULL);
 	sigaction(SIGUSR1, &sa, NULL);  
 
 	signal(SIGINT, stop_signal_handler);

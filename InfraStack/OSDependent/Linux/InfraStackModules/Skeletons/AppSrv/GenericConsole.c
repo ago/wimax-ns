@@ -104,7 +104,7 @@ void print_callstack_to_file(int sig, siginfo_t *info, void *secret)
 	// printf("Came here %d\n", __LINE__);
 	char command[MAX_STR_LEN + MAX_FILENAME_LEN];
 	/* Do something useful with siginfo_t */
-  	if ((sig != SIGSEGV) && (sig != SIGINT)) {
+  	if (sig != SIGINT) {
 		syslog(LOG_ERR,"Got signal %d#92", sig);
 		// printf("Came here %d\n", __LINE__);
 		return;
@@ -167,7 +167,7 @@ void console_signal_handler(int sig, siginfo_t *info, void *secret)
 	// printf("First ctrl +c recieived \n");
 	no_of_signals++;
 	
-	if ((sig == SIGSEGV) && (sig == SIGINT)) {
+	if (sig == SIGINT) {
 		syslog(LOG_ERR,"Got signal %d", sig);
 		print_callstack_to_file(sig, info, secret);
 	}
@@ -201,7 +201,6 @@ int main_console(void)
   	sigemptyset (&sa.sa_mask);
   	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 	
-  	sigaction(SIGSEGV, &sa, NULL);
   	sigaction(SIGUSR1, &sa, NULL);   // install our handler
 	sigaction(SIGINT, &sa, NULL);
   	sigaction(SIGTERM, &sa, NULL);   // install our handler

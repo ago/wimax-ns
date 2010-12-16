@@ -1653,9 +1653,13 @@ int OSAL_CAPI_wmemcpy_s(OSAL_WIMAX_API_WSTRING dest, size_t sizeInWords, const O
 }
 // TODO::OSAL-WORK::IMPORTANT - OSAL_wcscmp, OSAL_wcslen - What happens when these methods are fed with ansi strings???
 
-int OSAL_wcscmp(const wchar_t * string1, const wchar_t * string2)
+int OSAL_wcscmp(OSAL_WIMAX_API_WSTRING string1, OSAL_WIMAX_API_WSTRING string2)
 {
+#ifdef NATIVE_LINUX
+	return strcmp(string1, string2);
+#else
 	return wcscmp(string1, string2);
+#endif
 }
 
 

@@ -11223,7 +11223,7 @@ program_suffix=$cooked_program_suffix
 
 
 #if (test "${CFLAGS}" = ""); then
-CFLAGS="-O2 -g -Wall -D _USE_TRACE -ldl -lm"
+CFLAGS="-g -Wall -D _USE_TRACE -ldl -lm"
 #fi
 
 # Check whether --enable-debug was given.

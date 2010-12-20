@@ -23,7 +23,7 @@ AC_SUBST(program_suffix, $cooked_program_suffix)
 
 
 #if (test "${CFLAGS}" = ""); then
-CFLAGS="-O2 -g -Wall -D _USE_TRACE -ldl -lm"
+CFLAGS="-g -Wall -D _USE_TRACE -ldl -lm"
 #fi
 
 AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],

@@ -34,6 +34,8 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <libgen.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "wimax_osal_primitives.h"
 #include "wimax_osal_config_controler.h"
@@ -45,6 +47,7 @@ extern char *g_ifacename;
 static char *progname;
 int g_kill = 0;
 int g_daemon = -1;
+extern char *g_script;
 
 static 
 void do_help(FILE *f)
@@ -58,6 +61,7 @@ void do_help(FILE *f)
 		"-k              Kill existing instance (requires -i)\n"
 		"-d              Debug mode, work in console and don't become a daemon\n"
 		"-b              Force working in background and become a daemon\n"
+		"-s SCRIPT       Script to run on network interface IP change events\n"
 		"-h              This help\n", progname);
 }
 
@@ -65,18 +69,15 @@ int main(int argc, char *argv[])
 {
 	BOOL res;
 	char target[MAX_TARGET_NAME] = {0};
-	if (geteuid() != (uid_t) 0) {
-		fprintf(stderr,	"ERROR: You do not possess sufficient privileges to perform this action.\n");
-		return 1;
-	}
 	int c;
 	int ret;
 	int pid;
+	struct stat st;
 
 	opterr = 0;
 	progname = basename(argv[0]);
 	
-	while ((c = getopt(argc, argv, "i:kdbk")) != -1)
+	while ((c = getopt(argc, argv, "i:s:kdbk")) != -1)
 		switch (c)
 		{
 		case 'i':
@@ -90,6 +91,9 @@ int main(int argc, char *argv[])
 			break;
 		case 'b':
 			g_daemon = 1;
+			break;
+		case 's':
+			g_script = optarg;
 			break;
 		case 'h':
 			do_help(stdout);
@@ -111,6 +115,27 @@ int main(int argc, char *argv[])
 		fprintf(stderr,
 			"ERROR: You do not possess sufficient privileges to perform this action.\n");
 		return 1;
+	}
+
+	// check the script file
+	if (g_script) {
+		if (stat (g_script, &st) != 0) {
+			fprintf(stderr,
+				"ERROR: Script '%s' is not accessible.\n", g_script);
+			return 1;
+		}
+
+		if (st.st_uid != 0) {
+			fprintf(stderr,
+				"ERROR: Script '%s' not owned by root.\n", g_script);
+			return 1;
+		}
+
+		if ((st.st_mode & S_IXUSR) == 0) {
+			fprintf(stderr,
+				"ERROR: Script '%s' is not executable.\n", g_script);
+			return 1;
+		}
 	}
 	
 	pid = IsDaemonRunning();

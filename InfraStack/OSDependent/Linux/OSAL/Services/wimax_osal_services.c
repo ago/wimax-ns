@@ -56,6 +56,7 @@
 
 int linkup_redundant = 0;
 char * g_ifacename = NULL;
+char * g_script = NULL;
 
 #define TRACE(x, y, z, ...)
 
@@ -284,7 +285,7 @@ UINT32 OSAL_RenewIP( UINT32 mediaStatus )
 
 void *ManageIPThread(void *param)
 {
-#define DHCP_RENEW_FILE_NAME "dhcp_renew.sh"
+#define DEFAULT_DHCP_RENEW_FILE_NAME "dhcp_renew.sh"
 
 	char file_name[MAX_FILENAME_LEN + 10]; // 10 more chacters to add interface name	
 	int len = 0;
@@ -294,14 +295,20 @@ void *ManageIPThread(void *param)
 
 	OSALTRACE(OSAL_ERROR, ("Enter"));
 
-	strcpy(file_name, PKG_DATA_DIR);
-	len = strlen(file_name);
-	
-	if(file_name[len-1] != '/') {
-		strcat(file_name,"/");
-	} 
-	
-	strcat(file_name, DHCP_RENEW_FILE_NAME);	
+	if (g_script == NULL)
+	{
+		strcpy(file_name, PKG_DATA_DIR);
+		len = strlen(file_name);
+
+		if(file_name[len-1] != '/')
+			strcat(file_name,"/");
+
+		strcat(file_name, DEFAULT_DHCP_RENEW_FILE_NAME);
+	}
+	else
+	{
+		strcpy(file_name, g_script);
+	}
 	
 	interface_name[0] = '\0';
 

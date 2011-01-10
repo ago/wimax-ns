@@ -2,7 +2,7 @@
         daily
 	delaycompress
 	copytruncate
-        externsion log
+        extension log
         missingok
         rotate 9
 }

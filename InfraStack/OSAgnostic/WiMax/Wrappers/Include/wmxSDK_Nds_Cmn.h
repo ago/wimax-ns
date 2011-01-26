@@ -41,6 +41,7 @@
 #define MAX_VERBOSE_NSP_NAME_SIZE 256
 #define MAX_SP_LOCK_CODE_SIZE 32
 #define PREAMBLES_LENGTH	15
+#define PREAMBLES_SIZE		16
 #define WMX_CHANNELS_MAX_NUM 64
 #define MAX_INSTALLAION_VERSION_SIZE 50
 
@@ -75,7 +76,7 @@ typedef UINT8 wmx_BSidMask_t[6], *wmx_pBSidMask_t;
 /// </summary>
 typedef UINT16 wmx_ChannelID_t, *wmx_pChannelID_t;
 typedef UINT32 wmx_PPMFreqError_t, *wmx_pPPMFreqError_t;
-typedef UINT8 wmx_Preambles_t[PREAMBLES_LENGTH], *wmx_pPreambles_t;
+typedef UINT8 wmx_Preambles_t[PREAMBLES_SIZE], *wmx_pPreambles_t;
 
 /// <summary>
 /// Type definition for a variable containing the ID of a NSP. 

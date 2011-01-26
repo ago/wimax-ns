@@ -57,7 +57,7 @@ extern L5_CONNECTION l4Proxy_Connection;
 extern tL5DispatcherFunctions *l4Proxy_pFuncs;
 
 
-typedef UINT16 L4_INTEL_80216_INDICATION;
+typedef UINT32 L4_INTEL_80216_INDICATION;
 
 
 // AppSrv Agent Interface:

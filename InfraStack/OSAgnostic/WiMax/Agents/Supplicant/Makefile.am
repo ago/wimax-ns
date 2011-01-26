@@ -124,7 +124,7 @@ libSupplicantAgent_la_CFLAGS = 	-I "$(top_srcdir)/InfraStack/OSAgnostic/Product/
 				-I "$(srcdir)/../../Wrappers/NDnS" \
 				-I "$(srcdir)/../../Wrappers/Apdo" \
 				-I "$(srcdir)/Source/ds" \
-				-D _GNU_SOURCE \
+				-D _GNU_SOURCE @LIBWIMAX_CFLAGS@ \
 				-D "_USE_TRACE" -D "BMI_MACHINE_ENDIANNESS_LITTLE" \
 				-D "IEEE8021X_EAPOL" -D "_OS_WIN32SIM" -D "_LINUX"
 
@@ -133,7 +133,7 @@ libSupplicantAgent_la_CFLAGS = 	-I "$(top_srcdir)/InfraStack/OSAgnostic/Product/
 if WPA_SUP_ENABLE
 libSupplicantAgent_la_SOURCES += $(WPA_SUP_SOURCES)
 libSupplicantAgent_la_CFLAGS += $(WPA_SUP_CFLAGS)
-libSupplicantAgent_la_LIBS = $(WPA_SUP_LIBS)
+libSupplicantAgent_la_LIBS = $(WPA_SUP_LIBS) @LIBWIMAX_LIBS@ 
 EXTRA_DIST += $(DS_SUP_SOURCES)
 else
 libSupplicantAgent_la_SOURCES += $(DS_SUP_SOURCES)

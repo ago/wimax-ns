@@ -53,6 +53,8 @@
 #include <eap_peer/util/common.h>
 #include <eap_peer/crypto/tls.h>
 
+#include <wimaxll.h>
+
 
 #ifndef WPA_OPEN_SOURCE
 /* temporary, remove*/
@@ -211,8 +213,12 @@ void wmxSup_MessagesHandler(L5_CONNECTION Conn,
 											void *pvReserved )
 {	
 	L3L4CompleteHeader_type *l3L4CompleteHeader;
+	UINT16 length;
+	UINT16 type;
 
 	l3L4CompleteHeader = (L3L4CompleteHeader_type*)pvSentBuffer;
+	type = wimaxll_le16_to_cpu(l3L4CompleteHeader->Type);
+	length = wimaxll_le16_to_cpu(l3L4CompleteHeader->Length);
 
 	UNREFERENCED_PARAMETER(pvReserved);
 	UNREFERENCED_PARAMETER(pvUserContext);
@@ -227,7 +233,7 @@ void wmxSup_MessagesHandler(L5_CONNECTION Conn,
 		//GOLD, SILVER
 	case L4_PROXY_OPCODE_STATUS_INDICATION_ARRIVED:
 	case L4_PROXY_OPCODE_L4_INDICATION_ARRIVED:
-		switch (l3L4CompleteHeader->Type)
+		switch (type)
 		{
 		case L3_L4_OPCODE_REPORT_EAP_REQUEST:
 			pUtils->tpfnPostRequest(	MEDIUM,
@@ -240,13 +246,13 @@ void wmxSup_MessagesHandler(L5_CONNECTION Conn,
 		case L3_L4_OPCODE_REPORT_ALT_ACCEPT:			
 		case L3_L4_OPCODE_REPORT_KEY_REQUEST:
 			pUtils->tpfnPostRequest(	MEDIUM,
-									l3L4CompleteHeader->Type, 
+									type, 
 									NULL, 
 									0,
 									wmxSup_InternalHandler	);
 			break;		
 		case L3_L4_OPCODE_REPORT_EMSK_RELATED_KEYS:
-			TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_INFO, "Received BEK (%d bytes)", l3L4CompleteHeader->Length);
+			TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_INFO, "Received BEK (%d bytes)", length);
 			break;
 		default:
 			TRACE(TR_MOD_SUPPLICANT_WRAPPER, TR_SEV_ERR,"Unknown message arrived");
@@ -255,7 +261,7 @@ void wmxSup_MessagesHandler(L5_CONNECTION Conn,
 		break;
 		//PVC
 	case SUP_OPCODE_INDICATION_ARRIVED:
-		switch (((pSUP_MESSAGE_HEADER)pvSentBuffer)->opcode)
+		switch (wimaxll_le32_to_cpu(((pSUP_MESSAGE_HEADER)pvSentBuffer)->opcode))
 		{
 		case SUP_OPCODE_IND_EVENT:
 			EventReportCB(*(wmx_pSupEvent_t)(((pSUP_MESSAGE)pvSentBuffer)->buf));

@@ -56,10 +56,13 @@ libPipeHandler_la_CFLAGS = 	-I "$(top_srcdir)/InfraStack/OSAgnostic/Common/Commo
 			  	-I "$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/" \
 			  	-D _GNU_SOURCE \
 			  	-D "L5_USE_CLIENT_SOCKETS" -D "_USE_TRACE" \
+				@LIBWIMAX_CFLAGS@				\
 			  	-D "BMI_MACHINE_ENDIANNESS_LITTLE" -D "_LINUX"
 
-libPipeHandler_la_LIBADD = $(top_builddir)/InfraStack/OSDependent/Linux/InfraStackModules/IPCs/libSockets.la
+libPipeHandler_la_LIBADD = \
+	$(top_builddir)/InfraStack/OSDependent/Linux/InfraStackModules/IPCs/libSockets.la \
+	@LIBWIMAX_LIBS@
 
- 
+
 
 

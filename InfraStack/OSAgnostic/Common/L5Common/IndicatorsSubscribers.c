@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
 #include <unistd.h>
 #include <stdlib.h>
+#include <wimaxll.h>
 #include "IndicatorsSubscribers.h"
 
 #include "CommonServices.h"
@@ -197,8 +198,8 @@ EXPORT void SendIndicationToSubscribers( UINT32 internalRequestID, void *_buffer
 		{
 			//in case we are working with remote DnD, we want to send the trace and monitor indications 
 			//only to the DnD agent
-			if(((L3_L4_OPCODE_REPORT_MONITOR_EVACUATE != *((UINT16 *)buffer->indication_buffer)) &&
-				(L3_L4_OPCODE_REPORT_TRACE_EVACUATE != *((UINT16 *)buffer->indication_buffer))) ||
+			if(((L3_L4_OPCODE_REPORT_MONITOR_EVACUATE != wimaxll_le16_to_cpu(*((UINT16 *)buffer->indication_buffer))) &&
+				(L3_L4_OPCODE_REPORT_TRACE_EVACUATE != wimaxll_le16_to_cpu(*((UINT16 *)buffer->indication_buffer)))) ||
 				(L5_TARGET_DND_AGENT == targetID))
 			{
 				TRACE(TR_MOD_WRAPPER_LOGS, TR_SEV_DEBUG,"SendIndicationToSubscribers - senderL5Conn=0x%x, targetID=%d, internalRequestID=%d",

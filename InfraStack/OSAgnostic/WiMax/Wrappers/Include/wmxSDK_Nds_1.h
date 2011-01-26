@@ -248,7 +248,7 @@ typedef struct _wmx_SystemStateUpdate
 	wmx_LinkStatus_t linkStatus;
 	wmx_MediaStatus_t MediaStatus;
 	wmx_ChannedInfo_t channelInfo;
-	UINT8				dummyCompilerHappy[3];
+//	UINT8				dummyCompilerHappy[3];
 	wmx_RfSwitchesStatus_t rfSwitchesStatus;	
 } wmx_SystemStateUpdate, *wmx_pSystemStateUpdate;
 

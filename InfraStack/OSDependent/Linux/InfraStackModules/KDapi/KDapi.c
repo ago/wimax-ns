@@ -58,6 +58,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "KDapiForLinuxNlsock.h"
 #include "L4BufMan_L3L4Structs_Desc.h"
 #include "L4BufMan_L3L4Structs.h"
+#include "Services_Ctrl.h"
 
 #define MAX_DATA_SIZE_SET_NORMAL 100
 
@@ -264,12 +265,12 @@ static int send_recieve_message_to_driver(IN UINT32 Command,
 	// the flag so that next LINK_UP is accepted for dhcp req
 	// This will be useful in fast reconnect scenario where firmware is
 	// failing to send LINK_DOWN before sending a LINK_UP
-	if(wmx_in_buffer->type == L4_L3_OPCODE_CMD_CONNECT)
+	if(wmx_in_buffer->type == wimaxll_cpu_to_le16(L4_L3_OPCODE_CMD_CONNECT))
 	{
 		linkup_redundant = 0;
 	}
 
-	if (*((UINT16 *) pInBuffer) == 0x4604)	// enable raw logging during connect
+	if (*((UINT16 *) pInBuffer) == wimaxll_cpu_to_le16(0x4604))	// enable raw logging during connect
 	{
 		 bEnableRawTracing = 1;
 		//g_Connected = 0;
@@ -281,7 +282,7 @@ static int send_recieve_message_to_driver(IN UINT32 Command,
 
 
 
-	if ((bEnableRawTracing) || (*((UINT16 *) pInBuffer) == 0x6201)) {
+	if ((bEnableRawTracing) || (*((UINT16 *) pInBuffer) == wimaxll_cpu_to_le16(0x6201))) {
 #ifdef _DEBUG1
 		if (inBufSize == 2088) {
 			// Probe to check if the device has already rebooted before sending this large packet down
@@ -289,7 +290,7 @@ static int send_recieve_message_to_driver(IN UINT32 Command,
 			inBufSize = sizeof(GET_STATE_L4L3_MSG);
 		}
 #endif
-		if (*((UINT16 *) pInBuffer) == 0x6201)
+		if (*((UINT16 *) pInBuffer) == wimaxll_cpu_to_le16(0x6201))
 			DumpHexString("Gatekeeper (TLS Out): ", pInBuffer, inBufSize);
 		else {
 			DumpHexString("Gatekeeper (out) : ", pInBuffer, inBufSize);
@@ -328,22 +329,23 @@ static int send_recieve_message_to_driver(IN UINT32 Command,
 		if (send_rcv_msg->type != *(unsigned short *)pInBuffer) {
 			TRACE(TR_MOD_KDAPI, TR_SEV_ERR,
 			      "Incorrect response recieved %x expected %x\n",
-			      send_rcv_msg->type, *(unsigned short *)pInBuffer);
+			      wimaxll_le16_to_cpu(send_rcv_msg->type),
+			      wimaxll_le16_to_cpu(*(unsigned short *)pInBuffer));
 			printk("Incorrect response recieved %x expected %x\n",
-			       send_rcv_msg->type,
-			       *(unsigned short *)pInBuffer);
+			       wimaxll_le16_to_cpu(send_rcv_msg->type),
+			       wimaxll_le16_to_cpu(*(unsigned short *)pInBuffer));
 			free(send_rcv_msg);
 			send_rcv_msg = NULL;
 			goto error_msg_send_command;
 		}
 		memcpy(pOutBuffer, send_rcv_msg, rcv_msg_size);
 		*pWrittenOutBufSize = rcv_msg_size;
-		printk("Response recieved: size(%d) status(%x)\n", rcv_msg_size, send_rcv_msg->status);
+		printk("Response recieved: size(%d) status(%x)\n", rcv_msg_size, wimaxll_le16_to_cpu(send_rcv_msg->status));
 
 #ifndef DEBUG_DEVELOPER
         if(g_enable_driver_msg == TRUE) {
             printf("<<< [RSP 0x%x][%d]\n", Command, rcv_msg_size);
-            print_hex(send_rcv_msg, rcv_msg_size);
+            print_hex((unsigned char *)send_rcv_msg, rcv_msg_size);
         }
 #endif
 		// free the memory allocated by send_msg_response_to_l4
@@ -351,13 +353,13 @@ static int send_recieve_message_to_driver(IN UINT32 Command,
 		send_rcv_msg = NULL;
 
 		if (bEnableRawTracing) {
-			if (*((UINT16 *) pInBuffer) == 0x6201)
+			if (*((UINT16 *) pInBuffer) == wimaxll_cpu_to_le16(0x6201))
 				DumpHexString("Gatekeeper (TLS IN): ", pOutBuffer, rcv_msg_size);
 			else
 				DumpHexString("Gatekeeper (in): ", pOutBuffer, rcv_msg_size);
 		}
 // #if 1
-//              if ( *((UINT16 *)pInBuffer) == 0xd002 )
+//              if ( *((UINT16 *)pInBuffer) == wimaxll_cpu_to_le16(0xd002) )
 //              {
 //                      UINT16 *pTmp = pInBuffer;
 
@@ -367,7 +369,7 @@ static int send_recieve_message_to_driver(IN UINT32 Command,
 //              }
 // #endif // 1
 #ifdef INTERNAL_SUPPLICANT_DONT_SEND_KEY_SECONDTIME_IF_ALREADY_CONNECTED
-		if (*((UINT16 *) pInBuffer) == 0xd002) {
+		if (*((UINT16 *) pInBuffer) == wimaxll_cpu_to_le16(0xd002)) {
 			UINT16 *pTmp = pInBuffer;
 			// Set the global system state
 			if (*(pTmp + 12) == 8) {
@@ -407,8 +409,8 @@ static int get_L4M_version()
 	UINT32 tempByteWritten = 30;
 
 	memset(&cmd, 0, sizeof(cmd));
-	cmd.type = I2400M_MT_GET_LM_VERSION;
-	cmd.version = I2400M_L3L4_VERSION;
+	cmd.type = wimaxll_cpu_to_le16(I2400M_MT_GET_LM_VERSION);
+	cmd.version = wimaxll_cpu_to_le16(I2400M_L3L4_VERSION);
 
 	res =
 	    send_recieve_message_to_driver(0, &cmd, sizeof(cmd), response_from_driver,
@@ -515,7 +517,7 @@ static KDAPI_RESULT KDAPI_send_io_control(IN void *pInBuffer,
 
 	//printk("*");
 
-	type = *(unsigned short *)pInBuffer;
+	type = wimaxll_le16_to_cpu(*(unsigned short *)pInBuffer);
 	printk("KK Ioctl Sending L4 Message type %d\n", type);
 
 	TRACE(TR_MOD_KDAPI, TR_SEV_DEBUG, "Sending DeviceIoControl with ioctl");
@@ -550,14 +552,14 @@ static KDAPI_RESULT KDAPI_send_io_control(IN void *pInBuffer,
 #endif
 
 	/*
-	   if(header->Opcode == L4_L3_OPCODE_SET_SCAN_PARAM)
+	   if(header->Opcode == wimaxll_cpu_to_le16(L4_L3_OPCODE_SET_SCAN_PARAM))
 	   {
 	   //memset((char *)pInBuffer + 28, 0xff, 16);
 	   }
 	 */
 
 	ioctlRes =
-	    send_recieve_message_to_driver(*(unsigned short *)pInBuffer, pInBuffer,
+	    send_recieve_message_to_driver(wimaxll_le16_to_cpu(*(unsigned short *)pInBuffer), pInBuffer,
 			       inBufSize, pOutBuffer, &BytesWritten);
 	if (ioctlRes != 0) {
 		TRACE(TR_MOD_KDAPI, TR_SEV_ERR,
@@ -602,14 +604,14 @@ static int set_device_mode_to_normal()
 	}
 	//assemble radio-on message
 	//setup header
-	header.Opcode = L4_L3_OPCODE_CMD_MODE_OF_OPERATION;	//setup message type
-	header.Length = sizeof(struct ModeOfOperationCommand);	//setup message length. rest of the fields are irrelevant
+	header.Opcode = wimaxll_cpu_to_le16(L4_L3_OPCODE_CMD_MODE_OF_OPERATION);	//setup message type
+	header.Length = wimaxll_cpu_to_le16(sizeof(struct ModeOfOperationCommand));	//setup message length. rest of the fields are irrelevant
 	memcpy(message, (char *)&header, sizeof(header));
 
 	//setup message body
-	modeCommand.type = L3L4_TLV_TYPE_MODE_OF_OPERATION;	//setup rf operatig_wmx_handleon TLV type
-	modeCommand.length = sizeof(struct RfControl) - 4;	//setup rf operation TLV length
-	modeCommand.modeCommand = E_MODE_OF_OPERATION_NORMAL;	//setup rf operation to ON
+	modeCommand.type = wimaxll_cpu_to_le16(L3L4_TLV_TYPE_MODE_OF_OPERATION);	//setup rf operatig_wmx_handleon TLV type
+	modeCommand.length = wimaxll_cpu_to_le16(sizeof(struct RfControl) - 4);		//setup rf operation TLV length
+	modeCommand.modeCommand = wimaxll_cpu_to_le32(E_MODE_OF_OPERATION_NORMAL);	//setup rf operation to ON
 	memcpy(message + sizeof(header), (char *)&modeCommand,
 	       sizeof(modeCommand));
 
@@ -626,8 +628,8 @@ static int set_device_mode_to_normal()
 
 	free(message);
 	header = *(struct L3L4Header *)retMsg;
-	if ((header.Status != L3L4_RESPONSE_STATUS_SUCCESS_DONE)
-	    && (header.Status != L3L4_RESPONSE_STATUS_SUCCESS_IN_PROCESS)) {
+	if ((header.Status != wimaxll_cpu_to_le16(L3L4_RESPONSE_STATUS_SUCCESS_DONE))
+	    && (header.Status != wimaxll_cpu_to_le16(L3L4_RESPONSE_STATUS_SUCCESS_IN_PROCESS))) {
 		retStatus = 0;
 		printk
 		    ("Got status response other than SUCCESS_DONE or SUCCESS_IN_PROCESS\n");
@@ -649,8 +651,8 @@ static void prepare_nl_iface()
 
 	/* open command: Send a raw request */
 	memset(&cmd, 0, sizeof(cmd));
-	cmd.type = (I2400M_MT_OPEN);
-	cmd.version = (I2400M_L3L4_VERSION);
+	cmd.type = wimaxll_cpu_to_le16(I2400M_MT_OPEN);
+	cmd.version = wimaxll_cpu_to_le16(I2400M_L3L4_VERSION);
 	result = wimaxll_msg_write(g_wmx_write_handle,NULL ,&cmd, sizeof(cmd));
 	if (result < 0) {
 		printk(stderr, "E: libwimax: can't send open message: %d\n",
@@ -661,7 +663,7 @@ static void prepare_nl_iface()
 	/* open command: get the ack */
 	result = wimax_msg_read(g_wmx_read_handle, (void **)&ack);
 
-	if ((ack->type) != I2400M_MT_OPEN) {
+	if (wimaxll_le16_to_cpu(ack->type) != I2400M_MT_OPEN) {
 		printk(stderr,
 		       "E: libwimax: wrong reply 0x%04x to OPEN command\n",
 		       (ack->type));
@@ -687,8 +689,8 @@ static int get_L4M_version_no_thread()
 	/* get l4m version: Send a raw request */
 	printk("get l4m version: Send a raw request \n");
 	memset(&cmd, 0, sizeof(cmd));
-	cmd.type = I2400M_MT_GET_LM_VERSION;
-	cmd.version = I2400M_L3L4_VERSION;
+	cmd.type = wimaxll_cpu_to_le16(I2400M_MT_GET_LM_VERSION);
+	cmd.version = wimaxll_cpu_to_le16(I2400M_L3L4_VERSION);
 
 	CHECK_NL_HANDLE();
 
@@ -711,7 +713,7 @@ static int get_L4M_version_no_thread()
 			      "Error wimax read messsage: %d\n", result);
 			return -1;
 		}
-		if ((ack->type) == I2400M_MT_GET_LM_VERSION) {
+		if (wimaxll_le16_to_cpu(ack->type) == I2400M_MT_GET_LM_VERSION) {
 			printk
 			    ("Nlsock: correct reply 0x%04x to get l4m version command\n",
 			     (ack->type));
@@ -789,8 +791,8 @@ use_EL3RST:
 	 * get a -EL3RST back.
 	 */
 	memset(&cmd, 0, sizeof(cmd));
-	cmd.type = L4_L3_OPCODE_GET_STATE;
-	cmd.version = I2400M_L3L4_VERSION;
+	cmd.type = wimaxll_cpu_to_le16(L4_L3_OPCODE_GET_STATE);
+	cmd.version = wimaxll_cpu_to_le16(I2400M_L3L4_VERSION);
 
 	retry_count = 10;
 	while(--retry_count) {
@@ -839,8 +841,8 @@ static int init_device()
 
 	/* init device: Send a raw request */
 	memset(&cmd, 0, sizeof(cmd));
-	cmd.type = (L4_L3_OPCODE_CMD_INIT);
-	cmd.version = (I2400M_L3L4_VERSION);
+	cmd.type = wimaxll_cpu_to_le16(L4_L3_OPCODE_CMD_INIT);
+	cmd.version = wimaxll_cpu_to_le16(I2400M_L3L4_VERSION);
 
 	CHECK_NL_HANDLE();
 
@@ -870,7 +872,7 @@ static int init_device()
 			printk("Error wimax read message \n");
 		}
 
-		if ((ack->type) == L4_L3_OPCODE_CMD_INIT) {
+		if ((ack->type) == wimaxll_cpu_to_le16(L4_L3_OPCODE_CMD_INIT)) {
 			wimaxll_msg_free(ack);
 			break;
 		}
@@ -970,7 +972,7 @@ static int preinit_device()
 			return -1;
 		}
 
- 		if ((ack->type) == L4_L3_OPCODE_SET_PREINIT_CONFIG) {
+ 		if ((ack->type) == wimaxll_cpu_to_le16(L4_L3_OPCODE_SET_PREINIT_CONFIG)) {
 			wimaxll_msg_free(ack);
 			break;
 		}
@@ -1003,13 +1005,11 @@ static int stop_trace()
 	/* stop trace: Send a raw request */
 	printk("stop trace: Send a raw request \n");
 	memset(&cmd, 0, sizeof(cmd));
-	// warning FIXME: need conversion to little endian
-	// Don't worry if we are running on X86 platform as X86 platform is already little endian
-	cmd.hdr.type = I2400M_MT_CMD_MONITOR_CONTROL;
-	cmd.hdr.length = sizeof(cmd) - sizeof(cmd.hdr);
-	cmd.hdr.version = I2400M_L3L4_VERSION;
-	cmd.tlv.type = 0x4002;
-	cmd.tlv.length = 1;
+	cmd.hdr.type = wimaxll_cpu_to_le16(I2400M_MT_CMD_MONITOR_CONTROL);
+	cmd.hdr.length = wimaxll_cpu_to_le16(sizeof(cmd) - sizeof(cmd.hdr));
+	cmd.hdr.version = wimaxll_cpu_to_le16(I2400M_L3L4_VERSION);
+	cmd.tlv.type = wimaxll_cpu_to_le16(0x4002);
+	cmd.tlv.length = wimaxll_cpu_to_le16(1);
 	cmd.val = 1;
 
 	CHECK_NL_HANDLE();
@@ -1187,7 +1187,7 @@ void send_msg_response_to_l4(const struct i2400m_l3l4_hdr *l3l4, size_t size)
 #else
     if(g_enable_driver_msg == TRUE) {
             printf("<<< [IND 0x%x][%d]\n", type, size);
-            print_hex(l3l4, size);
+            print_hex((unsigned char *)l3l4, size);
         }
 #endif
 

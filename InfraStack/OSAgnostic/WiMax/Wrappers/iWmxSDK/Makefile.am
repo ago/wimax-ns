@@ -98,7 +98,7 @@ libiWmxSdk_la_CFLAGS =  \
 			-I "$(srcdir)/../../Agents/NDnS/Source" \
 			-I "$(srcdir)/../../Agents/NDnS/APDO/" \
 			-I "$(srcdir)/../../Agents/Supplicant/Source/ds" \
-			-D "_USE_TRACE" -D "BMI_ENDIANNESS_LITTLE" \
+			-D "_USE_TRACE" \
 			-D "_OS_WIN32SIM" -D "OMADM_CLIENT_SIMULATOR" \
 			-D _GNU_SOURCE \
 			-D "_LINUX" -D "_WIMAX_SDK_" \

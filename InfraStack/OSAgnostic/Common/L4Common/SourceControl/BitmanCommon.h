@@ -12,6 +12,8 @@
 #ifndef _BITMAN_COMMON_H_
 #define _BITMAN_COMMON_H_
 
+#include <endian.h>
+
 #if defined __ARMCC_VERSION
 	#ifndef __arm
 		#define __arm
@@ -29,9 +31,9 @@
 #define BMI_MACHINE_INTEL_LITTLE	(3)
 
 // New definitions for machine endianness
-#if defined BMI_MACHINE_ENDIANNESS_LITTLE
+#if BYTE_ORDER == LITTLE_ENDIAN
 #define BMI_ENDIANNESS_LITTLE
-#elif defined BMI_MACHINE_ENDIANNESS_BIG
+#elif BYTE_ORDER == BIG_ENDIAN
 #define BMI_ENDIANNESS_BIG
 #endif
 

@@ -24,6 +24,6 @@ libMocMsgProxy_la_CFLAGS = \
 			-I "$(top_srcdir)/InfraStack/OSAgnostic/Common/L4Common/SourceControl" \
 			-I "$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated" \
 			-I "$(top_srcdir)/InfraStack/OSAgnostic/OSInterface/InfraStackModules"  \
-			-D "_USE_TRACE" -D "BMI_ENDIANNESS_LITTLE" -D "_LINUX" -D "_OS_WIN32SIM" 
+			-D "_USE_TRACE" -D "_LINUX" -D "_OS_WIN32SIM" 
 
 

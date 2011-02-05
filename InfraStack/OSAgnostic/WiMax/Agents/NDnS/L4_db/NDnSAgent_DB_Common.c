@@ -3078,7 +3078,10 @@ void l4db_RemoveSpecialCharacters(char* string)
 				(0 != OSAL_CAPI_strncmp(&currChar, "+", 1)) &&
 				(0 != OSAL_CAPI_strncmp(&currChar, " ", 1)))	
 			{					
-				OSAL_memcpy_s(&string[currCharIndex], 1, &string[i], 1); 
+				if (i > currCharIndex)
+				{
+					OSAL_memcpy_s(&string[currCharIndex], 1, &string[i], 1); 
+				}
 				currCharIndex++;
 			}			
 		}	

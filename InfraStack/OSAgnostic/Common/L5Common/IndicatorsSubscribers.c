@@ -134,14 +134,17 @@ EXPORT IndicatorSubscribers *GetIndicatorSubscribers(List *pList, UINT32 indicat
 // Add a subscriber to the IndicatorSubscribers list
 EXPORT void Indications_AddSubscriber(IndicatorSubscribers *indSubscribers, UINT32 subscriberID)
 {
-	//I`m using the pointer to data (in the list) as my indication id. So i don`t need to allocate/free it.
-	List_AddItem(&(indSubscribers->subscribersList), (void*)((ULONG_PTR)subscriberID));
+	// Instead of storing a pointer in the 'pData' field of the ListItem, the indicator ID is stored there;
+	// so malloc() is not necessary. Note that the size of a pointer may be larger than the size of a UINT32.
+	List_AddItem(&(indSubscribers->subscribersList), (void*)(subscriberID));
 }
 
 // Remove a subscriber from the IndicatorSubscribers list
 EXPORT BOOL Indications_RemoveSubscriber(IndicatorSubscribers *indSubscribers, UINT32 subscriberID)
 {
-	if (List_RemoveItem(&(indSubscribers->subscribersList), (void*)((ULONG_PTR)subscriberID)))
+	// Instead of storing a pointer in the 'pData' field of the ListItem, the indicator ID is stored there;
+	// so free() is not necessary. Note that the size of a pointer may be larger than the size of a UINT32.
+	if (List_RemoveItem(&(indSubscribers->subscribersList), (void*)(subscriberID)))
 	{
 		return TRUE;
 	}
@@ -155,7 +158,10 @@ EXPORT void SendIndicationToSubscribers( UINT32 internalRequestID, void *_buffer
 	SendIndData *buffer = _buffer;
 	ListItem* handle;
 	L5_TARGET_ID targetID;
-	L5_TARGET_ID data;
+	// Instead of storing a pointer in the 'pData' field of the ListItem, the indicator ID is stored there.
+	// Since the size of a pointer may be larger than the size of an L5_TARGET_ID, a pointer needs to be used
+	// with Iterator_GetNext() to store the indicator ID, before copying the value to an L5_TARGET_ID.
+	void *data;
 	L5_RESULT res;
 	IndicatorSubscribers *indSubscribers;
 	List tempList;
@@ -174,16 +180,11 @@ EXPORT void SendIndicationToSubscribers( UINT32 internalRequestID, void *_buffer
 		// Build temp list
 		List_Init(&tempList, FALSE);
 		handle = CreateIterator(&(indSubscribers->subscribersList));
-//		handle = Iterator_GetNext(&(indSubscribers->subscribersList), handle, (void**)&targetID);
 		handle = Iterator_GetNext(&(indSubscribers->subscribersList), handle, (void**)(&data));
-		targetID = data;
 		while (handle != NULL)
 		{
-			List_AddItem(&tempList, (void *)targetID);
+			List_AddItem(&tempList, data);
 			handle = Iterator_GetNext(&(indSubscribers->subscribersList), handle, (void**)(&data));
-    		targetID = data; ////
-
-	//		handle = Iterator_GetNext(&(indSubscribers->subscribersList), handle, (void**)&targetID);
 		}
 
 		FreeIterator(&(indSubscribers->subscribersList));
@@ -191,11 +192,10 @@ EXPORT void SendIndicationToSubscribers( UINT32 internalRequestID, void *_buffer
 		//iterate the temp list and send the targets indication:
 		handle = CreateIterator(&tempList);
 		handle = Iterator_GetNext(&tempList, handle, (void**)(&data));
-    	targetID = data;
-
-	//	handle = Iterator_GetNext(&tempList, handle, (void**)&targetID);
 		while (handle != NULL)
 		{
+			targetID = (L5_TARGET_ID) data;
+
 			//in case we are working with remote DnD, we want to send the trace and monitor indications 
 			//only to the DnD agent
 			if(((L3_L4_OPCODE_REPORT_MONITOR_EVACUATE != wimaxll_le16_to_cpu(*((UINT16 *)buffer->indication_buffer))) &&
@@ -217,12 +217,8 @@ EXPORT void SendIndicationToSubscribers( UINT32 internalRequestID, void *_buffer
 				}
 
 			}
-			
-	//		handle = Iterator_GetNext(&tempList, handle, (void**)&targetID);
 
 			handle = Iterator_GetNext(&tempList, handle, (void**)(&data));
-    		targetID = data;
-
 
 			// TODO - XXX - check L5_COMMON_UTILS_IsTargetNotExist
 			// TODO - XXX - check res

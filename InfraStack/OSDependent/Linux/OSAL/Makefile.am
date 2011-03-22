@@ -41,6 +41,8 @@ libosal_la_SOURCES = \
 			$(srcdir)/./Primitives/crtdbg.h \
 			$(srcdir)/Primitives/wimax_osal_error.h
 
+libosal_la_LIBADD = @ZLIB_LIBS@
+
  
 #TODO:: Move out the compilations of thesefiles to services project (they are high level absractions with
 #       dependencies on higher layers..
@@ -64,6 +66,7 @@ AM_CFLAGS = -lz -I "$(srcdir)/./Primitives" \
 	-I "$(srcdir)/../../../OSAgnostic/OSInterface/InfraStackModules" \
 	-I "$(top_srcdir)/InfraStack/OSAgnostic/Common/L4Common/SourceControl" \
 	-I "$(top_srcdir)" \
+	@ZLIB_CFLAGS@ \
 	-D PKG_VAR_LOG_DIR="\"${pkgvarlogdir}\"" \
 	-D PKG_DATA_DIR="\"${pkgdatadir}\"" \
 	-D LIB_DIR="\"${libdir}\"" \

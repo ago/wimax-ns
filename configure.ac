@@ -52,6 +52,18 @@ LDFLAGS="$LIBWIMAX_LIBS $LDFLAGS"
 AC_CHECK_FUNCS(wimaxll_state_get)
 LDFLAGS="$LDFLAGS_save"
 
+# zlib
+AC_ARG_WITH(zlib,
+            AC_HELP_STRING([--with-zlib],
+			   [path to where zlib is installed. USE ABSOLUTE PATHS.]), 
+            export PKG_CONFIG_PATH="$withval:$withval/lib/pkgconfig:$PKG_CONFIG_PATH")
+PKG_CHECK_MODULES(ZLIB, zlib)
+libwimax_prefix=`pkg-config zlib --variable=prefix`
+AC_MSG_RESULT(Using zlib from $libwimax_prefix)
+AC_SUBST(ZLIB_CFLAGS)
+AC_SUBST(ZLIB_LIBS)
+
+
 # Linux WiMAX stack
 LINUX_KERNEL=/usr
 AC_ARG_WITH(linux,

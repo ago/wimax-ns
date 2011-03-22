@@ -58,22 +58,38 @@ am_wimaxcu_OBJECTS = wimaxcu-wimaxcu_main.$(OBJEXT) \
 	wimaxcu-wimaxcu_util.$(OBJEXT)
 wimaxcu_OBJECTS = $(am_wimaxcu_OBJECTS)
 wimaxcu_DEPENDENCIES = $(top_builddir)/InfraStack/OSAgnostic/WiMax/Wrappers/iWmxSDK/libiWmxSdk.la
-wimaxcu_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(wimaxcu_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+wimaxcu_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(wimaxcu_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(wimaxcu_SOURCES)
 DIST_SOURCES = $(wimaxcu_SOURCES)
 ETAGS = etags
@@ -81,6 +97,7 @@ CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -309,7 +326,7 @@ clean-binPROGRAMS:
 	rm -f $$list
 wimaxcu$(EXEEXT): $(wimaxcu_OBJECTS) $(wimaxcu_DEPENDENCIES) 
 	@rm -f wimaxcu$(EXEEXT)
-	$(wimaxcu_LINK) $(wimaxcu_OBJECTS) $(wimaxcu_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(wimaxcu_LINK) $(wimaxcu_OBJECTS) $(wimaxcu_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -326,120 +343,137 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wimaxcu-wimaxcu_util.Po@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 wimaxcu-wimaxcu_main.o: $(srcdir)/wimaxcu_main.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_main.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_main.Tpo -c -o wimaxcu-wimaxcu_main.o `test -f '$(srcdir)/wimaxcu_main.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_main.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_main.Tpo $(DEPDIR)/wimaxcu-wimaxcu_main.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_main.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_main.Tpo -c -o wimaxcu-wimaxcu_main.o `test -f '$(srcdir)/wimaxcu_main.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_main.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_main.Tpo $(DEPDIR)/wimaxcu-wimaxcu_main.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_main.c' object='wimaxcu-wimaxcu_main.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_main.o `test -f '$(srcdir)/wimaxcu_main.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_main.c
 
 wimaxcu-wimaxcu_main.obj: $(srcdir)/wimaxcu_main.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_main.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_main.Tpo -c -o wimaxcu-wimaxcu_main.obj `if test -f '$(srcdir)/wimaxcu_main.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_main.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_main.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_main.Tpo $(DEPDIR)/wimaxcu-wimaxcu_main.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_main.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_main.Tpo -c -o wimaxcu-wimaxcu_main.obj `if test -f '$(srcdir)/wimaxcu_main.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_main.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_main.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_main.Tpo $(DEPDIR)/wimaxcu-wimaxcu_main.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_main.c' object='wimaxcu-wimaxcu_main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_main.obj `if test -f '$(srcdir)/wimaxcu_main.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_main.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_main.c'; fi`
 
 wimaxcu-wimaxcu_cmdhdlr.o: $(srcdir)/wimaxcu_cmdhdlr.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_cmdhdlr.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Tpo -c -o wimaxcu-wimaxcu_cmdhdlr.o `test -f '$(srcdir)/wimaxcu_cmdhdlr.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_cmdhdlr.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Tpo $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_cmdhdlr.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Tpo -c -o wimaxcu-wimaxcu_cmdhdlr.o `test -f '$(srcdir)/wimaxcu_cmdhdlr.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_cmdhdlr.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Tpo $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_cmdhdlr.c' object='wimaxcu-wimaxcu_cmdhdlr.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_cmdhdlr.o `test -f '$(srcdir)/wimaxcu_cmdhdlr.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_cmdhdlr.c
 
 wimaxcu-wimaxcu_cmdhdlr.obj: $(srcdir)/wimaxcu_cmdhdlr.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_cmdhdlr.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Tpo -c -o wimaxcu-wimaxcu_cmdhdlr.obj `if test -f '$(srcdir)/wimaxcu_cmdhdlr.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_cmdhdlr.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_cmdhdlr.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Tpo $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_cmdhdlr.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Tpo -c -o wimaxcu-wimaxcu_cmdhdlr.obj `if test -f '$(srcdir)/wimaxcu_cmdhdlr.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_cmdhdlr.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_cmdhdlr.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Tpo $(DEPDIR)/wimaxcu-wimaxcu_cmdhdlr.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_cmdhdlr.c' object='wimaxcu-wimaxcu_cmdhdlr.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_cmdhdlr.obj `if test -f '$(srcdir)/wimaxcu_cmdhdlr.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_cmdhdlr.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_cmdhdlr.c'; fi`
 
 wimaxcu-wimaxcu_apdo_op.o: $(srcdir)/wimaxcu_apdo_op.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_apdo_op.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Tpo -c -o wimaxcu-wimaxcu_apdo_op.o `test -f '$(srcdir)/wimaxcu_apdo_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_apdo_op.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_apdo_op.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Tpo -c -o wimaxcu-wimaxcu_apdo_op.o `test -f '$(srcdir)/wimaxcu_apdo_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_apdo_op.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_apdo_op.c' object='wimaxcu-wimaxcu_apdo_op.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_apdo_op.o `test -f '$(srcdir)/wimaxcu_apdo_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_apdo_op.c
 
 wimaxcu-wimaxcu_apdo_op.obj: $(srcdir)/wimaxcu_apdo_op.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_apdo_op.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Tpo -c -o wimaxcu-wimaxcu_apdo_op.obj `if test -f '$(srcdir)/wimaxcu_apdo_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_apdo_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_apdo_op.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_apdo_op.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Tpo -c -o wimaxcu-wimaxcu_apdo_op.obj `if test -f '$(srcdir)/wimaxcu_apdo_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_apdo_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_apdo_op.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_apdo_op.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_apdo_op.c' object='wimaxcu-wimaxcu_apdo_op.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_apdo_op.obj `if test -f '$(srcdir)/wimaxcu_apdo_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_apdo_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_apdo_op.c'; fi`
 
 wimaxcu-wimaxcu_set_get_op.o: $(srcdir)/wimaxcu_set_get_op.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_set_get_op.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Tpo -c -o wimaxcu-wimaxcu_set_get_op.o `test -f '$(srcdir)/wimaxcu_set_get_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_set_get_op.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_set_get_op.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Tpo -c -o wimaxcu-wimaxcu_set_get_op.o `test -f '$(srcdir)/wimaxcu_set_get_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_set_get_op.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_set_get_op.c' object='wimaxcu-wimaxcu_set_get_op.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_set_get_op.o `test -f '$(srcdir)/wimaxcu_set_get_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_set_get_op.c
 
 wimaxcu-wimaxcu_set_get_op.obj: $(srcdir)/wimaxcu_set_get_op.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_set_get_op.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Tpo -c -o wimaxcu-wimaxcu_set_get_op.obj `if test -f '$(srcdir)/wimaxcu_set_get_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_set_get_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_set_get_op.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_set_get_op.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Tpo -c -o wimaxcu-wimaxcu_set_get_op.obj `if test -f '$(srcdir)/wimaxcu_set_get_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_set_get_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_set_get_op.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_set_get_op.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_set_get_op.c' object='wimaxcu-wimaxcu_set_get_op.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_set_get_op.obj `if test -f '$(srcdir)/wimaxcu_set_get_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_set_get_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_set_get_op.c'; fi`
 
 wimaxcu-wimaxcu_connect_op.o: $(srcdir)/wimaxcu_connect_op.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_connect_op.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Tpo -c -o wimaxcu-wimaxcu_connect_op.o `test -f '$(srcdir)/wimaxcu_connect_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_connect_op.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_connect_op.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Tpo -c -o wimaxcu-wimaxcu_connect_op.o `test -f '$(srcdir)/wimaxcu_connect_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_connect_op.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_connect_op.c' object='wimaxcu-wimaxcu_connect_op.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_connect_op.o `test -f '$(srcdir)/wimaxcu_connect_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_connect_op.c
 
 wimaxcu-wimaxcu_connect_op.obj: $(srcdir)/wimaxcu_connect_op.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_connect_op.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Tpo -c -o wimaxcu-wimaxcu_connect_op.obj `if test -f '$(srcdir)/wimaxcu_connect_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_connect_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_connect_op.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_connect_op.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Tpo -c -o wimaxcu-wimaxcu_connect_op.obj `if test -f '$(srcdir)/wimaxcu_connect_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_connect_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_connect_op.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_connect_op.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_connect_op.c' object='wimaxcu-wimaxcu_connect_op.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_connect_op.obj `if test -f '$(srcdir)/wimaxcu_connect_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_connect_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_connect_op.c'; fi`
 
 wimaxcu-wimaxcu_scan_op.o: $(srcdir)/wimaxcu_scan_op.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_scan_op.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Tpo -c -o wimaxcu-wimaxcu_scan_op.o `test -f '$(srcdir)/wimaxcu_scan_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_scan_op.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_scan_op.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Tpo -c -o wimaxcu-wimaxcu_scan_op.o `test -f '$(srcdir)/wimaxcu_scan_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_scan_op.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_scan_op.c' object='wimaxcu-wimaxcu_scan_op.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_scan_op.o `test -f '$(srcdir)/wimaxcu_scan_op.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_scan_op.c
 
 wimaxcu-wimaxcu_scan_op.obj: $(srcdir)/wimaxcu_scan_op.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_scan_op.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Tpo -c -o wimaxcu-wimaxcu_scan_op.obj `if test -f '$(srcdir)/wimaxcu_scan_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_scan_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_scan_op.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_scan_op.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Tpo -c -o wimaxcu-wimaxcu_scan_op.obj `if test -f '$(srcdir)/wimaxcu_scan_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_scan_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_scan_op.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Tpo $(DEPDIR)/wimaxcu-wimaxcu_scan_op.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_scan_op.c' object='wimaxcu-wimaxcu_scan_op.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_scan_op.obj `if test -f '$(srcdir)/wimaxcu_scan_op.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_scan_op.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_scan_op.c'; fi`
 
 wimaxcu-wimaxcu_util.o: $(srcdir)/wimaxcu_util.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_util.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_util.Tpo -c -o wimaxcu-wimaxcu_util.o `test -f '$(srcdir)/wimaxcu_util.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_util.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_util.Tpo $(DEPDIR)/wimaxcu-wimaxcu_util.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_util.o -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_util.Tpo -c -o wimaxcu-wimaxcu_util.o `test -f '$(srcdir)/wimaxcu_util.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_util.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_util.Tpo $(DEPDIR)/wimaxcu-wimaxcu_util.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_util.c' object='wimaxcu-wimaxcu_util.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_util.o `test -f '$(srcdir)/wimaxcu_util.c' || echo '$(srcdir)/'`$(srcdir)/wimaxcu_util.c
 
 wimaxcu-wimaxcu_util.obj: $(srcdir)/wimaxcu_util.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_util.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_util.Tpo -c -o wimaxcu-wimaxcu_util.obj `if test -f '$(srcdir)/wimaxcu_util.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_util.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_util.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_util.Tpo $(DEPDIR)/wimaxcu-wimaxcu_util.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -MT wimaxcu-wimaxcu_util.obj -MD -MP -MF $(DEPDIR)/wimaxcu-wimaxcu_util.Tpo -c -o wimaxcu-wimaxcu_util.obj `if test -f '$(srcdir)/wimaxcu_util.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_util.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_util.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxcu-wimaxcu_util.Tpo $(DEPDIR)/wimaxcu-wimaxcu_util.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/wimaxcu_util.c' object='wimaxcu-wimaxcu_util.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxcu_CFLAGS) $(CFLAGS) -c -o wimaxcu-wimaxcu_util.obj `if test -f '$(srcdir)/wimaxcu_util.c'; then $(CYGPATH_W) '$(srcdir)/wimaxcu_util.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/wimaxcu_util.c'; fi`

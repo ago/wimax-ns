@@ -51,22 +51,39 @@ am_libDnDAgent_la_OBJECTS = libDnDAgent_la-DnDAgent.lo \
 	libDnDAgent_la-wmxSDK_DnD_Common.lo \
 	libDnDAgent_la-RemoveExcessFiles.lo
 libDnDAgent_la_OBJECTS = $(am_libDnDAgent_la_OBJECTS)
-libDnDAgent_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libDnDAgent_la_CFLAGS) \
-	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+libDnDAgent_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(libDnDAgent_la_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o \
+	$@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libDnDAgent_la_SOURCES)
 DIST_SOURCES = $(libDnDAgent_la_SOURCES)
 ETAGS = etags
@@ -74,6 +91,7 @@ CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -290,7 +308,7 @@ clean-noinstLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libDnDAgent.la: $(libDnDAgent_la_OBJECTS) $(libDnDAgent_la_DEPENDENCIES) 
-	$(libDnDAgent_la_LINK)  $(libDnDAgent_la_OBJECTS) $(libDnDAgent_la_LIBADD) $(LIBS)
+	$(AM_V_CCLD)$(libDnDAgent_la_LINK)  $(libDnDAgent_la_OBJECTS) $(libDnDAgent_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -305,60 +323,68 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libDnDAgent_la-wmxSDK_DnD_Common.Plo@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 libDnDAgent_la-DnDAgent.lo: $(srcdir)/DnDAgent.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -MT libDnDAgent_la-DnDAgent.lo -MD -MP -MF $(DEPDIR)/libDnDAgent_la-DnDAgent.Tpo -c -o libDnDAgent_la-DnDAgent.lo `test -f '$(srcdir)/DnDAgent.c' || echo '$(srcdir)/'`$(srcdir)/DnDAgent.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libDnDAgent_la-DnDAgent.Tpo $(DEPDIR)/libDnDAgent_la-DnDAgent.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -MT libDnDAgent_la-DnDAgent.lo -MD -MP -MF $(DEPDIR)/libDnDAgent_la-DnDAgent.Tpo -c -o libDnDAgent_la-DnDAgent.lo `test -f '$(srcdir)/DnDAgent.c' || echo '$(srcdir)/'`$(srcdir)/DnDAgent.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libDnDAgent_la-DnDAgent.Tpo $(DEPDIR)/libDnDAgent_la-DnDAgent.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/DnDAgent.c' object='libDnDAgent_la-DnDAgent.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -c -o libDnDAgent_la-DnDAgent.lo `test -f '$(srcdir)/DnDAgent.c' || echo '$(srcdir)/'`$(srcdir)/DnDAgent.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -c -o libDnDAgent_la-DnDAgent.lo `test -f '$(srcdir)/DnDAgent.c' || echo '$(srcdir)/'`$(srcdir)/DnDAgent.c
 
 libDnDAgent_la-DnDUtils.lo: $(srcdir)/DnDUtils.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -MT libDnDAgent_la-DnDUtils.lo -MD -MP -MF $(DEPDIR)/libDnDAgent_la-DnDUtils.Tpo -c -o libDnDAgent_la-DnDUtils.lo `test -f '$(srcdir)/DnDUtils.c' || echo '$(srcdir)/'`$(srcdir)/DnDUtils.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libDnDAgent_la-DnDUtils.Tpo $(DEPDIR)/libDnDAgent_la-DnDUtils.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -MT libDnDAgent_la-DnDUtils.lo -MD -MP -MF $(DEPDIR)/libDnDAgent_la-DnDUtils.Tpo -c -o libDnDAgent_la-DnDUtils.lo `test -f '$(srcdir)/DnDUtils.c' || echo '$(srcdir)/'`$(srcdir)/DnDUtils.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libDnDAgent_la-DnDUtils.Tpo $(DEPDIR)/libDnDAgent_la-DnDUtils.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/DnDUtils.c' object='libDnDAgent_la-DnDUtils.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -c -o libDnDAgent_la-DnDUtils.lo `test -f '$(srcdir)/DnDUtils.c' || echo '$(srcdir)/'`$(srcdir)/DnDUtils.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -c -o libDnDAgent_la-DnDUtils.lo `test -f '$(srcdir)/DnDUtils.c' || echo '$(srcdir)/'`$(srcdir)/DnDUtils.c
 
 libDnDAgent_la-L4DnDHandler.lo: $(srcdir)/L4DnDHandler.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -MT libDnDAgent_la-L4DnDHandler.lo -MD -MP -MF $(DEPDIR)/libDnDAgent_la-L4DnDHandler.Tpo -c -o libDnDAgent_la-L4DnDHandler.lo `test -f '$(srcdir)/L4DnDHandler.c' || echo '$(srcdir)/'`$(srcdir)/L4DnDHandler.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libDnDAgent_la-L4DnDHandler.Tpo $(DEPDIR)/libDnDAgent_la-L4DnDHandler.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -MT libDnDAgent_la-L4DnDHandler.lo -MD -MP -MF $(DEPDIR)/libDnDAgent_la-L4DnDHandler.Tpo -c -o libDnDAgent_la-L4DnDHandler.lo `test -f '$(srcdir)/L4DnDHandler.c' || echo '$(srcdir)/'`$(srcdir)/L4DnDHandler.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libDnDAgent_la-L4DnDHandler.Tpo $(DEPDIR)/libDnDAgent_la-L4DnDHandler.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L4DnDHandler.c' object='libDnDAgent_la-L4DnDHandler.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -c -o libDnDAgent_la-L4DnDHandler.lo `test -f '$(srcdir)/L4DnDHandler.c' || echo '$(srcdir)/'`$(srcdir)/L4DnDHandler.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -c -o libDnDAgent_la-L4DnDHandler.lo `test -f '$(srcdir)/L4DnDHandler.c' || echo '$(srcdir)/'`$(srcdir)/L4DnDHandler.c
 
 libDnDAgent_la-wmxSDK_DnD_Common.lo: $(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -MT libDnDAgent_la-wmxSDK_DnD_Common.lo -MD -MP -MF $(DEPDIR)/libDnDAgent_la-wmxSDK_DnD_Common.Tpo -c -o libDnDAgent_la-wmxSDK_DnD_Common.lo `test -f '$(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.c' || echo '$(srcdir)/'`$(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libDnDAgent_la-wmxSDK_DnD_Common.Tpo $(DEPDIR)/libDnDAgent_la-wmxSDK_DnD_Common.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -MT libDnDAgent_la-wmxSDK_DnD_Common.lo -MD -MP -MF $(DEPDIR)/libDnDAgent_la-wmxSDK_DnD_Common.Tpo -c -o libDnDAgent_la-wmxSDK_DnD_Common.lo `test -f '$(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.c' || echo '$(srcdir)/'`$(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libDnDAgent_la-wmxSDK_DnD_Common.Tpo $(DEPDIR)/libDnDAgent_la-wmxSDK_DnD_Common.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.c' object='libDnDAgent_la-wmxSDK_DnD_Common.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -c -o libDnDAgent_la-wmxSDK_DnD_Common.lo `test -f '$(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.c' || echo '$(srcdir)/'`$(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -c -o libDnDAgent_la-wmxSDK_DnD_Common.lo `test -f '$(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.c' || echo '$(srcdir)/'`$(srcdir)/../DnDWrapper/wmxSDK_DnD_Common.c
 
 libDnDAgent_la-RemoveExcessFiles.lo: $(srcdir)/RemoveExcessFiles.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -MT libDnDAgent_la-RemoveExcessFiles.lo -MD -MP -MF $(DEPDIR)/libDnDAgent_la-RemoveExcessFiles.Tpo -c -o libDnDAgent_la-RemoveExcessFiles.lo `test -f '$(srcdir)/RemoveExcessFiles.c' || echo '$(srcdir)/'`$(srcdir)/RemoveExcessFiles.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libDnDAgent_la-RemoveExcessFiles.Tpo $(DEPDIR)/libDnDAgent_la-RemoveExcessFiles.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -MT libDnDAgent_la-RemoveExcessFiles.lo -MD -MP -MF $(DEPDIR)/libDnDAgent_la-RemoveExcessFiles.Tpo -c -o libDnDAgent_la-RemoveExcessFiles.lo `test -f '$(srcdir)/RemoveExcessFiles.c' || echo '$(srcdir)/'`$(srcdir)/RemoveExcessFiles.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libDnDAgent_la-RemoveExcessFiles.Tpo $(DEPDIR)/libDnDAgent_la-RemoveExcessFiles.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/RemoveExcessFiles.c' object='libDnDAgent_la-RemoveExcessFiles.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -c -o libDnDAgent_la-RemoveExcessFiles.lo `test -f '$(srcdir)/RemoveExcessFiles.c' || echo '$(srcdir)/'`$(srcdir)/RemoveExcessFiles.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libDnDAgent_la_CFLAGS) $(CFLAGS) -c -o libDnDAgent_la-RemoveExcessFiles.lo `test -f '$(srcdir)/RemoveExcessFiles.c' || echo '$(srcdir)/'`$(srcdir)/RemoveExcessFiles.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

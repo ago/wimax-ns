@@ -91,7 +91,10 @@ am_libiWmxSdk_la_OBJECTS = libiWmxSdk_la-WrappersMain.lo \
 	libiWmxSdk_la-wmxSDK_Apdo_Internals.lo libiWmxSdk_la-AES.lo \
 	libiWmxSdk_la-AES_CCM.lo
 libiWmxSdk_la_OBJECTS = $(am_libiWmxSdk_la_OBJECTS)
-libiWmxSdk_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+libiWmxSdk_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libiWmxSdk_la_CFLAGS) \
 	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -100,13 +103,26 @@ am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libiWmxSdk_la_SOURCES)
 DIST_SOURCES = $(libiWmxSdk_la_SOURCES)
 DATA = $(pkgconfig_DATA)
@@ -116,6 +132,7 @@ CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -422,7 +439,7 @@ clean-libLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libiWmxSdk.la: $(libiWmxSdk_la_OBJECTS) $(libiWmxSdk_la_DEPENDENCIES) 
-	$(libiWmxSdk_la_LINK) -rpath $(libdir) $(libiWmxSdk_la_OBJECTS) $(libiWmxSdk_la_LIBADD) $(LIBS)
+	$(AM_V_CCLD)$(libiWmxSdk_la_LINK) -rpath $(libdir) $(libiWmxSdk_la_OBJECTS) $(libiWmxSdk_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -451,158 +468,180 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Utils.Plo@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 libiWmxSdk_la-WrappersMain.lo: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/Wrappers/WrappersMain.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-WrappersMain.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-WrappersMain.Tpo -c -o libiWmxSdk_la-WrappersMain.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/Wrappers/WrappersMain.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/Wrappers/WrappersMain.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-WrappersMain.Tpo $(DEPDIR)/libiWmxSdk_la-WrappersMain.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-WrappersMain.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-WrappersMain.Tpo -c -o libiWmxSdk_la-WrappersMain.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/Wrappers/WrappersMain.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/Wrappers/WrappersMain.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-WrappersMain.Tpo $(DEPDIR)/libiWmxSdk_la-WrappersMain.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/Wrappers/WrappersMain.c' object='libiWmxSdk_la-WrappersMain.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-WrappersMain.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/Wrappers/WrappersMain.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/Wrappers/WrappersMain.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-WrappersMain.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/Wrappers/WrappersMain.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/Wrappers/WrappersMain.c
 
 libiWmxSdk_la-iWmxSDK.lo: $(srcdir)/iWmxSDK.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-iWmxSDK.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-iWmxSDK.Tpo -c -o libiWmxSdk_la-iWmxSDK.lo `test -f '$(srcdir)/iWmxSDK.c' || echo '$(srcdir)/'`$(srcdir)/iWmxSDK.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-iWmxSDK.Tpo $(DEPDIR)/libiWmxSdk_la-iWmxSDK.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-iWmxSDK.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-iWmxSDK.Tpo -c -o libiWmxSdk_la-iWmxSDK.lo `test -f '$(srcdir)/iWmxSDK.c' || echo '$(srcdir)/'`$(srcdir)/iWmxSDK.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-iWmxSDK.Tpo $(DEPDIR)/libiWmxSdk_la-iWmxSDK.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/iWmxSDK.c' object='libiWmxSdk_la-iWmxSDK.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-iWmxSDK.lo `test -f '$(srcdir)/iWmxSDK.c' || echo '$(srcdir)/'`$(srcdir)/iWmxSDK.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-iWmxSDK.lo `test -f '$(srcdir)/iWmxSDK.c' || echo '$(srcdir)/'`$(srcdir)/iWmxSDK.c
 
 libiWmxSdk_la-wimaxapi.lo: $(srcdir)/../CommonAPI/wimaxapi.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wimaxapi.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wimaxapi.Tpo -c -o libiWmxSdk_la-wimaxapi.lo `test -f '$(srcdir)/../CommonAPI/wimaxapi.c' || echo '$(srcdir)/'`$(srcdir)/../CommonAPI/wimaxapi.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wimaxapi.Tpo $(DEPDIR)/libiWmxSdk_la-wimaxapi.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wimaxapi.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wimaxapi.Tpo -c -o libiWmxSdk_la-wimaxapi.lo `test -f '$(srcdir)/../CommonAPI/wimaxapi.c' || echo '$(srcdir)/'`$(srcdir)/../CommonAPI/wimaxapi.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wimaxapi.Tpo $(DEPDIR)/libiWmxSdk_la-wimaxapi.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../CommonAPI/wimaxapi.c' object='libiWmxSdk_la-wimaxapi.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wimaxapi.lo `test -f '$(srcdir)/../CommonAPI/wimaxapi.c' || echo '$(srcdir)/'`$(srcdir)/../CommonAPI/wimaxapi.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wimaxapi.lo `test -f '$(srcdir)/../CommonAPI/wimaxapi.c' || echo '$(srcdir)/'`$(srcdir)/../CommonAPI/wimaxapi.c
 
 libiWmxSdk_la-wmxSDK_Msc_Impl.lo: $(srcdir)/../Miscellaneous/wmxSDK_Msc_Impl.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Msc_Impl.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Msc_Impl.Tpo -c -o libiWmxSdk_la-wmxSDK_Msc_Impl.lo `test -f '$(srcdir)/../Miscellaneous/wmxSDK_Msc_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../Miscellaneous/wmxSDK_Msc_Impl.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Msc_Impl.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Msc_Impl.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Msc_Impl.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Msc_Impl.Tpo -c -o libiWmxSdk_la-wmxSDK_Msc_Impl.lo `test -f '$(srcdir)/../Miscellaneous/wmxSDK_Msc_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../Miscellaneous/wmxSDK_Msc_Impl.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Msc_Impl.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Msc_Impl.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../Miscellaneous/wmxSDK_Msc_Impl.c' object='libiWmxSdk_la-wmxSDK_Msc_Impl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Msc_Impl.lo `test -f '$(srcdir)/../Miscellaneous/wmxSDK_Msc_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../Miscellaneous/wmxSDK_Msc_Impl.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Msc_Impl.lo `test -f '$(srcdir)/../Miscellaneous/wmxSDK_Msc_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../Miscellaneous/wmxSDK_Msc_Impl.c
 
 libiWmxSdk_la-wmxSDK_Nds_2.lo: $(srcdir)/../NDnS/wmxSDK_Nds_2.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_2.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_2.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_2.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_2.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_2.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_2.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_2.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_2.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_2.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_2.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_2.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_2.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_2.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_2.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../NDnS/wmxSDK_Nds_2.c' object='libiWmxSdk_la-wmxSDK_Nds_2.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_2.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_2.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_2.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_2.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_2.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_2.c
 
 libiWmxSdk_la-wmxSDK_Nds_3.lo: $(srcdir)/../NDnS/wmxSDK_Nds_3.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_3.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_3.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_3.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_3.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_3.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_3.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_3.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_3.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_3.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_3.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_3.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_3.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_3.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_3.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../NDnS/wmxSDK_Nds_3.c' object='libiWmxSdk_la-wmxSDK_Nds_3.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_3.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_3.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_3.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_3.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_3.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_3.c
 
 libiWmxSdk_la-wmxSDK_Nds_Ctrl.lo: $(srcdir)/../NDnS/wmxSDK_Nds_Ctrl.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_Ctrl.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Ctrl.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_Ctrl.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Ctrl.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Ctrl.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Ctrl.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_Ctrl.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Ctrl.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_Ctrl.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Ctrl.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Ctrl.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Ctrl.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../NDnS/wmxSDK_Nds_Ctrl.c' object='libiWmxSdk_la-wmxSDK_Nds_Ctrl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_Ctrl.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Ctrl.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_Ctrl.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Ctrl.c
 
 libiWmxSdk_la-wmxSDK_Nds_IndHandler.lo: $(srcdir)/../NDnS/wmxSDK_Nds_IndHandler.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_IndHandler.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_IndHandler.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_IndHandler.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_IndHandler.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_IndHandler.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_IndHandler.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_IndHandler.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_IndHandler.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_IndHandler.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_IndHandler.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_IndHandler.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_IndHandler.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../NDnS/wmxSDK_Nds_IndHandler.c' object='libiWmxSdk_la-wmxSDK_Nds_IndHandler.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_IndHandler.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_IndHandler.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_IndHandler.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_IndHandler.c
 
 libiWmxSdk_la-wmxSDK_Nds_Internals.lo: $(srcdir)/../NDnS/wmxSDK_Nds_Internals.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_Internals.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Internals.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_Internals.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Internals.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Internals.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Internals.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_Internals.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Internals.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_Internals.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Internals.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Internals.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Internals.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../NDnS/wmxSDK_Nds_Internals.c' object='libiWmxSdk_la-wmxSDK_Nds_Internals.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_Internals.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Internals.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_Internals.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Internals.c
 
 libiWmxSdk_la-wmxSDK_Nds_L5.lo: $(srcdir)/../NDnS/wmxSDK_Nds_L5.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_L5.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_L5.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_L5.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_L5.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_L5.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_L5.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_L5.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_L5.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_L5.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_L5.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_L5.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_L5.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_L5.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_L5.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../NDnS/wmxSDK_Nds_L5.c' object='libiWmxSdk_la-wmxSDK_Nds_L5.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_L5.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_L5.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_L5.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_L5.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_L5.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_L5.c
 
 libiWmxSdk_la-wmxSDK_Nds_Utils.lo: $(srcdir)/../NDnS/wmxSDK_Nds_Utils.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_Utils.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Utils.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_Utils.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Utils.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Utils.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Utils.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Nds_Utils.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Utils.Tpo -c -o libiWmxSdk_la-wmxSDK_Nds_Utils.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Utils.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Utils.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Nds_Utils.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../NDnS/wmxSDK_Nds_Utils.c' object='libiWmxSdk_la-wmxSDK_Nds_Utils.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_Utils.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Utils.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Nds_Utils.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Nds_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Nds_Utils.c
 
 libiWmxSdk_la-wmxSDK_Coex_3.lo: $(srcdir)/../NDnS/wmxSDK_Coex_3.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Coex_3.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Coex_3.Tpo -c -o libiWmxSdk_la-wmxSDK_Coex_3.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Coex_3.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Coex_3.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Coex_3.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Coex_3.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Coex_3.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Coex_3.Tpo -c -o libiWmxSdk_la-wmxSDK_Coex_3.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Coex_3.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Coex_3.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Coex_3.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Coex_3.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../NDnS/wmxSDK_Coex_3.c' object='libiWmxSdk_la-wmxSDK_Coex_3.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Coex_3.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Coex_3.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Coex_3.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Coex_3.lo `test -f '$(srcdir)/../NDnS/wmxSDK_Coex_3.c' || echo '$(srcdir)/'`$(srcdir)/../NDnS/wmxSDK_Coex_3.c
 
 libiWmxSdk_la-wmxSDK_Apdo_Impl.lo: $(srcdir)/../Apdo/wmxSDK_Apdo_Impl.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Apdo_Impl.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Impl.Tpo -c -o libiWmxSdk_la-wmxSDK_Apdo_Impl.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Impl.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Impl.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Impl.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Apdo_Impl.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Impl.Tpo -c -o libiWmxSdk_la-wmxSDK_Apdo_Impl.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Impl.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Impl.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Impl.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../Apdo/wmxSDK_Apdo_Impl.c' object='libiWmxSdk_la-wmxSDK_Apdo_Impl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Apdo_Impl.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Impl.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Apdo_Impl.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Impl.c
 
 libiWmxSdk_la-wmxSDK_Apdo_Utils.lo: $(srcdir)/../Apdo/wmxSDK_Apdo_Utils.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Apdo_Utils.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Utils.Tpo -c -o libiWmxSdk_la-wmxSDK_Apdo_Utils.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Utils.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Utils.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Utils.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Apdo_Utils.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Utils.Tpo -c -o libiWmxSdk_la-wmxSDK_Apdo_Utils.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Utils.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Utils.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Utils.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../Apdo/wmxSDK_Apdo_Utils.c' object='libiWmxSdk_la-wmxSDK_Apdo_Utils.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Apdo_Utils.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Utils.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Apdo_Utils.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Utils.c
 
 libiWmxSdk_la-wmxSDK_Apdo_L5.lo: $(srcdir)/../Apdo/wmxSDK_Apdo_L5.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Apdo_L5.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_L5.Tpo -c -o libiWmxSdk_la-wmxSDK_Apdo_L5.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_L5.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_L5.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_L5.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_L5.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Apdo_L5.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_L5.Tpo -c -o libiWmxSdk_la-wmxSDK_Apdo_L5.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_L5.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_L5.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_L5.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_L5.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../Apdo/wmxSDK_Apdo_L5.c' object='libiWmxSdk_la-wmxSDK_Apdo_L5.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Apdo_L5.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_L5.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_L5.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Apdo_L5.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_L5.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_L5.c
 
 libiWmxSdk_la-wmxSDK_Apdo_IndHandler.lo: $(srcdir)/../Apdo/wmxSDK_Apdo_IndHandler.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Apdo_IndHandler.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_IndHandler.Tpo -c -o libiWmxSdk_la-wmxSDK_Apdo_IndHandler.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_IndHandler.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_IndHandler.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_IndHandler.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Apdo_IndHandler.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_IndHandler.Tpo -c -o libiWmxSdk_la-wmxSDK_Apdo_IndHandler.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_IndHandler.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_IndHandler.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_IndHandler.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../Apdo/wmxSDK_Apdo_IndHandler.c' object='libiWmxSdk_la-wmxSDK_Apdo_IndHandler.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Apdo_IndHandler.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_IndHandler.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Apdo_IndHandler.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_IndHandler.c
 
 libiWmxSdk_la-wmxSDK_Apdo_Internals.lo: $(srcdir)/../Apdo/wmxSDK_Apdo_Internals.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Apdo_Internals.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Internals.Tpo -c -o libiWmxSdk_la-wmxSDK_Apdo_Internals.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Internals.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Internals.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Internals.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-wmxSDK_Apdo_Internals.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Internals.Tpo -c -o libiWmxSdk_la-wmxSDK_Apdo_Internals.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Internals.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Internals.Tpo $(DEPDIR)/libiWmxSdk_la-wmxSDK_Apdo_Internals.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../Apdo/wmxSDK_Apdo_Internals.c' object='libiWmxSdk_la-wmxSDK_Apdo_Internals.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Apdo_Internals.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Internals.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-wmxSDK_Apdo_Internals.lo `test -f '$(srcdir)/../Apdo/wmxSDK_Apdo_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/wmxSDK_Apdo_Internals.c
 
 libiWmxSdk_la-AES.lo: $(srcdir)/../Apdo/AES.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-AES.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-AES.Tpo -c -o libiWmxSdk_la-AES.lo `test -f '$(srcdir)/../Apdo/AES.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/AES.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-AES.Tpo $(DEPDIR)/libiWmxSdk_la-AES.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-AES.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-AES.Tpo -c -o libiWmxSdk_la-AES.lo `test -f '$(srcdir)/../Apdo/AES.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/AES.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-AES.Tpo $(DEPDIR)/libiWmxSdk_la-AES.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../Apdo/AES.c' object='libiWmxSdk_la-AES.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-AES.lo `test -f '$(srcdir)/../Apdo/AES.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/AES.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-AES.lo `test -f '$(srcdir)/../Apdo/AES.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/AES.c
 
 libiWmxSdk_la-AES_CCM.lo: $(srcdir)/../Apdo/AES_CCM.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-AES_CCM.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-AES_CCM.Tpo -c -o libiWmxSdk_la-AES_CCM.lo `test -f '$(srcdir)/../Apdo/AES_CCM.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/AES_CCM.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libiWmxSdk_la-AES_CCM.Tpo $(DEPDIR)/libiWmxSdk_la-AES_CCM.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -MT libiWmxSdk_la-AES_CCM.lo -MD -MP -MF $(DEPDIR)/libiWmxSdk_la-AES_CCM.Tpo -c -o libiWmxSdk_la-AES_CCM.lo `test -f '$(srcdir)/../Apdo/AES_CCM.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/AES_CCM.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libiWmxSdk_la-AES_CCM.Tpo $(DEPDIR)/libiWmxSdk_la-AES_CCM.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../Apdo/AES_CCM.c' object='libiWmxSdk_la-AES_CCM.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-AES_CCM.lo `test -f '$(srcdir)/../Apdo/AES_CCM.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/AES_CCM.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libiWmxSdk_la_CFLAGS) $(CFLAGS) -c -o libiWmxSdk_la-AES_CCM.lo `test -f '$(srcdir)/../Apdo/AES_CCM.c' || echo '$(srcdir)/'`$(srcdir)/../Apdo/AES_CCM.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

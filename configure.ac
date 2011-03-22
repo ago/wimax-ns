@@ -4,6 +4,8 @@ AC_PROG_CC
 AC_PROG_LIBTOOL
 AC_CONFIG_HEADERS([config.h])
 
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+
 
 # For multiple installations
 if test x$program_prefix = xNONE

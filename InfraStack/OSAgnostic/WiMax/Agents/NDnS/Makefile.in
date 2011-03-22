@@ -82,22 +82,39 @@ am_libNDnSAgent_la_OBJECTS = libNDnSAgent_la-FormatConversions.lo \
 	libNDnSAgent_la-wmxSDK_Nds_Utils.lo \
 	libNDnSAgent_la-wmxSDK_Coex_1.lo
 libNDnSAgent_la_OBJECTS = $(am_libNDnSAgent_la_OBJECTS)
-libNDnSAgent_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libNDnSAgent_la_CFLAGS) \
-	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+libNDnSAgent_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(libNDnSAgent_la_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
+	-o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libNDnSAgent_la_SOURCES)
 DIST_SOURCES = $(libNDnSAgent_la_SOURCES)
 ETAGS = etags
@@ -105,6 +122,7 @@ CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -382,7 +400,7 @@ clean-noinstLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libNDnSAgent.la: $(libNDnSAgent_la_OBJECTS) $(libNDnSAgent_la_DEPENDENCIES) 
-	$(libNDnSAgent_la_LINK)  $(libNDnSAgent_la_OBJECTS) $(libNDnSAgent_la_LIBADD) $(LIBS)
+	$(AM_V_CCLD)$(libNDnSAgent_la_LINK)  $(libNDnSAgent_la_OBJECTS) $(libNDnSAgent_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -429,284 +447,324 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Utils.Plo@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 libNDnSAgent_la-FormatConversions.lo: $(srcdir)/Source/FormatConversions.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-FormatConversions.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-FormatConversions.Tpo -c -o libNDnSAgent_la-FormatConversions.lo `test -f '$(srcdir)/Source/FormatConversions.c' || echo '$(srcdir)/'`$(srcdir)/Source/FormatConversions.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-FormatConversions.Tpo $(DEPDIR)/libNDnSAgent_la-FormatConversions.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-FormatConversions.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-FormatConversions.Tpo -c -o libNDnSAgent_la-FormatConversions.lo `test -f '$(srcdir)/Source/FormatConversions.c' || echo '$(srcdir)/'`$(srcdir)/Source/FormatConversions.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-FormatConversions.Tpo $(DEPDIR)/libNDnSAgent_la-FormatConversions.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Source/FormatConversions.c' object='libNDnSAgent_la-FormatConversions.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-FormatConversions.lo `test -f '$(srcdir)/Source/FormatConversions.c' || echo '$(srcdir)/'`$(srcdir)/Source/FormatConversions.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-FormatConversions.lo `test -f '$(srcdir)/Source/FormatConversions.c' || echo '$(srcdir)/'`$(srcdir)/Source/FormatConversions.c
 
 libNDnSAgent_la-NDnS_TinyFSM.lo: $(srcdir)/Source/NDnS_TinyFSM.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnS_TinyFSM.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnS_TinyFSM.Tpo -c -o libNDnSAgent_la-NDnS_TinyFSM.lo `test -f '$(srcdir)/Source/NDnS_TinyFSM.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnS_TinyFSM.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnS_TinyFSM.Tpo $(DEPDIR)/libNDnSAgent_la-NDnS_TinyFSM.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnS_TinyFSM.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnS_TinyFSM.Tpo -c -o libNDnSAgent_la-NDnS_TinyFSM.lo `test -f '$(srcdir)/Source/NDnS_TinyFSM.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnS_TinyFSM.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnS_TinyFSM.Tpo $(DEPDIR)/libNDnSAgent_la-NDnS_TinyFSM.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Source/NDnS_TinyFSM.c' object='libNDnSAgent_la-NDnS_TinyFSM.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnS_TinyFSM.lo `test -f '$(srcdir)/Source/NDnS_TinyFSM.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnS_TinyFSM.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnS_TinyFSM.lo `test -f '$(srcdir)/Source/NDnS_TinyFSM.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnS_TinyFSM.c
 
 libNDnSAgent_la-NDnSAgent.lo: $(srcdir)/Source/NDnSAgent.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent.Tpo -c -o libNDnSAgent_la-NDnSAgent.lo `test -f '$(srcdir)/Source/NDnSAgent.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent.Tpo -c -o libNDnSAgent_la-NDnSAgent.lo `test -f '$(srcdir)/Source/NDnSAgent.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Source/NDnSAgent.c' object='libNDnSAgent_la-NDnSAgent.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent.lo `test -f '$(srcdir)/Source/NDnSAgent.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent.lo `test -f '$(srcdir)/Source/NDnSAgent.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent.c
 
 libNDnSAgent_la-NDnSAgent_CBs.lo: $(srcdir)/Source/NDnSAgent_CBs.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_CBs.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_CBs.Tpo -c -o libNDnSAgent_la-NDnSAgent_CBs.lo `test -f '$(srcdir)/Source/NDnSAgent_CBs.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_CBs.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_CBs.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_CBs.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_CBs.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_CBs.Tpo -c -o libNDnSAgent_la-NDnSAgent_CBs.lo `test -f '$(srcdir)/Source/NDnSAgent_CBs.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_CBs.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_CBs.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_CBs.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Source/NDnSAgent_CBs.c' object='libNDnSAgent_la-NDnSAgent_CBs.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_CBs.lo `test -f '$(srcdir)/Source/NDnSAgent_CBs.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_CBs.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_CBs.lo `test -f '$(srcdir)/Source/NDnSAgent_CBs.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_CBs.c
 
 libNDnSAgent_la-NDnSAgent_Ctrl.lo: $(srcdir)/Source/NDnSAgent_Ctrl.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_Ctrl.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Ctrl.Tpo -c -o libNDnSAgent_la-NDnSAgent_Ctrl.lo `test -f '$(srcdir)/Source/NDnSAgent_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Ctrl.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Ctrl.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Ctrl.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_Ctrl.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Ctrl.Tpo -c -o libNDnSAgent_la-NDnSAgent_Ctrl.lo `test -f '$(srcdir)/Source/NDnSAgent_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Ctrl.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Ctrl.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Ctrl.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Source/NDnSAgent_Ctrl.c' object='libNDnSAgent_la-NDnSAgent_Ctrl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_Ctrl.lo `test -f '$(srcdir)/Source/NDnSAgent_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Ctrl.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_Ctrl.lo `test -f '$(srcdir)/Source/NDnSAgent_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Ctrl.c
 
 libNDnSAgent_la-NDnSAgent_Internals.lo: $(srcdir)/Source/NDnSAgent_Internals.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_Internals.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Internals.Tpo -c -o libNDnSAgent_la-NDnSAgent_Internals.lo `test -f '$(srcdir)/Source/NDnSAgent_Internals.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Internals.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Internals.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Internals.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_Internals.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Internals.Tpo -c -o libNDnSAgent_la-NDnSAgent_Internals.lo `test -f '$(srcdir)/Source/NDnSAgent_Internals.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Internals.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Internals.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Internals.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Source/NDnSAgent_Internals.c' object='libNDnSAgent_la-NDnSAgent_Internals.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_Internals.lo `test -f '$(srcdir)/Source/NDnSAgent_Internals.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Internals.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_Internals.lo `test -f '$(srcdir)/Source/NDnSAgent_Internals.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Internals.c
 
 libNDnSAgent_la-NDnSAgent_Utils.lo: $(srcdir)/Source/NDnSAgent_Utils.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_Utils.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Utils.Tpo -c -o libNDnSAgent_la-NDnSAgent_Utils.lo `test -f '$(srcdir)/Source/NDnSAgent_Utils.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Utils.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Utils.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Utils.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_Utils.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Utils.Tpo -c -o libNDnSAgent_la-NDnSAgent_Utils.lo `test -f '$(srcdir)/Source/NDnSAgent_Utils.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Utils.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Utils.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Utils.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Source/NDnSAgent_Utils.c' object='libNDnSAgent_la-NDnSAgent_Utils.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_Utils.lo `test -f '$(srcdir)/Source/NDnSAgent_Utils.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Utils.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_Utils.lo `test -f '$(srcdir)/Source/NDnSAgent_Utils.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Utils.c
 
 libNDnSAgent_la-NDnSAgent_L4P.lo: $(srcdir)/Source/NDnSAgent_L4P.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_L4P.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4P.Tpo -c -o libNDnSAgent_la-NDnSAgent_L4P.lo `test -f '$(srcdir)/Source/NDnSAgent_L4P.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_L4P.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4P.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4P.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_L4P.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4P.Tpo -c -o libNDnSAgent_la-NDnSAgent_L4P.lo `test -f '$(srcdir)/Source/NDnSAgent_L4P.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_L4P.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4P.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4P.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Source/NDnSAgent_L4P.c' object='libNDnSAgent_la-NDnSAgent_L4P.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_L4P.lo `test -f '$(srcdir)/Source/NDnSAgent_L4P.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_L4P.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_L4P.lo `test -f '$(srcdir)/Source/NDnSAgent_L4P.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_L4P.c
 
 libNDnSAgent_la-NDnSAgent_Monitor.lo: $(srcdir)/Source/NDnSAgent_Monitor.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_Monitor.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Monitor.Tpo -c -o libNDnSAgent_la-NDnSAgent_Monitor.lo `test -f '$(srcdir)/Source/NDnSAgent_Monitor.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Monitor.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Monitor.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Monitor.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_Monitor.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Monitor.Tpo -c -o libNDnSAgent_la-NDnSAgent_Monitor.lo `test -f '$(srcdir)/Source/NDnSAgent_Monitor.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Monitor.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Monitor.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_Monitor.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Source/NDnSAgent_Monitor.c' object='libNDnSAgent_la-NDnSAgent_Monitor.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_Monitor.lo `test -f '$(srcdir)/Source/NDnSAgent_Monitor.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Monitor.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_Monitor.lo `test -f '$(srcdir)/Source/NDnSAgent_Monitor.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_Monitor.c
 
 libNDnSAgent_la-NDnS_Coex.lo: $(srcdir)/Source/NDnS_Coex.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnS_Coex.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnS_Coex.Tpo -c -o libNDnSAgent_la-NDnS_Coex.lo `test -f '$(srcdir)/Source/NDnS_Coex.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnS_Coex.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnS_Coex.Tpo $(DEPDIR)/libNDnSAgent_la-NDnS_Coex.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnS_Coex.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnS_Coex.Tpo -c -o libNDnSAgent_la-NDnS_Coex.lo `test -f '$(srcdir)/Source/NDnS_Coex.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnS_Coex.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnS_Coex.Tpo $(DEPDIR)/libNDnSAgent_la-NDnS_Coex.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Source/NDnS_Coex.c' object='libNDnSAgent_la-NDnS_Coex.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnS_Coex.lo `test -f '$(srcdir)/Source/NDnS_Coex.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnS_Coex.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnS_Coex.lo `test -f '$(srcdir)/Source/NDnS_Coex.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnS_Coex.c
 
 libNDnSAgent_la-NDnSAgent_NSPsList.lo: $(srcdir)/Source/NDnSAgent_NSPsList.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_NSPsList.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_NSPsList.Tpo -c -o libNDnSAgent_la-NDnSAgent_NSPsList.lo `test -f '$(srcdir)/Source/NDnSAgent_NSPsList.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_NSPsList.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_NSPsList.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_NSPsList.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_NSPsList.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_NSPsList.Tpo -c -o libNDnSAgent_la-NDnSAgent_NSPsList.lo `test -f '$(srcdir)/Source/NDnSAgent_NSPsList.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_NSPsList.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_NSPsList.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_NSPsList.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Source/NDnSAgent_NSPsList.c' object='libNDnSAgent_la-NDnSAgent_NSPsList.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_NSPsList.lo `test -f '$(srcdir)/Source/NDnSAgent_NSPsList.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_NSPsList.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_NSPsList.lo `test -f '$(srcdir)/Source/NDnSAgent_NSPsList.c' || echo '$(srcdir)/'`$(srcdir)/Source/NDnSAgent_NSPsList.c
 
 libNDnSAgent_la-NDnSAgent_APDO_CBs.lo: $(srcdir)/APDO/NDnSAgent_APDO_CBs.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_APDO_CBs.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO_CBs.Tpo -c -o libNDnSAgent_la-NDnSAgent_APDO_CBs.lo `test -f '$(srcdir)/APDO/NDnSAgent_APDO_CBs.c' || echo '$(srcdir)/'`$(srcdir)/APDO/NDnSAgent_APDO_CBs.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO_CBs.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO_CBs.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_APDO_CBs.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO_CBs.Tpo -c -o libNDnSAgent_la-NDnSAgent_APDO_CBs.lo `test -f '$(srcdir)/APDO/NDnSAgent_APDO_CBs.c' || echo '$(srcdir)/'`$(srcdir)/APDO/NDnSAgent_APDO_CBs.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO_CBs.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO_CBs.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/APDO/NDnSAgent_APDO_CBs.c' object='libNDnSAgent_la-NDnSAgent_APDO_CBs.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_APDO_CBs.lo `test -f '$(srcdir)/APDO/NDnSAgent_APDO_CBs.c' || echo '$(srcdir)/'`$(srcdir)/APDO/NDnSAgent_APDO_CBs.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_APDO_CBs.lo `test -f '$(srcdir)/APDO/NDnSAgent_APDO_CBs.c' || echo '$(srcdir)/'`$(srcdir)/APDO/NDnSAgent_APDO_CBs.c
 
 libNDnSAgent_la-NDnSAgent_APDO.lo: $(srcdir)/APDO/NDnSAgent_APDO.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_APDO.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO.Tpo -c -o libNDnSAgent_la-NDnSAgent_APDO.lo `test -f '$(srcdir)/APDO/NDnSAgent_APDO.c' || echo '$(srcdir)/'`$(srcdir)/APDO/NDnSAgent_APDO.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_APDO.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO.Tpo -c -o libNDnSAgent_la-NDnSAgent_APDO.lo `test -f '$(srcdir)/APDO/NDnSAgent_APDO.c' || echo '$(srcdir)/'`$(srcdir)/APDO/NDnSAgent_APDO.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_APDO.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/APDO/NDnSAgent_APDO.c' object='libNDnSAgent_la-NDnSAgent_APDO.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_APDO.lo `test -f '$(srcdir)/APDO/NDnSAgent_APDO.c' || echo '$(srcdir)/'`$(srcdir)/APDO/NDnSAgent_APDO.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_APDO.lo `test -f '$(srcdir)/APDO/NDnSAgent_APDO.c' || echo '$(srcdir)/'`$(srcdir)/APDO/NDnSAgent_APDO.c
 
 libNDnSAgent_la-NDnS_L4Publisher.lo: $(srcdir)/L4Publisher/NDnS_L4Publisher.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnS_L4Publisher.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnS_L4Publisher.Tpo -c -o libNDnSAgent_la-NDnS_L4Publisher.lo `test -f '$(srcdir)/L4Publisher/NDnS_L4Publisher.c' || echo '$(srcdir)/'`$(srcdir)/L4Publisher/NDnS_L4Publisher.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnS_L4Publisher.Tpo $(DEPDIR)/libNDnSAgent_la-NDnS_L4Publisher.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnS_L4Publisher.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnS_L4Publisher.Tpo -c -o libNDnSAgent_la-NDnS_L4Publisher.lo `test -f '$(srcdir)/L4Publisher/NDnS_L4Publisher.c' || echo '$(srcdir)/'`$(srcdir)/L4Publisher/NDnS_L4Publisher.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnS_L4Publisher.Tpo $(DEPDIR)/libNDnSAgent_la-NDnS_L4Publisher.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L4Publisher/NDnS_L4Publisher.c' object='libNDnSAgent_la-NDnS_L4Publisher.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnS_L4Publisher.lo `test -f '$(srcdir)/L4Publisher/NDnS_L4Publisher.c' || echo '$(srcdir)/'`$(srcdir)/L4Publisher/NDnS_L4Publisher.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnS_L4Publisher.lo `test -f '$(srcdir)/L4Publisher/NDnS_L4Publisher.c' || echo '$(srcdir)/'`$(srcdir)/L4Publisher/NDnS_L4Publisher.c
 
 libNDnSAgent_la-NDnSAgent_DB.lo: $(srcdir)/L4_db/NDnSAgent_DB.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_DB.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB.Tpo -c -o libNDnSAgent_la-NDnSAgent_DB.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_DB.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB.Tpo -c -o libNDnSAgent_la-NDnSAgent_DB.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L4_db/NDnSAgent_DB.c' object='libNDnSAgent_la-NDnSAgent_DB.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_DB.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_DB.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB.c
 
 libNDnSAgent_la-NDnSAgent_DB_Common.lo: $(srcdir)/L4_db/NDnSAgent_DB_Common.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_DB_Common.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Common.Tpo -c -o libNDnSAgent_la-NDnSAgent_DB_Common.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Common.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Common.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Common.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Common.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_DB_Common.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Common.Tpo -c -o libNDnSAgent_la-NDnSAgent_DB_Common.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Common.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Common.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Common.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Common.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L4_db/NDnSAgent_DB_Common.c' object='libNDnSAgent_la-NDnSAgent_DB_Common.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_DB_Common.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Common.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Common.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_DB_Common.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Common.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Common.c
 
 libNDnSAgent_la-NDnSAgent_DB_Restore.lo: $(srcdir)/L4_db/NDnSAgent_DB_Restore.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_DB_Restore.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Restore.Tpo -c -o libNDnSAgent_la-NDnSAgent_DB_Restore.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Restore.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Restore.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Restore.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Restore.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_DB_Restore.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Restore.Tpo -c -o libNDnSAgent_la-NDnSAgent_DB_Restore.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Restore.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Restore.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Restore.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Restore.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L4_db/NDnSAgent_DB_Restore.c' object='libNDnSAgent_la-NDnSAgent_DB_Restore.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_DB_Restore.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Restore.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Restore.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_DB_Restore.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Restore.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Restore.c
 
 libNDnSAgent_la-NDnSAgent_DB_Save.lo: $(srcdir)/L4_db/NDnSAgent_DB_Save.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_DB_Save.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Save.Tpo -c -o libNDnSAgent_la-NDnSAgent_DB_Save.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Save.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Save.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Save.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Save.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_DB_Save.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Save.Tpo -c -o libNDnSAgent_la-NDnSAgent_DB_Save.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Save.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Save.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Save.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Save.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L4_db/NDnSAgent_DB_Save.c' object='libNDnSAgent_la-NDnSAgent_DB_Save.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_DB_Save.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Save.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Save.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_DB_Save.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Save.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Save.c
 
 libNDnSAgent_la-NDnSAgent_DB_Update.lo: $(srcdir)/L4_db/NDnSAgent_DB_Update.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_DB_Update.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Update.Tpo -c -o libNDnSAgent_la-NDnSAgent_DB_Update.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Update.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Update.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Update.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Update.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_DB_Update.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Update.Tpo -c -o libNDnSAgent_la-NDnSAgent_DB_Update.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Update.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Update.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Update.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_DB_Update.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L4_db/NDnSAgent_DB_Update.c' object='libNDnSAgent_la-NDnSAgent_DB_Update.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_DB_Update.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Update.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Update.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_DB_Update.lo `test -f '$(srcdir)/L4_db/NDnSAgent_DB_Update.c' || echo '$(srcdir)/'`$(srcdir)/L4_db/NDnSAgent_DB_Update.c
 
 libNDnSAgent_la-NDnS_L4Scanner.lo: $(srcdir)/L4Scanner/NDnS_L4Scanner.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnS_L4Scanner.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnS_L4Scanner.Tpo -c -o libNDnSAgent_la-NDnS_L4Scanner.lo `test -f '$(srcdir)/L4Scanner/NDnS_L4Scanner.c' || echo '$(srcdir)/'`$(srcdir)/L4Scanner/NDnS_L4Scanner.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnS_L4Scanner.Tpo $(DEPDIR)/libNDnSAgent_la-NDnS_L4Scanner.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnS_L4Scanner.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnS_L4Scanner.Tpo -c -o libNDnSAgent_la-NDnS_L4Scanner.lo `test -f '$(srcdir)/L4Scanner/NDnS_L4Scanner.c' || echo '$(srcdir)/'`$(srcdir)/L4Scanner/NDnS_L4Scanner.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnS_L4Scanner.Tpo $(DEPDIR)/libNDnSAgent_la-NDnS_L4Scanner.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L4Scanner/NDnS_L4Scanner.c' object='libNDnSAgent_la-NDnS_L4Scanner.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnS_L4Scanner.lo `test -f '$(srcdir)/L4Scanner/NDnS_L4Scanner.c' || echo '$(srcdir)/'`$(srcdir)/L4Scanner/NDnS_L4Scanner.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnS_L4Scanner.lo `test -f '$(srcdir)/L4Scanner/NDnS_L4Scanner.c' || echo '$(srcdir)/'`$(srcdir)/L4Scanner/NDnS_L4Scanner.c
 
 libNDnSAgent_la-NDnSAgent_L4S_CBs.lo: $(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_L4S_CBs.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4S_CBs.Tpo -c -o libNDnSAgent_la-NDnSAgent_L4S_CBs.lo `test -f '$(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c' || echo '$(srcdir)/'`$(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4S_CBs.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4S_CBs.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-NDnSAgent_L4S_CBs.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4S_CBs.Tpo -c -o libNDnSAgent_la-NDnSAgent_L4S_CBs.lo `test -f '$(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c' || echo '$(srcdir)/'`$(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4S_CBs.Tpo $(DEPDIR)/libNDnSAgent_la-NDnSAgent_L4S_CBs.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c' object='libNDnSAgent_la-NDnSAgent_L4S_CBs.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_L4S_CBs.lo `test -f '$(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c' || echo '$(srcdir)/'`$(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-NDnSAgent_L4S_CBs.lo `test -f '$(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c' || echo '$(srcdir)/'`$(srcdir)/L4Scanner/NDnSAgent_L4S_CBs.c
 
 libNDnSAgent_la-AES.lo: $(srcdir)/../../Wrappers/Apdo/AES.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-AES.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-AES.Tpo -c -o libNDnSAgent_la-AES.lo `test -f '$(srcdir)/../../Wrappers/Apdo/AES.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/AES.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-AES.Tpo $(DEPDIR)/libNDnSAgent_la-AES.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-AES.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-AES.Tpo -c -o libNDnSAgent_la-AES.lo `test -f '$(srcdir)/../../Wrappers/Apdo/AES.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/AES.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-AES.Tpo $(DEPDIR)/libNDnSAgent_la-AES.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/Apdo/AES.c' object='libNDnSAgent_la-AES.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-AES.lo `test -f '$(srcdir)/../../Wrappers/Apdo/AES.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/AES.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-AES.lo `test -f '$(srcdir)/../../Wrappers/Apdo/AES.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/AES.c
 
 libNDnSAgent_la-AES_CCM.lo: $(srcdir)/../../Wrappers/Apdo/AES_CCM.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-AES_CCM.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-AES_CCM.Tpo -c -o libNDnSAgent_la-AES_CCM.lo `test -f '$(srcdir)/../../Wrappers/Apdo/AES_CCM.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/AES_CCM.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-AES_CCM.Tpo $(DEPDIR)/libNDnSAgent_la-AES_CCM.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-AES_CCM.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-AES_CCM.Tpo -c -o libNDnSAgent_la-AES_CCM.lo `test -f '$(srcdir)/../../Wrappers/Apdo/AES_CCM.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/AES_CCM.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-AES_CCM.Tpo $(DEPDIR)/libNDnSAgent_la-AES_CCM.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/Apdo/AES_CCM.c' object='libNDnSAgent_la-AES_CCM.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-AES_CCM.lo `test -f '$(srcdir)/../../Wrappers/Apdo/AES_CCM.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/AES_CCM.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-AES_CCM.lo `test -f '$(srcdir)/../../Wrappers/Apdo/AES_CCM.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/AES_CCM.c
 
 libNDnSAgent_la-wmxSDK_Apdo_Internals.lo: $(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Internals.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Apdo_Internals.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Internals.Tpo -c -o libNDnSAgent_la-wmxSDK_Apdo_Internals.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Internals.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Internals.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Internals.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Apdo_Internals.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Internals.Tpo -c -o libNDnSAgent_la-wmxSDK_Apdo_Internals.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Internals.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Internals.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Internals.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Internals.c' object='libNDnSAgent_la-wmxSDK_Apdo_Internals.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Apdo_Internals.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Internals.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Apdo_Internals.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Internals.c
 
 libNDnSAgent_la-wmxSDK_Apdo_L5.lo: $(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_L5.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Apdo_L5.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_L5.Tpo -c -o libNDnSAgent_la-wmxSDK_Apdo_L5.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_L5.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_L5.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_L5.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_L5.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Apdo_L5.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_L5.Tpo -c -o libNDnSAgent_la-wmxSDK_Apdo_L5.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_L5.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_L5.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_L5.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_L5.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_L5.c' object='libNDnSAgent_la-wmxSDK_Apdo_L5.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Apdo_L5.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_L5.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_L5.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Apdo_L5.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_L5.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_L5.c
 
 libNDnSAgent_la-wmxSDK_Apdo_Utils.lo: $(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Utils.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Apdo_Utils.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Utils.Tpo -c -o libNDnSAgent_la-wmxSDK_Apdo_Utils.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Utils.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Utils.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Utils.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Apdo_Utils.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Utils.Tpo -c -o libNDnSAgent_la-wmxSDK_Apdo_Utils.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Utils.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Utils.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Utils.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Utils.c' object='libNDnSAgent_la-wmxSDK_Apdo_Utils.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Apdo_Utils.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Utils.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Apdo_Utils.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Utils.c
 
 libNDnSAgent_la-wmxSDK_Apdo_Impl.lo: $(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Impl.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Apdo_Impl.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Impl.Tpo -c -o libNDnSAgent_la-wmxSDK_Apdo_Impl.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Impl.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Impl.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Impl.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Apdo_Impl.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Impl.Tpo -c -o libNDnSAgent_la-wmxSDK_Apdo_Impl.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Impl.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Impl.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_Impl.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Impl.c' object='libNDnSAgent_la-wmxSDK_Apdo_Impl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Apdo_Impl.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Impl.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Apdo_Impl.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_Impl.c
 
 libNDnSAgent_la-wmxSDK_Msc_Impl.lo: $(srcdir)/../../Wrappers/Miscellaneous/wmxSDK_Msc_Impl.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Msc_Impl.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Msc_Impl.Tpo -c -o libNDnSAgent_la-wmxSDK_Msc_Impl.lo `test -f '$(srcdir)/../../Wrappers/Miscellaneous/wmxSDK_Msc_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Miscellaneous/wmxSDK_Msc_Impl.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Msc_Impl.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Msc_Impl.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Msc_Impl.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Msc_Impl.Tpo -c -o libNDnSAgent_la-wmxSDK_Msc_Impl.lo `test -f '$(srcdir)/../../Wrappers/Miscellaneous/wmxSDK_Msc_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Miscellaneous/wmxSDK_Msc_Impl.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Msc_Impl.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Msc_Impl.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/Miscellaneous/wmxSDK_Msc_Impl.c' object='libNDnSAgent_la-wmxSDK_Msc_Impl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Msc_Impl.lo `test -f '$(srcdir)/../../Wrappers/Miscellaneous/wmxSDK_Msc_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Miscellaneous/wmxSDK_Msc_Impl.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Msc_Impl.lo `test -f '$(srcdir)/../../Wrappers/Miscellaneous/wmxSDK_Msc_Impl.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Miscellaneous/wmxSDK_Msc_Impl.c
 
 libNDnSAgent_la-wmxSDK_Apdo_IndHandler.lo: $(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_IndHandler.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Apdo_IndHandler.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_IndHandler.Tpo -c -o libNDnSAgent_la-wmxSDK_Apdo_IndHandler.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_IndHandler.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_IndHandler.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_IndHandler.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Apdo_IndHandler.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_IndHandler.Tpo -c -o libNDnSAgent_la-wmxSDK_Apdo_IndHandler.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_IndHandler.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_IndHandler.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Apdo_IndHandler.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_IndHandler.c' object='libNDnSAgent_la-wmxSDK_Apdo_IndHandler.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Apdo_IndHandler.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_IndHandler.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Apdo_IndHandler.lo `test -f '$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/Apdo/wmxSDK_Apdo_IndHandler.c
 
 libNDnSAgent_la-wmxSDK_Nds_1.lo: $(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_1.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_1.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_1.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_1.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_1.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_1.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_1.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_1.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_1.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_1.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_1.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_1.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_1.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_1.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_1.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_1.c' object='libNDnSAgent_la-wmxSDK_Nds_1.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_1.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_1.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_1.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_1.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_1.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_1.c
 
 libNDnSAgent_la-wmxSDK_Nds_2.lo: $(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_2.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_2.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_2.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_2.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_2.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_2.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_2.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_2.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_2.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_2.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_2.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_2.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_2.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_2.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_2.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_2.c' object='libNDnSAgent_la-wmxSDK_Nds_2.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_2.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_2.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_2.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_2.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_2.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_2.c
 
 libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.lo: $(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_CtrlAgent.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_CtrlAgent.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_CtrlAgent.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_CtrlAgent.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_CtrlAgent.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_CtrlAgent.c' object='libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_CtrlAgent.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_CtrlAgent.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_CtrlAgent.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_CtrlAgent.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_CtrlAgent.c
 
 libNDnSAgent_la-wmxSDK_Nds_IndHandler.lo: $(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_IndHandler.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_IndHandler.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_IndHandler.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_IndHandler.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_IndHandler.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_IndHandler.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_IndHandler.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_IndHandler.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_IndHandler.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_IndHandler.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_IndHandler.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_IndHandler.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_IndHandler.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_IndHandler.c' object='libNDnSAgent_la-wmxSDK_Nds_IndHandler.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_IndHandler.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_IndHandler.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_IndHandler.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_IndHandler.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_IndHandler.c
 
 libNDnSAgent_la-wmxSDK_Nds_Internals.lo: $(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Internals.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_Internals.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Internals.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_Internals.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Internals.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Internals.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Internals.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_Internals.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Internals.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_Internals.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Internals.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Internals.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Internals.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Internals.c' object='libNDnSAgent_la-wmxSDK_Nds_Internals.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_Internals.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Internals.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_Internals.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Internals.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Internals.c
 
 libNDnSAgent_la-wmxSDK_Nds_L5.lo: $(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_L5.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_L5.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_L5.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_L5.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_L5.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_L5.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_L5.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_L5.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_L5.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_L5.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_L5.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_L5.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_L5.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_L5.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_L5.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_L5.c' object='libNDnSAgent_la-wmxSDK_Nds_L5.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_L5.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_L5.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_L5.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_L5.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_L5.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_L5.c
 
 libNDnSAgent_la-wmxSDK_Nds_Utils.lo: $(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Utils.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_Utils.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Utils.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_Utils.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Utils.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Utils.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Utils.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Nds_Utils.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Utils.Tpo -c -o libNDnSAgent_la-wmxSDK_Nds_Utils.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Utils.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Utils.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Nds_Utils.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Utils.c' object='libNDnSAgent_la-wmxSDK_Nds_Utils.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_Utils.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Utils.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Nds_Utils.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Utils.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Nds_Utils.c
 
 libNDnSAgent_la-wmxSDK_Coex_1.lo: $(srcdir)/../../Wrappers/NDnS/wmxSDK_Coex_1.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Coex_1.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Coex_1.Tpo -c -o libNDnSAgent_la-wmxSDK_Coex_1.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Coex_1.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Coex_1.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Coex_1.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Coex_1.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -MT libNDnSAgent_la-wmxSDK_Coex_1.lo -MD -MP -MF $(DEPDIR)/libNDnSAgent_la-wmxSDK_Coex_1.Tpo -c -o libNDnSAgent_la-wmxSDK_Coex_1.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Coex_1.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Coex_1.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libNDnSAgent_la-wmxSDK_Coex_1.Tpo $(DEPDIR)/libNDnSAgent_la-wmxSDK_Coex_1.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Wrappers/NDnS/wmxSDK_Coex_1.c' object='libNDnSAgent_la-wmxSDK_Coex_1.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Coex_1.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Coex_1.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Coex_1.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libNDnSAgent_la_CFLAGS) $(CFLAGS) -c -o libNDnSAgent_la-wmxSDK_Coex_1.lo `test -f '$(srcdir)/../../Wrappers/NDnS/wmxSDK_Coex_1.c' || echo '$(srcdir)/'`$(srcdir)/../../Wrappers/NDnS/wmxSDK_Coex_1.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

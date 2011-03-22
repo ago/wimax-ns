@@ -629,6 +629,8 @@ PKG_CONFIG_PATH
 PKG_CONFIG
 program_suffix
 program_prefix
+AM_BACKSLASH
+AM_DEFAULT_VERBOSITY
 CPP
 OTOOL64
 OTOOL
@@ -743,6 +745,7 @@ with_pic
 enable_fast_install
 with_gnu_ld
 enable_libtool_lock
+enable_silent_rules
 enable_debug
 with_libwimaxll
 with_zlib
@@ -1399,6 +1402,8 @@ Optional Features:
   --enable-fast-install[=PKGS]
                           optimize for fast installation [default=yes]
   --disable-libtool-lock  avoid locking (might break parallel builds)
+  --enable-silent-rules          less verbose build output (undo: `make V=1')
+  --disable-silent-rules         verbose build output (undo: `make V=0')
   --enable-debug          enable compiling with debugging information
   --enable-instrument     enable support for instrumentation
   --enable-bindb          enable support for binary databases (disabled by
@@ -10692,6 +10697,19 @@ CC="$lt_save_CC"
 
 
 ac_config_headers="$ac_config_headers config.h"
+
+
+# Check whether --enable-silent-rules was given.
+if test "${enable_silent_rules+set}" = set; then :
+  enableval=$enable_silent_rules;
+fi
+
+case $enable_silent_rules in
+yes) AM_DEFAULT_VERBOSITY=0;;
+no)  AM_DEFAULT_VERBOSITY=1;;
+*)   AM_DEFAULT_VERBOSITY=0;;
+esac
+AM_BACKSLASH='\'
 
 
 

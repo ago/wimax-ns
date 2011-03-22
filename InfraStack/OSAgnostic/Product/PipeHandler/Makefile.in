@@ -61,8 +61,11 @@ am_libPipeHandler_la_OBJECTS = libPipeHandler_la-PipeHandlerMain.lo \
 	libPipeHandler_la-WrappersUtils.lo \
 	libPipeHandler_la-TraceModule.lo
 libPipeHandler_la_OBJECTS = $(am_libPipeHandler_la_OBJECTS)
-libPipeHandler_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) \
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+libPipeHandler_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(libPipeHandler_la_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -71,13 +74,26 @@ am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libPipeHandler_la_SOURCES)
 DIST_SOURCES = $(libPipeHandler_la_SOURCES)
 ETAGS = etags
@@ -85,6 +101,7 @@ CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -315,7 +332,7 @@ clean-noinstLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libPipeHandler.la: $(libPipeHandler_la_OBJECTS) $(libPipeHandler_la_DEPENDENCIES) 
-	$(libPipeHandler_la_LINK)  $(libPipeHandler_la_OBJECTS) $(libPipeHandler_la_LIBADD) $(LIBS)
+	$(AM_V_CCLD)$(libPipeHandler_la_LINK)  $(libPipeHandler_la_OBJECTS) $(libPipeHandler_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -339,123 +356,140 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libPipeHandler_la-WrappersUtils.Plo@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 libPipeHandler_la-PipeHandlerMain.lo: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/PipeHandler/PipeHandlerMain.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-PipeHandlerMain.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-PipeHandlerMain.Tpo -c -o libPipeHandler_la-PipeHandlerMain.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/PipeHandler/PipeHandlerMain.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/PipeHandler/PipeHandlerMain.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-PipeHandlerMain.Tpo $(DEPDIR)/libPipeHandler_la-PipeHandlerMain.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-PipeHandlerMain.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-PipeHandlerMain.Tpo -c -o libPipeHandler_la-PipeHandlerMain.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/PipeHandler/PipeHandlerMain.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/PipeHandler/PipeHandlerMain.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-PipeHandlerMain.Tpo $(DEPDIR)/libPipeHandler_la-PipeHandlerMain.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/PipeHandler/PipeHandlerMain.c' object='libPipeHandler_la-PipeHandlerMain.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-PipeHandlerMain.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/PipeHandler/PipeHandlerMain.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/PipeHandler/PipeHandlerMain.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-PipeHandlerMain.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/PipeHandler/PipeHandlerMain.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/PipeHandler/PipeHandlerMain.c
 
 libPipeHandler_la-ConnGateKeeper.lo: $(srcdir)/ConnGateKeeper.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-ConnGateKeeper.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-ConnGateKeeper.Tpo -c -o libPipeHandler_la-ConnGateKeeper.lo `test -f '$(srcdir)/ConnGateKeeper.c' || echo '$(srcdir)/'`$(srcdir)/ConnGateKeeper.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-ConnGateKeeper.Tpo $(DEPDIR)/libPipeHandler_la-ConnGateKeeper.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-ConnGateKeeper.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-ConnGateKeeper.Tpo -c -o libPipeHandler_la-ConnGateKeeper.lo `test -f '$(srcdir)/ConnGateKeeper.c' || echo '$(srcdir)/'`$(srcdir)/ConnGateKeeper.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-ConnGateKeeper.Tpo $(DEPDIR)/libPipeHandler_la-ConnGateKeeper.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/ConnGateKeeper.c' object='libPipeHandler_la-ConnGateKeeper.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-ConnGateKeeper.lo `test -f '$(srcdir)/ConnGateKeeper.c' || echo '$(srcdir)/'`$(srcdir)/ConnGateKeeper.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-ConnGateKeeper.lo `test -f '$(srcdir)/ConnGateKeeper.c' || echo '$(srcdir)/'`$(srcdir)/ConnGateKeeper.c
 
 libPipeHandler_la-L5Connector.lo: $(srcdir)/L5Connector.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-L5Connector.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-L5Connector.Tpo -c -o libPipeHandler_la-L5Connector.lo `test -f '$(srcdir)/L5Connector.c' || echo '$(srcdir)/'`$(srcdir)/L5Connector.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-L5Connector.Tpo $(DEPDIR)/libPipeHandler_la-L5Connector.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-L5Connector.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-L5Connector.Tpo -c -o libPipeHandler_la-L5Connector.lo `test -f '$(srcdir)/L5Connector.c' || echo '$(srcdir)/'`$(srcdir)/L5Connector.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-L5Connector.Tpo $(DEPDIR)/libPipeHandler_la-L5Connector.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L5Connector.c' object='libPipeHandler_la-L5Connector.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-L5Connector.lo `test -f '$(srcdir)/L5Connector.c' || echo '$(srcdir)/'`$(srcdir)/L5Connector.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-L5Connector.lo `test -f '$(srcdir)/L5Connector.c' || echo '$(srcdir)/'`$(srcdir)/L5Connector.c
 
 libPipeHandler_la-PipeHandler_Ctrl.lo: $(srcdir)/PipeHandler_Ctrl.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-PipeHandler_Ctrl.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-PipeHandler_Ctrl.Tpo -c -o libPipeHandler_la-PipeHandler_Ctrl.lo `test -f '$(srcdir)/PipeHandler_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/PipeHandler_Ctrl.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-PipeHandler_Ctrl.Tpo $(DEPDIR)/libPipeHandler_la-PipeHandler_Ctrl.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-PipeHandler_Ctrl.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-PipeHandler_Ctrl.Tpo -c -o libPipeHandler_la-PipeHandler_Ctrl.lo `test -f '$(srcdir)/PipeHandler_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/PipeHandler_Ctrl.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-PipeHandler_Ctrl.Tpo $(DEPDIR)/libPipeHandler_la-PipeHandler_Ctrl.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/PipeHandler_Ctrl.c' object='libPipeHandler_la-PipeHandler_Ctrl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-PipeHandler_Ctrl.lo `test -f '$(srcdir)/PipeHandler_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/PipeHandler_Ctrl.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-PipeHandler_Ctrl.lo `test -f '$(srcdir)/PipeHandler_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/PipeHandler_Ctrl.c
 
 libPipeHandler_la-PipeServices_Ctrl.lo: $(srcdir)/PipeServices_Ctrl.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-PipeServices_Ctrl.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-PipeServices_Ctrl.Tpo -c -o libPipeHandler_la-PipeServices_Ctrl.lo `test -f '$(srcdir)/PipeServices_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/PipeServices_Ctrl.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-PipeServices_Ctrl.Tpo $(DEPDIR)/libPipeHandler_la-PipeServices_Ctrl.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-PipeServices_Ctrl.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-PipeServices_Ctrl.Tpo -c -o libPipeHandler_la-PipeServices_Ctrl.lo `test -f '$(srcdir)/PipeServices_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/PipeServices_Ctrl.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-PipeServices_Ctrl.Tpo $(DEPDIR)/libPipeHandler_la-PipeServices_Ctrl.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/PipeServices_Ctrl.c' object='libPipeHandler_la-PipeServices_Ctrl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-PipeServices_Ctrl.lo `test -f '$(srcdir)/PipeServices_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/PipeServices_Ctrl.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-PipeServices_Ctrl.lo `test -f '$(srcdir)/PipeServices_Ctrl.c' || echo '$(srcdir)/'`$(srcdir)/PipeServices_Ctrl.c
 
 libPipeHandler_la-L5CommonUtils.lo: $(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/L5CommonUtils.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-L5CommonUtils.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-L5CommonUtils.Tpo -c -o libPipeHandler_la-L5CommonUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/L5CommonUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/L5CommonUtils.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-L5CommonUtils.Tpo $(DEPDIR)/libPipeHandler_la-L5CommonUtils.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-L5CommonUtils.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-L5CommonUtils.Tpo -c -o libPipeHandler_la-L5CommonUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/L5CommonUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/L5CommonUtils.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-L5CommonUtils.Tpo $(DEPDIR)/libPipeHandler_la-L5CommonUtils.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/L5CommonUtils.c' object='libPipeHandler_la-L5CommonUtils.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-L5CommonUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/L5CommonUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/L5CommonUtils.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-L5CommonUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/L5CommonUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/L5CommonUtils.c
 
 libPipeHandler_la-EventSubscribers.lo: $(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/EventSubscribers.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-EventSubscribers.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-EventSubscribers.Tpo -c -o libPipeHandler_la-EventSubscribers.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/EventSubscribers.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/EventSubscribers.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-EventSubscribers.Tpo $(DEPDIR)/libPipeHandler_la-EventSubscribers.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-EventSubscribers.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-EventSubscribers.Tpo -c -o libPipeHandler_la-EventSubscribers.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/EventSubscribers.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/EventSubscribers.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-EventSubscribers.Tpo $(DEPDIR)/libPipeHandler_la-EventSubscribers.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/EventSubscribers.c' object='libPipeHandler_la-EventSubscribers.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-EventSubscribers.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/EventSubscribers.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/EventSubscribers.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-EventSubscribers.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/EventSubscribers.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/EventSubscribers.c
 
 libPipeHandler_la-VersionHandshake.lo: $(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionHandshake.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-VersionHandshake.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-VersionHandshake.Tpo -c -o libPipeHandler_la-VersionHandshake.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionHandshake.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionHandshake.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-VersionHandshake.Tpo $(DEPDIR)/libPipeHandler_la-VersionHandshake.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-VersionHandshake.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-VersionHandshake.Tpo -c -o libPipeHandler_la-VersionHandshake.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionHandshake.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionHandshake.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-VersionHandshake.Tpo $(DEPDIR)/libPipeHandler_la-VersionHandshake.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionHandshake.c' object='libPipeHandler_la-VersionHandshake.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-VersionHandshake.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionHandshake.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionHandshake.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-VersionHandshake.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionHandshake.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionHandshake.c
 
 libPipeHandler_la-IndicatorsSubscribers.lo: $(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/IndicatorsSubscribers.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-IndicatorsSubscribers.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-IndicatorsSubscribers.Tpo -c -o libPipeHandler_la-IndicatorsSubscribers.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/IndicatorsSubscribers.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/IndicatorsSubscribers.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-IndicatorsSubscribers.Tpo $(DEPDIR)/libPipeHandler_la-IndicatorsSubscribers.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-IndicatorsSubscribers.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-IndicatorsSubscribers.Tpo -c -o libPipeHandler_la-IndicatorsSubscribers.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/IndicatorsSubscribers.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/IndicatorsSubscribers.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-IndicatorsSubscribers.Tpo $(DEPDIR)/libPipeHandler_la-IndicatorsSubscribers.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/IndicatorsSubscribers.c' object='libPipeHandler_la-IndicatorsSubscribers.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-IndicatorsSubscribers.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/IndicatorsSubscribers.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/IndicatorsSubscribers.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-IndicatorsSubscribers.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/IndicatorsSubscribers.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/L5Common/IndicatorsSubscribers.c
 
 libPipeHandler_la-Messenger.lo: $(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/Messenger.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-Messenger.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-Messenger.Tpo -c -o libPipeHandler_la-Messenger.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/Messenger.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/Messenger.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-Messenger.Tpo $(DEPDIR)/libPipeHandler_la-Messenger.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-Messenger.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-Messenger.Tpo -c -o libPipeHandler_la-Messenger.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/Messenger.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/Messenger.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-Messenger.Tpo $(DEPDIR)/libPipeHandler_la-Messenger.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/Messenger.c' object='libPipeHandler_la-Messenger.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-Messenger.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/Messenger.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/Messenger.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-Messenger.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/Messenger.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/Messenger.c
 
 libPipeHandler_la-VersionUtils.lo: $(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionUtils.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-VersionUtils.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-VersionUtils.Tpo -c -o libPipeHandler_la-VersionUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionUtils.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-VersionUtils.Tpo $(DEPDIR)/libPipeHandler_la-VersionUtils.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-VersionUtils.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-VersionUtils.Tpo -c -o libPipeHandler_la-VersionUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionUtils.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-VersionUtils.Tpo $(DEPDIR)/libPipeHandler_la-VersionUtils.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionUtils.c' object='libPipeHandler_la-VersionUtils.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-VersionUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionUtils.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-VersionUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/CommonServices/VersionUtils.c
 
 libPipeHandler_la-WrappersCommon.lo: $(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersCommon.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-WrappersCommon.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-WrappersCommon.Tpo -c -o libPipeHandler_la-WrappersCommon.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersCommon.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersCommon.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-WrappersCommon.Tpo $(DEPDIR)/libPipeHandler_la-WrappersCommon.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-WrappersCommon.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-WrappersCommon.Tpo -c -o libPipeHandler_la-WrappersCommon.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersCommon.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersCommon.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-WrappersCommon.Tpo $(DEPDIR)/libPipeHandler_la-WrappersCommon.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersCommon.c' object='libPipeHandler_la-WrappersCommon.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-WrappersCommon.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersCommon.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersCommon.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-WrappersCommon.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersCommon.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersCommon.c
 
 libPipeHandler_la-WrappersUtils.lo: $(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersUtils.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-WrappersUtils.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-WrappersUtils.Tpo -c -o libPipeHandler_la-WrappersUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersUtils.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-WrappersUtils.Tpo $(DEPDIR)/libPipeHandler_la-WrappersUtils.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-WrappersUtils.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-WrappersUtils.Tpo -c -o libPipeHandler_la-WrappersUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersUtils.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-WrappersUtils.Tpo $(DEPDIR)/libPipeHandler_la-WrappersUtils.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersUtils.c' object='libPipeHandler_la-WrappersUtils.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-WrappersUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersUtils.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-WrappersUtils.lo `test -f '$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersUtils.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSAgnostic/Common/WrappersCommon/WrappersUtils.c
 
 libPipeHandler_la-TraceModule.lo: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceModule.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-TraceModule.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-TraceModule.Tpo -c -o libPipeHandler_la-TraceModule.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceModule.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceModule.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libPipeHandler_la-TraceModule.Tpo $(DEPDIR)/libPipeHandler_la-TraceModule.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -MT libPipeHandler_la-TraceModule.lo -MD -MP -MF $(DEPDIR)/libPipeHandler_la-TraceModule.Tpo -c -o libPipeHandler_la-TraceModule.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceModule.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceModule.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libPipeHandler_la-TraceModule.Tpo $(DEPDIR)/libPipeHandler_la-TraceModule.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceModule.c' object='libPipeHandler_la-TraceModule.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-TraceModule.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceModule.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceModule.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libPipeHandler_la_CFLAGS) $(CFLAGS) -c -o libPipeHandler_la-TraceModule.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceModule.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/TraceModule/TraceModule.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

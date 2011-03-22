@@ -66,8 +66,11 @@ wimaxd_DEPENDENCIES = ../../WiMax/Agents/NDnS/libNDnSAgent.la \
 	../Instrumantation/libWmxInstrument.la \
 	../../Common/CommonServices/libServices.la \
 	$(am__DEPENDENCIES_1) ../../Common/L4Common/libL4Common.la
-wimaxd_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(wimaxd_CFLAGS) $(CFLAGS) \
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+wimaxd_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(wimaxd_CFLAGS) $(CFLAGS) \
 	$(wimaxd_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -75,13 +78,26 @@ am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(wimaxd_SOURCES)
 DIST_SOURCES = $(wimaxd_SOURCES)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
@@ -112,6 +128,7 @@ CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -438,7 +455,7 @@ clean-binPROGRAMS:
 	rm -f $$list
 wimaxd$(EXEEXT): $(wimaxd_OBJECTS) $(wimaxd_DEPENDENCIES) 
 	@rm -f wimaxd$(EXEEXT)
-	$(wimaxd_LINK) $(wimaxd_OBJECTS) $(wimaxd_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(wimaxd_LINK) $(wimaxd_OBJECTS) $(wimaxd_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -461,204 +478,233 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wimaxd-LoadInstrumentation.Po@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 wimaxd-Act.o: $(srcdir)/Act.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-Act.o -MD -MP -MF $(DEPDIR)/wimaxd-Act.Tpo -c -o wimaxd-Act.o `test -f '$(srcdir)/Act.c' || echo '$(srcdir)/'`$(srcdir)/Act.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-Act.Tpo $(DEPDIR)/wimaxd-Act.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-Act.o -MD -MP -MF $(DEPDIR)/wimaxd-Act.Tpo -c -o wimaxd-Act.o `test -f '$(srcdir)/Act.c' || echo '$(srcdir)/'`$(srcdir)/Act.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-Act.Tpo $(DEPDIR)/wimaxd-Act.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Act.c' object='wimaxd-Act.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-Act.o `test -f '$(srcdir)/Act.c' || echo '$(srcdir)/'`$(srcdir)/Act.c
 
 wimaxd-Act.obj: $(srcdir)/Act.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-Act.obj -MD -MP -MF $(DEPDIR)/wimaxd-Act.Tpo -c -o wimaxd-Act.obj `if test -f '$(srcdir)/Act.c'; then $(CYGPATH_W) '$(srcdir)/Act.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/Act.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-Act.Tpo $(DEPDIR)/wimaxd-Act.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-Act.obj -MD -MP -MF $(DEPDIR)/wimaxd-Act.Tpo -c -o wimaxd-Act.obj `if test -f '$(srcdir)/Act.c'; then $(CYGPATH_W) '$(srcdir)/Act.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/Act.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-Act.Tpo $(DEPDIR)/wimaxd-Act.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/Act.c' object='wimaxd-Act.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-Act.obj `if test -f '$(srcdir)/Act.c'; then $(CYGPATH_W) '$(srcdir)/Act.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/Act.c'; fi`
 
 wimaxd-L4MsgProxy.o: $(srcdir)/L4MsgProxy.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L4MsgProxy.o -MD -MP -MF $(DEPDIR)/wimaxd-L4MsgProxy.Tpo -c -o wimaxd-L4MsgProxy.o `test -f '$(srcdir)/L4MsgProxy.c' || echo '$(srcdir)/'`$(srcdir)/L4MsgProxy.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-L4MsgProxy.Tpo $(DEPDIR)/wimaxd-L4MsgProxy.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L4MsgProxy.o -MD -MP -MF $(DEPDIR)/wimaxd-L4MsgProxy.Tpo -c -o wimaxd-L4MsgProxy.o `test -f '$(srcdir)/L4MsgProxy.c' || echo '$(srcdir)/'`$(srcdir)/L4MsgProxy.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-L4MsgProxy.Tpo $(DEPDIR)/wimaxd-L4MsgProxy.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L4MsgProxy.c' object='wimaxd-L4MsgProxy.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-L4MsgProxy.o `test -f '$(srcdir)/L4MsgProxy.c' || echo '$(srcdir)/'`$(srcdir)/L4MsgProxy.c
 
 wimaxd-L4MsgProxy.obj: $(srcdir)/L4MsgProxy.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L4MsgProxy.obj -MD -MP -MF $(DEPDIR)/wimaxd-L4MsgProxy.Tpo -c -o wimaxd-L4MsgProxy.obj `if test -f '$(srcdir)/L4MsgProxy.c'; then $(CYGPATH_W) '$(srcdir)/L4MsgProxy.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/L4MsgProxy.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-L4MsgProxy.Tpo $(DEPDIR)/wimaxd-L4MsgProxy.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L4MsgProxy.obj -MD -MP -MF $(DEPDIR)/wimaxd-L4MsgProxy.Tpo -c -o wimaxd-L4MsgProxy.obj `if test -f '$(srcdir)/L4MsgProxy.c'; then $(CYGPATH_W) '$(srcdir)/L4MsgProxy.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/L4MsgProxy.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-L4MsgProxy.Tpo $(DEPDIR)/wimaxd-L4MsgProxy.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L4MsgProxy.c' object='wimaxd-L4MsgProxy.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-L4MsgProxy.obj `if test -f '$(srcdir)/L4MsgProxy.c'; then $(CYGPATH_W) '$(srcdir)/L4MsgProxy.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/L4MsgProxy.c'; fi`
 
 wimaxd-L5SocketsDispatcher.o: $(srcdir)/L5SocketsDispatcher.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5SocketsDispatcher.o -MD -MP -MF $(DEPDIR)/wimaxd-L5SocketsDispatcher.Tpo -c -o wimaxd-L5SocketsDispatcher.o `test -f '$(srcdir)/L5SocketsDispatcher.c' || echo '$(srcdir)/'`$(srcdir)/L5SocketsDispatcher.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-L5SocketsDispatcher.Tpo $(DEPDIR)/wimaxd-L5SocketsDispatcher.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5SocketsDispatcher.o -MD -MP -MF $(DEPDIR)/wimaxd-L5SocketsDispatcher.Tpo -c -o wimaxd-L5SocketsDispatcher.o `test -f '$(srcdir)/L5SocketsDispatcher.c' || echo '$(srcdir)/'`$(srcdir)/L5SocketsDispatcher.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-L5SocketsDispatcher.Tpo $(DEPDIR)/wimaxd-L5SocketsDispatcher.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L5SocketsDispatcher.c' object='wimaxd-L5SocketsDispatcher.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-L5SocketsDispatcher.o `test -f '$(srcdir)/L5SocketsDispatcher.c' || echo '$(srcdir)/'`$(srcdir)/L5SocketsDispatcher.c
 
 wimaxd-L5SocketsDispatcher.obj: $(srcdir)/L5SocketsDispatcher.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5SocketsDispatcher.obj -MD -MP -MF $(DEPDIR)/wimaxd-L5SocketsDispatcher.Tpo -c -o wimaxd-L5SocketsDispatcher.obj `if test -f '$(srcdir)/L5SocketsDispatcher.c'; then $(CYGPATH_W) '$(srcdir)/L5SocketsDispatcher.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/L5SocketsDispatcher.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-L5SocketsDispatcher.Tpo $(DEPDIR)/wimaxd-L5SocketsDispatcher.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5SocketsDispatcher.obj -MD -MP -MF $(DEPDIR)/wimaxd-L5SocketsDispatcher.Tpo -c -o wimaxd-L5SocketsDispatcher.obj `if test -f '$(srcdir)/L5SocketsDispatcher.c'; then $(CYGPATH_W) '$(srcdir)/L5SocketsDispatcher.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/L5SocketsDispatcher.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-L5SocketsDispatcher.Tpo $(DEPDIR)/wimaxd-L5SocketsDispatcher.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L5SocketsDispatcher.c' object='wimaxd-L5SocketsDispatcher.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-L5SocketsDispatcher.obj `if test -f '$(srcdir)/L5SocketsDispatcher.c'; then $(CYGPATH_W) '$(srcdir)/L5SocketsDispatcher.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/L5SocketsDispatcher.c'; fi`
 
 wimaxd-L5Dispatcher.o: $(srcdir)/L5Dispatcher.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5Dispatcher.o -MD -MP -MF $(DEPDIR)/wimaxd-L5Dispatcher.Tpo -c -o wimaxd-L5Dispatcher.o `test -f '$(srcdir)/L5Dispatcher.c' || echo '$(srcdir)/'`$(srcdir)/L5Dispatcher.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-L5Dispatcher.Tpo $(DEPDIR)/wimaxd-L5Dispatcher.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5Dispatcher.o -MD -MP -MF $(DEPDIR)/wimaxd-L5Dispatcher.Tpo -c -o wimaxd-L5Dispatcher.o `test -f '$(srcdir)/L5Dispatcher.c' || echo '$(srcdir)/'`$(srcdir)/L5Dispatcher.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-L5Dispatcher.Tpo $(DEPDIR)/wimaxd-L5Dispatcher.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L5Dispatcher.c' object='wimaxd-L5Dispatcher.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-L5Dispatcher.o `test -f '$(srcdir)/L5Dispatcher.c' || echo '$(srcdir)/'`$(srcdir)/L5Dispatcher.c
 
 wimaxd-L5Dispatcher.obj: $(srcdir)/L5Dispatcher.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5Dispatcher.obj -MD -MP -MF $(DEPDIR)/wimaxd-L5Dispatcher.Tpo -c -o wimaxd-L5Dispatcher.obj `if test -f '$(srcdir)/L5Dispatcher.c'; then $(CYGPATH_W) '$(srcdir)/L5Dispatcher.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/L5Dispatcher.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-L5Dispatcher.Tpo $(DEPDIR)/wimaxd-L5Dispatcher.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5Dispatcher.obj -MD -MP -MF $(DEPDIR)/wimaxd-L5Dispatcher.Tpo -c -o wimaxd-L5Dispatcher.obj `if test -f '$(srcdir)/L5Dispatcher.c'; then $(CYGPATH_W) '$(srcdir)/L5Dispatcher.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/L5Dispatcher.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-L5Dispatcher.Tpo $(DEPDIR)/wimaxd-L5Dispatcher.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/L5Dispatcher.c' object='wimaxd-L5Dispatcher.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-L5Dispatcher.obj `if test -f '$(srcdir)/L5Dispatcher.c'; then $(CYGPATH_W) '$(srcdir)/L5Dispatcher.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/L5Dispatcher.c'; fi`
 
 wimaxd-L5CommonUtils.o: $(srcdir)/../../Common/L5Common/L5CommonUtils.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5CommonUtils.o -MD -MP -MF $(DEPDIR)/wimaxd-L5CommonUtils.Tpo -c -o wimaxd-L5CommonUtils.o `test -f '$(srcdir)/../../Common/L5Common/L5CommonUtils.c' || echo '$(srcdir)/'`$(srcdir)/../../Common/L5Common/L5CommonUtils.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-L5CommonUtils.Tpo $(DEPDIR)/wimaxd-L5CommonUtils.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5CommonUtils.o -MD -MP -MF $(DEPDIR)/wimaxd-L5CommonUtils.Tpo -c -o wimaxd-L5CommonUtils.o `test -f '$(srcdir)/../../Common/L5Common/L5CommonUtils.c' || echo '$(srcdir)/'`$(srcdir)/../../Common/L5Common/L5CommonUtils.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-L5CommonUtils.Tpo $(DEPDIR)/wimaxd-L5CommonUtils.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Common/L5Common/L5CommonUtils.c' object='wimaxd-L5CommonUtils.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-L5CommonUtils.o `test -f '$(srcdir)/../../Common/L5Common/L5CommonUtils.c' || echo '$(srcdir)/'`$(srcdir)/../../Common/L5Common/L5CommonUtils.c
 
 wimaxd-L5CommonUtils.obj: $(srcdir)/../../Common/L5Common/L5CommonUtils.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5CommonUtils.obj -MD -MP -MF $(DEPDIR)/wimaxd-L5CommonUtils.Tpo -c -o wimaxd-L5CommonUtils.obj `if test -f '$(srcdir)/../../Common/L5Common/L5CommonUtils.c'; then $(CYGPATH_W) '$(srcdir)/../../Common/L5Common/L5CommonUtils.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/../../Common/L5Common/L5CommonUtils.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-L5CommonUtils.Tpo $(DEPDIR)/wimaxd-L5CommonUtils.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-L5CommonUtils.obj -MD -MP -MF $(DEPDIR)/wimaxd-L5CommonUtils.Tpo -c -o wimaxd-L5CommonUtils.obj `if test -f '$(srcdir)/../../Common/L5Common/L5CommonUtils.c'; then $(CYGPATH_W) '$(srcdir)/../../Common/L5Common/L5CommonUtils.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/../../Common/L5Common/L5CommonUtils.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-L5CommonUtils.Tpo $(DEPDIR)/wimaxd-L5CommonUtils.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../../Common/L5Common/L5CommonUtils.c' object='wimaxd-L5CommonUtils.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-L5CommonUtils.obj `if test -f '$(srcdir)/../../Common/L5Common/L5CommonUtils.c'; then $(CYGPATH_W) '$(srcdir)/../../Common/L5Common/L5CommonUtils.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/../../Common/L5Common/L5CommonUtils.c'; fi`
 
 wimaxd-KDapiAdapter.o: $(srcdir)/KDapiAdapter.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapiAdapter.o -MD -MP -MF $(DEPDIR)/wimaxd-KDapiAdapter.Tpo -c -o wimaxd-KDapiAdapter.o `test -f '$(srcdir)/KDapiAdapter.c' || echo '$(srcdir)/'`$(srcdir)/KDapiAdapter.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-KDapiAdapter.Tpo $(DEPDIR)/wimaxd-KDapiAdapter.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapiAdapter.o -MD -MP -MF $(DEPDIR)/wimaxd-KDapiAdapter.Tpo -c -o wimaxd-KDapiAdapter.o `test -f '$(srcdir)/KDapiAdapter.c' || echo '$(srcdir)/'`$(srcdir)/KDapiAdapter.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-KDapiAdapter.Tpo $(DEPDIR)/wimaxd-KDapiAdapter.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/KDapiAdapter.c' object='wimaxd-KDapiAdapter.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-KDapiAdapter.o `test -f '$(srcdir)/KDapiAdapter.c' || echo '$(srcdir)/'`$(srcdir)/KDapiAdapter.c
 
 wimaxd-KDapiAdapter.obj: $(srcdir)/KDapiAdapter.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapiAdapter.obj -MD -MP -MF $(DEPDIR)/wimaxd-KDapiAdapter.Tpo -c -o wimaxd-KDapiAdapter.obj `if test -f '$(srcdir)/KDapiAdapter.c'; then $(CYGPATH_W) '$(srcdir)/KDapiAdapter.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/KDapiAdapter.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-KDapiAdapter.Tpo $(DEPDIR)/wimaxd-KDapiAdapter.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapiAdapter.obj -MD -MP -MF $(DEPDIR)/wimaxd-KDapiAdapter.Tpo -c -o wimaxd-KDapiAdapter.obj `if test -f '$(srcdir)/KDapiAdapter.c'; then $(CYGPATH_W) '$(srcdir)/KDapiAdapter.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/KDapiAdapter.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-KDapiAdapter.Tpo $(DEPDIR)/wimaxd-KDapiAdapter.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/KDapiAdapter.c' object='wimaxd-KDapiAdapter.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-KDapiAdapter.obj `if test -f '$(srcdir)/KDapiAdapter.c'; then $(CYGPATH_W) '$(srcdir)/KDapiAdapter.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/KDapiAdapter.c'; fi`
 
 wimaxd-KDapi.o: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapi.o -MD -MP -MF $(DEPDIR)/wimaxd-KDapi.Tpo -c -o wimaxd-KDapi.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-KDapi.Tpo $(DEPDIR)/wimaxd-KDapi.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapi.o -MD -MP -MF $(DEPDIR)/wimaxd-KDapi.Tpo -c -o wimaxd-KDapi.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-KDapi.Tpo $(DEPDIR)/wimaxd-KDapi.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c' object='wimaxd-KDapi.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-KDapi.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c
 
 wimaxd-KDapi.obj: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapi.obj -MD -MP -MF $(DEPDIR)/wimaxd-KDapi.Tpo -c -o wimaxd-KDapi.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-KDapi.Tpo $(DEPDIR)/wimaxd-KDapi.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapi.obj -MD -MP -MF $(DEPDIR)/wimaxd-KDapi.Tpo -c -o wimaxd-KDapi.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-KDapi.Tpo $(DEPDIR)/wimaxd-KDapi.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c' object='wimaxd-KDapi.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-KDapi.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapi.c'; fi`
 
 wimaxd-KDapiForSim.o: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapiForSim.o -MD -MP -MF $(DEPDIR)/wimaxd-KDapiForSim.Tpo -c -o wimaxd-KDapiForSim.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-KDapiForSim.Tpo $(DEPDIR)/wimaxd-KDapiForSim.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapiForSim.o -MD -MP -MF $(DEPDIR)/wimaxd-KDapiForSim.Tpo -c -o wimaxd-KDapiForSim.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-KDapiForSim.Tpo $(DEPDIR)/wimaxd-KDapiForSim.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c' object='wimaxd-KDapiForSim.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-KDapiForSim.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c
 
 wimaxd-KDapiForSim.obj: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapiForSim.obj -MD -MP -MF $(DEPDIR)/wimaxd-KDapiForSim.Tpo -c -o wimaxd-KDapiForSim.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-KDapiForSim.Tpo $(DEPDIR)/wimaxd-KDapiForSim.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-KDapiForSim.obj -MD -MP -MF $(DEPDIR)/wimaxd-KDapiForSim.Tpo -c -o wimaxd-KDapiForSim.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-KDapiForSim.Tpo $(DEPDIR)/wimaxd-KDapiForSim.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c' object='wimaxd-KDapiForSim.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-KDapiForSim.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/KDapi/KDapiForSim.c'; fi`
 
 wimaxd-GenericMain.o: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericMain.o -MD -MP -MF $(DEPDIR)/wimaxd-GenericMain.Tpo -c -o wimaxd-GenericMain.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-GenericMain.Tpo $(DEPDIR)/wimaxd-GenericMain.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericMain.o -MD -MP -MF $(DEPDIR)/wimaxd-GenericMain.Tpo -c -o wimaxd-GenericMain.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-GenericMain.Tpo $(DEPDIR)/wimaxd-GenericMain.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c' object='wimaxd-GenericMain.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-GenericMain.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c
 
 wimaxd-GenericMain.obj: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericMain.obj -MD -MP -MF $(DEPDIR)/wimaxd-GenericMain.Tpo -c -o wimaxd-GenericMain.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-GenericMain.Tpo $(DEPDIR)/wimaxd-GenericMain.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericMain.obj -MD -MP -MF $(DEPDIR)/wimaxd-GenericMain.Tpo -c -o wimaxd-GenericMain.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-GenericMain.Tpo $(DEPDIR)/wimaxd-GenericMain.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c' object='wimaxd-GenericMain.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-GenericMain.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericMain.c'; fi`
 
 wimaxd-GenericConsole.o: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericConsole.o -MD -MP -MF $(DEPDIR)/wimaxd-GenericConsole.Tpo -c -o wimaxd-GenericConsole.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-GenericConsole.Tpo $(DEPDIR)/wimaxd-GenericConsole.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericConsole.o -MD -MP -MF $(DEPDIR)/wimaxd-GenericConsole.Tpo -c -o wimaxd-GenericConsole.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-GenericConsole.Tpo $(DEPDIR)/wimaxd-GenericConsole.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c' object='wimaxd-GenericConsole.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-GenericConsole.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c
 
 wimaxd-GenericConsole.obj: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericConsole.obj -MD -MP -MF $(DEPDIR)/wimaxd-GenericConsole.Tpo -c -o wimaxd-GenericConsole.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-GenericConsole.Tpo $(DEPDIR)/wimaxd-GenericConsole.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericConsole.obj -MD -MP -MF $(DEPDIR)/wimaxd-GenericConsole.Tpo -c -o wimaxd-GenericConsole.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-GenericConsole.Tpo $(DEPDIR)/wimaxd-GenericConsole.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c' object='wimaxd-GenericConsole.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-GenericConsole.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericConsole.c'; fi`
 
 wimaxd-GenericDaemon.o: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericDaemon.o -MD -MP -MF $(DEPDIR)/wimaxd-GenericDaemon.Tpo -c -o wimaxd-GenericDaemon.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-GenericDaemon.Tpo $(DEPDIR)/wimaxd-GenericDaemon.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericDaemon.o -MD -MP -MF $(DEPDIR)/wimaxd-GenericDaemon.Tpo -c -o wimaxd-GenericDaemon.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-GenericDaemon.Tpo $(DEPDIR)/wimaxd-GenericDaemon.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c' object='wimaxd-GenericDaemon.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-GenericDaemon.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c
 
 wimaxd-GenericDaemon.obj: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericDaemon.obj -MD -MP -MF $(DEPDIR)/wimaxd-GenericDaemon.Tpo -c -o wimaxd-GenericDaemon.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-GenericDaemon.Tpo $(DEPDIR)/wimaxd-GenericDaemon.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-GenericDaemon.obj -MD -MP -MF $(DEPDIR)/wimaxd-GenericDaemon.Tpo -c -o wimaxd-GenericDaemon.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-GenericDaemon.Tpo $(DEPDIR)/wimaxd-GenericDaemon.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c' object='wimaxd-GenericDaemon.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-GenericDaemon.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Skeletons/AppSrv/GenericDaemon.c'; fi`
 
 wimaxd-LoadInstrumentation.o: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-LoadInstrumentation.o -MD -MP -MF $(DEPDIR)/wimaxd-LoadInstrumentation.Tpo -c -o wimaxd-LoadInstrumentation.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-LoadInstrumentation.Tpo $(DEPDIR)/wimaxd-LoadInstrumentation.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-LoadInstrumentation.o -MD -MP -MF $(DEPDIR)/wimaxd-LoadInstrumentation.Tpo -c -o wimaxd-LoadInstrumentation.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-LoadInstrumentation.Tpo $(DEPDIR)/wimaxd-LoadInstrumentation.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c' object='wimaxd-LoadInstrumentation.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-LoadInstrumentation.o `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c
 
 wimaxd-LoadInstrumentation.obj: $(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-LoadInstrumentation.obj -MD -MP -MF $(DEPDIR)/wimaxd-LoadInstrumentation.Tpo -c -o wimaxd-LoadInstrumentation.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-LoadInstrumentation.Tpo $(DEPDIR)/wimaxd-LoadInstrumentation.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-LoadInstrumentation.obj -MD -MP -MF $(DEPDIR)/wimaxd-LoadInstrumentation.Tpo -c -o wimaxd-LoadInstrumentation.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-LoadInstrumentation.Tpo $(DEPDIR)/wimaxd-LoadInstrumentation.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c' object='wimaxd-LoadInstrumentation.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-LoadInstrumentation.obj `if test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c'; then $(CYGPATH_W) '$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/InfraStack/OSDependent/Linux/InfraStackModules/Instrumentation/LoadInstrumentation.c'; fi`
 
 wimaxd-DeviceConfiguration.o: $(srcdir)/DeviceConfiguration.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-DeviceConfiguration.o -MD -MP -MF $(DEPDIR)/wimaxd-DeviceConfiguration.Tpo -c -o wimaxd-DeviceConfiguration.o `test -f '$(srcdir)/DeviceConfiguration.c' || echo '$(srcdir)/'`$(srcdir)/DeviceConfiguration.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-DeviceConfiguration.Tpo $(DEPDIR)/wimaxd-DeviceConfiguration.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-DeviceConfiguration.o -MD -MP -MF $(DEPDIR)/wimaxd-DeviceConfiguration.Tpo -c -o wimaxd-DeviceConfiguration.o `test -f '$(srcdir)/DeviceConfiguration.c' || echo '$(srcdir)/'`$(srcdir)/DeviceConfiguration.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-DeviceConfiguration.Tpo $(DEPDIR)/wimaxd-DeviceConfiguration.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/DeviceConfiguration.c' object='wimaxd-DeviceConfiguration.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-DeviceConfiguration.o `test -f '$(srcdir)/DeviceConfiguration.c' || echo '$(srcdir)/'`$(srcdir)/DeviceConfiguration.c
 
 wimaxd-DeviceConfiguration.obj: $(srcdir)/DeviceConfiguration.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-DeviceConfiguration.obj -MD -MP -MF $(DEPDIR)/wimaxd-DeviceConfiguration.Tpo -c -o wimaxd-DeviceConfiguration.obj `if test -f '$(srcdir)/DeviceConfiguration.c'; then $(CYGPATH_W) '$(srcdir)/DeviceConfiguration.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/DeviceConfiguration.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimaxd-DeviceConfiguration.Tpo $(DEPDIR)/wimaxd-DeviceConfiguration.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -MT wimaxd-DeviceConfiguration.obj -MD -MP -MF $(DEPDIR)/wimaxd-DeviceConfiguration.Tpo -c -o wimaxd-DeviceConfiguration.obj `if test -f '$(srcdir)/DeviceConfiguration.c'; then $(CYGPATH_W) '$(srcdir)/DeviceConfiguration.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/DeviceConfiguration.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimaxd-DeviceConfiguration.Tpo $(DEPDIR)/wimaxd-DeviceConfiguration.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/DeviceConfiguration.c' object='wimaxd-DeviceConfiguration.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(wimaxd_CFLAGS) $(CFLAGS) -c -o wimaxd-DeviceConfiguration.obj `if test -f '$(srcdir)/DeviceConfiguration.c'; then $(CYGPATH_W) '$(srcdir)/DeviceConfiguration.c'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/DeviceConfiguration.c'; fi`

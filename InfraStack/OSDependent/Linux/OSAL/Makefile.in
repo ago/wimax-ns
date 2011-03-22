@@ -53,19 +53,35 @@ am_libosal_la_OBJECTS = wimax_osal_primitives.lo wimax_osal_strings.lo \
 	wimax_osal_config_controller.lo wimax_osal_crypt_services.lo \
 	EventLogger.lo
 libosal_la_OBJECTS = $(am_libosal_la_OBJECTS)
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libosal_la_SOURCES)
 DIST_SOURCES = $(libosal_la_SOURCES)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
@@ -96,6 +112,7 @@ CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -332,7 +349,7 @@ clean-noinstLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libosal.la: $(libosal_la_OBJECTS) $(libosal_la_DEPENDENCIES) 
-	$(LINK)  $(libosal_la_OBJECTS) $(libosal_la_LIBADD) $(LIBS)
+	$(AM_V_CCLD)$(LINK)  $(libosal_la_OBJECTS) $(libosal_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -352,95 +369,108 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wimax_osal_win.Plo@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 wimax_osal_primitives.lo: $(srcdir)/./Primitives/wimax_osal_primitives.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_primitives.lo -MD -MP -MF $(DEPDIR)/wimax_osal_primitives.Tpo -c -o wimax_osal_primitives.lo `test -f '$(srcdir)/./Primitives/wimax_osal_primitives.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_primitives.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimax_osal_primitives.Tpo $(DEPDIR)/wimax_osal_primitives.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_primitives.lo -MD -MP -MF $(DEPDIR)/wimax_osal_primitives.Tpo -c -o wimax_osal_primitives.lo `test -f '$(srcdir)/./Primitives/wimax_osal_primitives.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_primitives.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimax_osal_primitives.Tpo $(DEPDIR)/wimax_osal_primitives.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/./Primitives/wimax_osal_primitives.c' object='wimax_osal_primitives.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_primitives.lo `test -f '$(srcdir)/./Primitives/wimax_osal_primitives.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_primitives.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_primitives.lo `test -f '$(srcdir)/./Primitives/wimax_osal_primitives.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_primitives.c
 
 wimax_osal_strings.lo: $(srcdir)/./Primitives/wimax_osal_strings.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_strings.lo -MD -MP -MF $(DEPDIR)/wimax_osal_strings.Tpo -c -o wimax_osal_strings.lo `test -f '$(srcdir)/./Primitives/wimax_osal_strings.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_strings.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimax_osal_strings.Tpo $(DEPDIR)/wimax_osal_strings.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_strings.lo -MD -MP -MF $(DEPDIR)/wimax_osal_strings.Tpo -c -o wimax_osal_strings.lo `test -f '$(srcdir)/./Primitives/wimax_osal_strings.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_strings.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimax_osal_strings.Tpo $(DEPDIR)/wimax_osal_strings.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/./Primitives/wimax_osal_strings.c' object='wimax_osal_strings.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_strings.lo `test -f '$(srcdir)/./Primitives/wimax_osal_strings.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_strings.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_strings.lo `test -f '$(srcdir)/./Primitives/wimax_osal_strings.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_strings.c
 
 wimax_osal_event.lo: $(srcdir)/./Primitives/wimax_osal_event.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_event.lo -MD -MP -MF $(DEPDIR)/wimax_osal_event.Tpo -c -o wimax_osal_event.lo `test -f '$(srcdir)/./Primitives/wimax_osal_event.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_event.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimax_osal_event.Tpo $(DEPDIR)/wimax_osal_event.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_event.lo -MD -MP -MF $(DEPDIR)/wimax_osal_event.Tpo -c -o wimax_osal_event.lo `test -f '$(srcdir)/./Primitives/wimax_osal_event.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_event.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimax_osal_event.Tpo $(DEPDIR)/wimax_osal_event.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/./Primitives/wimax_osal_event.c' object='wimax_osal_event.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_event.lo `test -f '$(srcdir)/./Primitives/wimax_osal_event.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_event.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_event.lo `test -f '$(srcdir)/./Primitives/wimax_osal_event.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_event.c
 
 wimax_osal_util.lo: $(srcdir)/./Primitives/wimax_osal_util.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_util.lo -MD -MP -MF $(DEPDIR)/wimax_osal_util.Tpo -c -o wimax_osal_util.lo `test -f '$(srcdir)/./Primitives/wimax_osal_util.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_util.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimax_osal_util.Tpo $(DEPDIR)/wimax_osal_util.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_util.lo -MD -MP -MF $(DEPDIR)/wimax_osal_util.Tpo -c -o wimax_osal_util.lo `test -f '$(srcdir)/./Primitives/wimax_osal_util.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_util.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimax_osal_util.Tpo $(DEPDIR)/wimax_osal_util.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/./Primitives/wimax_osal_util.c' object='wimax_osal_util.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_util.lo `test -f '$(srcdir)/./Primitives/wimax_osal_util.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_util.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_util.lo `test -f '$(srcdir)/./Primitives/wimax_osal_util.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_util.c
 
 wimax_osal_trace.lo: $(srcdir)/./Primitives/wimax_osal_trace.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_trace.lo -MD -MP -MF $(DEPDIR)/wimax_osal_trace.Tpo -c -o wimax_osal_trace.lo `test -f '$(srcdir)/./Primitives/wimax_osal_trace.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_trace.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimax_osal_trace.Tpo $(DEPDIR)/wimax_osal_trace.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_trace.lo -MD -MP -MF $(DEPDIR)/wimax_osal_trace.Tpo -c -o wimax_osal_trace.lo `test -f '$(srcdir)/./Primitives/wimax_osal_trace.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_trace.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimax_osal_trace.Tpo $(DEPDIR)/wimax_osal_trace.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/./Primitives/wimax_osal_trace.c' object='wimax_osal_trace.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_trace.lo `test -f '$(srcdir)/./Primitives/wimax_osal_trace.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_trace.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_trace.lo `test -f '$(srcdir)/./Primitives/wimax_osal_trace.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_trace.c
 
 wimax_osal_win.lo: $(srcdir)/./Primitives/wimax_osal_win.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_win.lo -MD -MP -MF $(DEPDIR)/wimax_osal_win.Tpo -c -o wimax_osal_win.lo `test -f '$(srcdir)/./Primitives/wimax_osal_win.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_win.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimax_osal_win.Tpo $(DEPDIR)/wimax_osal_win.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_win.lo -MD -MP -MF $(DEPDIR)/wimax_osal_win.Tpo -c -o wimax_osal_win.lo `test -f '$(srcdir)/./Primitives/wimax_osal_win.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_win.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimax_osal_win.Tpo $(DEPDIR)/wimax_osal_win.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/./Primitives/wimax_osal_win.c' object='wimax_osal_win.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_win.lo `test -f '$(srcdir)/./Primitives/wimax_osal_win.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_win.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_win.lo `test -f '$(srcdir)/./Primitives/wimax_osal_win.c' || echo '$(srcdir)/'`$(srcdir)/./Primitives/wimax_osal_win.c
 
 wimax_osal_services.lo: $(srcdir)/./Services/wimax_osal_services.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_services.lo -MD -MP -MF $(DEPDIR)/wimax_osal_services.Tpo -c -o wimax_osal_services.lo `test -f '$(srcdir)/./Services/wimax_osal_services.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_services.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimax_osal_services.Tpo $(DEPDIR)/wimax_osal_services.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_services.lo -MD -MP -MF $(DEPDIR)/wimax_osal_services.Tpo -c -o wimax_osal_services.lo `test -f '$(srcdir)/./Services/wimax_osal_services.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_services.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimax_osal_services.Tpo $(DEPDIR)/wimax_osal_services.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/./Services/wimax_osal_services.c' object='wimax_osal_services.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_services.lo `test -f '$(srcdir)/./Services/wimax_osal_services.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_services.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_services.lo `test -f '$(srcdir)/./Services/wimax_osal_services.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_services.c
 
 wimax_osal_config_controller.lo: $(srcdir)/./Services/wimax_osal_config_controller.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_config_controller.lo -MD -MP -MF $(DEPDIR)/wimax_osal_config_controller.Tpo -c -o wimax_osal_config_controller.lo `test -f '$(srcdir)/./Services/wimax_osal_config_controller.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_config_controller.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimax_osal_config_controller.Tpo $(DEPDIR)/wimax_osal_config_controller.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_config_controller.lo -MD -MP -MF $(DEPDIR)/wimax_osal_config_controller.Tpo -c -o wimax_osal_config_controller.lo `test -f '$(srcdir)/./Services/wimax_osal_config_controller.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_config_controller.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimax_osal_config_controller.Tpo $(DEPDIR)/wimax_osal_config_controller.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/./Services/wimax_osal_config_controller.c' object='wimax_osal_config_controller.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_config_controller.lo `test -f '$(srcdir)/./Services/wimax_osal_config_controller.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_config_controller.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_config_controller.lo `test -f '$(srcdir)/./Services/wimax_osal_config_controller.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_config_controller.c
 
 wimax_osal_crypt_services.lo: $(srcdir)/./Services/wimax_osal_crypt_services.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_crypt_services.lo -MD -MP -MF $(DEPDIR)/wimax_osal_crypt_services.Tpo -c -o wimax_osal_crypt_services.lo `test -f '$(srcdir)/./Services/wimax_osal_crypt_services.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_crypt_services.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/wimax_osal_crypt_services.Tpo $(DEPDIR)/wimax_osal_crypt_services.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wimax_osal_crypt_services.lo -MD -MP -MF $(DEPDIR)/wimax_osal_crypt_services.Tpo -c -o wimax_osal_crypt_services.lo `test -f '$(srcdir)/./Services/wimax_osal_crypt_services.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_crypt_services.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/wimax_osal_crypt_services.Tpo $(DEPDIR)/wimax_osal_crypt_services.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/./Services/wimax_osal_crypt_services.c' object='wimax_osal_crypt_services.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_crypt_services.lo `test -f '$(srcdir)/./Services/wimax_osal_crypt_services.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_crypt_services.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wimax_osal_crypt_services.lo `test -f '$(srcdir)/./Services/wimax_osal_crypt_services.c' || echo '$(srcdir)/'`$(srcdir)/./Services/wimax_osal_crypt_services.c
 
 EventLogger.lo: $(srcdir)/../EventLogMessages/EventLogger.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT EventLogger.lo -MD -MP -MF $(DEPDIR)/EventLogger.Tpo -c -o EventLogger.lo `test -f '$(srcdir)/../EventLogMessages/EventLogger.c' || echo '$(srcdir)/'`$(srcdir)/../EventLogMessages/EventLogger.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/EventLogger.Tpo $(DEPDIR)/EventLogger.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT EventLogger.lo -MD -MP -MF $(DEPDIR)/EventLogger.Tpo -c -o EventLogger.lo `test -f '$(srcdir)/../EventLogMessages/EventLogger.c' || echo '$(srcdir)/'`$(srcdir)/../EventLogMessages/EventLogger.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/EventLogger.Tpo $(DEPDIR)/EventLogger.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/../EventLogMessages/EventLogger.c' object='EventLogger.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o EventLogger.lo `test -f '$(srcdir)/../EventLogMessages/EventLogger.c' || echo '$(srcdir)/'`$(srcdir)/../EventLogMessages/EventLogger.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o EventLogger.lo `test -f '$(srcdir)/../EventLogMessages/EventLogger.c' || echo '$(srcdir)/'`$(srcdir)/../EventLogMessages/EventLogger.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

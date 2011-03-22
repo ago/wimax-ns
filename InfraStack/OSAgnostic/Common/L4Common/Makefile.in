@@ -49,19 +49,35 @@ libL4Common_la_LIBADD =
 am_libL4Common_la_OBJECTS = BitmanCommon.lo L4BufMan_L4Common.lo \
 	L4BufMan_L3L4Structs.lo L4BufMan_L3L4DmStructs.lo
 libL4Common_la_OBJECTS = $(am_libL4Common_la_OBJECTS)
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libL4Common_la_SOURCES)
 DIST_SOURCES = $(libL4Common_la_SOURCES)
 ETAGS = etags
@@ -69,6 +85,7 @@ CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -286,7 +303,7 @@ clean-noinstLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libL4Common.la: $(libL4Common_la_OBJECTS) $(libL4Common_la_DEPENDENCIES) 
-	$(LINK)  $(libL4Common_la_OBJECTS) $(libL4Common_la_LIBADD) $(LIBS)
+	$(AM_V_CCLD)$(LINK)  $(libL4Common_la_OBJECTS) $(libL4Common_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -300,53 +317,60 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/L4BufMan_L4Common.Plo@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 BitmanCommon.lo: $(srcdir)/SourceControl/BitmanCommon.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT BitmanCommon.lo -MD -MP -MF $(DEPDIR)/BitmanCommon.Tpo -c -o BitmanCommon.lo `test -f '$(srcdir)/SourceControl/BitmanCommon.c' || echo '$(srcdir)/'`$(srcdir)/SourceControl/BitmanCommon.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/BitmanCommon.Tpo $(DEPDIR)/BitmanCommon.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT BitmanCommon.lo -MD -MP -MF $(DEPDIR)/BitmanCommon.Tpo -c -o BitmanCommon.lo `test -f '$(srcdir)/SourceControl/BitmanCommon.c' || echo '$(srcdir)/'`$(srcdir)/SourceControl/BitmanCommon.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/BitmanCommon.Tpo $(DEPDIR)/BitmanCommon.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/SourceControl/BitmanCommon.c' object='BitmanCommon.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o BitmanCommon.lo `test -f '$(srcdir)/SourceControl/BitmanCommon.c' || echo '$(srcdir)/'`$(srcdir)/SourceControl/BitmanCommon.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o BitmanCommon.lo `test -f '$(srcdir)/SourceControl/BitmanCommon.c' || echo '$(srcdir)/'`$(srcdir)/SourceControl/BitmanCommon.c
 
 L4BufMan_L4Common.lo: $(srcdir)/SourceControl/L4BufMan_L4Common.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT L4BufMan_L4Common.lo -MD -MP -MF $(DEPDIR)/L4BufMan_L4Common.Tpo -c -o L4BufMan_L4Common.lo `test -f '$(srcdir)/SourceControl/L4BufMan_L4Common.c' || echo '$(srcdir)/'`$(srcdir)/SourceControl/L4BufMan_L4Common.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/L4BufMan_L4Common.Tpo $(DEPDIR)/L4BufMan_L4Common.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT L4BufMan_L4Common.lo -MD -MP -MF $(DEPDIR)/L4BufMan_L4Common.Tpo -c -o L4BufMan_L4Common.lo `test -f '$(srcdir)/SourceControl/L4BufMan_L4Common.c' || echo '$(srcdir)/'`$(srcdir)/SourceControl/L4BufMan_L4Common.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/L4BufMan_L4Common.Tpo $(DEPDIR)/L4BufMan_L4Common.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(srcdir)/SourceControl/L4BufMan_L4Common.c' object='L4BufMan_L4Common.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o L4BufMan_L4Common.lo `test -f '$(srcdir)/SourceControl/L4BufMan_L4Common.c' || echo '$(srcdir)/'`$(srcdir)/SourceControl/L4BufMan_L4Common.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o L4BufMan_L4Common.lo `test -f '$(srcdir)/SourceControl/L4BufMan_L4Common.c' || echo '$(srcdir)/'`$(srcdir)/SourceControl/L4BufMan_L4Common.c
 
 L4BufMan_L3L4Structs.lo: $(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4Structs.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT L4BufMan_L3L4Structs.lo -MD -MP -MF $(DEPDIR)/L4BufMan_L3L4Structs.Tpo -c -o L4BufMan_L3L4Structs.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4Structs.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4Structs.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/L4BufMan_L3L4Structs.Tpo $(DEPDIR)/L4BufMan_L3L4Structs.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT L4BufMan_L3L4Structs.lo -MD -MP -MF $(DEPDIR)/L4BufMan_L3L4Structs.Tpo -c -o L4BufMan_L3L4Structs.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4Structs.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4Structs.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/L4BufMan_L3L4Structs.Tpo $(DEPDIR)/L4BufMan_L3L4Structs.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4Structs.c' object='L4BufMan_L3L4Structs.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o L4BufMan_L3L4Structs.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4Structs.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4Structs.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o L4BufMan_L3L4Structs.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4Structs.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4Structs.c
 
 L4BufMan_L3L4DmStructs.lo: $(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4DmStructs.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT L4BufMan_L3L4DmStructs.lo -MD -MP -MF $(DEPDIR)/L4BufMan_L3L4DmStructs.Tpo -c -o L4BufMan_L3L4DmStructs.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4DmStructs.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4DmStructs.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/L4BufMan_L3L4DmStructs.Tpo $(DEPDIR)/L4BufMan_L3L4DmStructs.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT L4BufMan_L3L4DmStructs.lo -MD -MP -MF $(DEPDIR)/L4BufMan_L3L4DmStructs.Tpo -c -o L4BufMan_L3L4DmStructs.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4DmStructs.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4DmStructs.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/L4BufMan_L3L4DmStructs.Tpo $(DEPDIR)/L4BufMan_L3L4DmStructs.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4DmStructs.c' object='L4BufMan_L3L4DmStructs.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o L4BufMan_L3L4DmStructs.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4DmStructs.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4DmStructs.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o L4BufMan_L3L4DmStructs.lo `test -f '$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4DmStructs.c' || echo '$(srcdir)/'`$(top_srcdir)/InfraStack/OSDependent/Linux/L4Generated/L4BufMan_L3L4DmStructs.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

@@ -1,3 +1,15 @@
+Changes in 1.5.2:
+
+ Please see the detailed changed changelog from GIT for authorship
+ attribution.
+
+ - plenty of 64-bit fixes
+ - big endian support
+ - miscellaneaous bug fixes
+ - fixed distro target generation, zlib detection; silent mode added
+   to build
+ - remove a big lot of dead, unused files
+
 Changes in [1.]5.1
  - fix build issues (especially on other arches)
  - cleanups: killed a lot of compile warnings, still many left; many

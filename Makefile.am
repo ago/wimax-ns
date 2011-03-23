@@ -16,4 +16,6 @@ SUBDIRS = \
 man_MANS = $(srcdir)/InfraStack/OSDependent/Linux/manpage/wimaxcu.1 \
 	   $(srcdir)/InfraStack/OSDependent/Linux/manpage/wimaxd.1
 
-EXTRA_DIST = $(man_MANS)
+EXTRA_DIST = $(man_MANS) .gitattributes .gitignore CHANGELOG LICENSE \
+	README.txt bootstrap mk-archive
+

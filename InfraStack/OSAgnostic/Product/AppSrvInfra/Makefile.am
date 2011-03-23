@@ -40,7 +40,8 @@ wimaxd_SOURCES = \
 EXTRA_DIST =	$(srcdir)/i2400m.conf \
 		$(srcdir)/iwmxsdk.rules.in \
 		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/config.xml.in \
-		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh.in
+		$(top_srcdir)/InfraStack/OSDependent/Linux/Config/dhcp_renew.sh.in \
+		$(top_srcdir)/InfraStack/OSDependent/Linux/Ver_info.bin
 
 noinst_DATA = $(top_srcdir)/InfraStack/OSAgnostic/WiMax/Agents/NDnS/XML_Files/NDnSAgentConfig_forDriver.xml \
 		$(top_srcdir)/$(VER_INFO_BIN_FILE_SRC)
@@ -74,13 +75,16 @@ endif
 WiMAX_DB.bin WiMAX_Def.bin: $(WIMAX_DB_BIN_FILE)
 	cp $(WIMAX_DB_BIN_FILE) $@
 
-git_version = $(shell cd $(top_srcdir) && git describe --abbrev=128 --always)
+git_version = $(shell cd $(top_srcdir); \
+	[ -d .git ] && git describe --abbrev=128 --always && exit 0; \
+	[ -f .git_archive_txt ] && cat .git_archive.txt )
 
 # If we get here, this means the file has to be generated
 $(top_distdir)/$(VER_INFO_BIN_FILE_SRC) \
 $(top_buildir)/$(VER_INFO_BIN_FILE_SRC) \
 	::
 	@echo $@: generating distribution version
+	@chmod u+w $@
 	@[ -z "$(git_version)" ] \
 		&& echo "git-version-n/a" > $@ \
 		|| echo $(git_version) > $@
